@@ -31,6 +31,7 @@ export interface RoomItem {
   added_at: string
   notes: string | null
   sort_order: number
+  quantity: number
 }
 
 export interface PresetItem {

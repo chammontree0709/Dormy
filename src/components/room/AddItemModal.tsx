@@ -26,8 +26,7 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
     const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase()) ||
       item.description.toLowerCase().includes(search.toLowerCase())
     const matchesCategory = !selectedCategory || item.category === selectedCategory
-    const notAdded = !existingPresetIds.includes(item.id)
-    return matchesSearch && matchesCategory && notAdded
+    return matchesSearch && matchesCategory
   })
 
   function handleAddPreset(item: PresetItem) {
@@ -100,34 +99,45 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
 
             <div className="overflow-y-auto flex-1 space-y-2">
               {filtered.length === 0 ? (
-                <p className="text-center text-gray-400 text-sm py-8">
-                  {existingPresetIds.length > 0 ? 'All matching items already added!' : 'No items found.'}
-                </p>
+                <p className="text-center text-gray-400 text-sm py-8">No items found.</p>
               ) : (
-                filtered.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => handleAddPreset(item)}
-                    className="w-full text-left flex items-start gap-3 p-3 rounded-xl border border-gray-100 hover:border-indigo-200 hover:bg-indigo-50 transition-all group"
-                  >
-                    <span className="text-xl flex-shrink-0 mt-0.5">{item.image_emoji}</span>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-2">
-                        <p className="font-semibold text-sm text-gray-900 truncate">{item.name}</p>
-                        <span className={cn('text-xs px-2 py-0.5 rounded-full flex-shrink-0', {
-                          'bg-red-100 text-red-700': item.priority === 'essential',
-                          'bg-blue-100 text-blue-700': item.priority === 'recommended',
-                          'bg-gray-100 text-gray-600': item.priority === 'nice-to-have',
-                        })}>
-                          {item.priority}
-                        </span>
+                filtered.map((item) => {
+                  const alreadyAdded = existingPresetIds.includes(item.id)
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => handleAddPreset(item)}
+                      className={cn(
+                        'w-full text-left flex items-start gap-3 p-3 rounded-xl border transition-all group',
+                        alreadyAdded
+                          ? 'border-indigo-200 bg-indigo-50 hover:bg-indigo-100'
+                          : 'border-gray-100 hover:border-indigo-200 hover:bg-indigo-50'
+                      )}
+                    >
+                      <span className="text-xl flex-shrink-0 mt-0.5">{item.image_emoji}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-2">
+                          <p className="font-semibold text-sm text-gray-900 truncate">{item.name}</p>
+                          <div className="flex items-center gap-1.5 flex-shrink-0">
+                            {alreadyAdded && (
+                              <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-200 text-indigo-800 font-semibold">in room</span>
+                            )}
+                            <span className={cn('text-xs px-2 py-0.5 rounded-full', {
+                              'bg-red-100 text-red-700': item.priority === 'essential',
+                              'bg-blue-100 text-blue-700': item.priority === 'recommended',
+                              'bg-gray-100 text-gray-600': item.priority === 'nice-to-have',
+                            })}>
+                              {item.priority}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{item.description}</p>
+                        <p className="text-xs text-indigo-600 font-medium mt-1">{item.price_estimate}</p>
                       </div>
-                      <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{item.description}</p>
-                      <p className="text-xs text-indigo-600 font-medium mt-1">{item.price_estimate}</p>
-                    </div>
-                    <Plus size={16} className="text-indigo-600 flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </button>
-                ))
+                      <Plus size={16} className="text-indigo-600 flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </button>
+                  )
+                })
               )}
             </div>
           </div>

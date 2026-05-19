@@ -12,10 +12,12 @@ interface ChecklistItemProps {
   onToggle: (id: string, checked: boolean) => void
   onDelete: (id: string) => void
   onClaim: (id: string, claimed: boolean) => void
+  onQuantityChange: (id: string, quantity: number) => void
   currentUserName: string
 }
 
-export default function ChecklistItem({ item, onToggle, onDelete, onClaim, currentUserName }: ChecklistItemProps) {
+export default function ChecklistItem({ item, onToggle, onDelete, onClaim, onQuantityChange, currentUserName }: ChecklistItemProps) {
+  const qty = item.quantity ?? 1
   const preset = item.preset_id ? getItemById(item.preset_id) : null
   const name = preset?.name ?? item.custom_name ?? 'Unnamed item'
   const buyUrl = preset ? buildAffiliateUrl(preset.amazon_url) : (item.custom_url ?? null)
@@ -54,10 +56,15 @@ export default function ChecklistItem({ item, onToggle, onDelete, onClaim, curre
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <p className={cn('font-medium text-gray-900 truncate', item.is_checked && 'line-through text-gray-500')}>
-              {preset && <span className="mr-1">{preset.image_emoji}</span>}
-              {name}
-            </p>
+            <div className="flex items-center gap-2 min-w-0">
+              <p className={cn('font-medium text-gray-900 truncate', item.is_checked && 'line-through text-gray-500')}>
+                {preset && <span className="mr-1">{preset.image_emoji}</span>}
+                {name}
+              </p>
+              {qty > 1 && (
+                <span className="flex-shrink-0 text-xs font-bold bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded-md">×{qty}</span>
+              )}
+            </div>
 
             {item.is_checked && item.checked_by_name && (
               <p className="text-xs text-green-600 mt-0.5">✓ Bought by {item.checked_by_name}</p>
@@ -122,6 +129,23 @@ export default function ChecklistItem({ item, onToggle, onDelete, onClaim, curre
                 <ExternalLink size={14} />
               </Link>
             )}
+            <div className="flex items-center gap-0.5 border border-gray-200 rounded-lg overflow-hidden">
+              <button
+                onClick={() => qty > 1 ? onQuantityChange(item.id, qty - 1) : onDelete(item.id)}
+                className="px-2 py-1.5 text-gray-500 hover:bg-gray-100 transition-colors text-sm font-bold leading-none"
+                title={qty > 1 ? 'Decrease quantity' : 'Remove item'}
+              >
+                −
+              </button>
+              <span className="px-1.5 text-xs font-semibold text-gray-700 select-none">{qty}</span>
+              <button
+                onClick={() => onQuantityChange(item.id, qty + 1)}
+                className="px-2 py-1.5 text-gray-500 hover:bg-gray-100 transition-colors text-sm font-bold leading-none"
+                title="Increase quantity"
+              >
+                +
+              </button>
+            </div>
             <button
               onClick={() => onDelete(item.id)}
               className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"

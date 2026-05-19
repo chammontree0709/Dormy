@@ -83,6 +83,10 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
     }).eq('id', itemId)
   }
 
+  async function updateQuantity(itemId: string, quantity: number) {
+    await supabase.from('room_items').update({ quantity }).eq('id', itemId)
+  }
+
   async function addItem(
     presetId: string | null,
     customName?: string,
@@ -245,6 +249,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                           onToggle={toggleItem}
                           onDelete={deleteItem}
                           onClaim={claimItem}
+                          onQuantityChange={updateQuantity}
                           currentUserName={currentUserName}
                         />
                       ))}
