@@ -1054,6 +1054,309 @@ export const PRESET_ITEMS: PresetItem[] = [
       { author: 'Alexis M.', rating: 5, text: 'Use this more than my big backpack honestly. So convenient.', date: '2024-09-20' },
     ],
   },
+
+  // Bedding additions
+  {
+    id: 'bed-risers',
+    name: 'Bed Risers (set of 4)',
+    description: 'Lift your bed 5–8 inches to create under-bed storage. One of the best space hacks in a tiny dorm room.',
+    category: 'bedding',
+    amazon_url: 'https://www.amazon.com/s?k=bed+risers+dorm+room+storage&tag=roomd05-20',
+    image_emoji: '📐',
+    price_estimate: '$15–$25',
+    priority: 'recommended',
+    tags: ['storage', 'space-saving', 'bedding'],
+    reviews: [
+      { author: 'Jordan P.', rating: 5, text: 'So much hidden storage under my bed. Totally changed my room.', date: '2024-08-29' },
+      { author: 'Mia C.', rating: 5, text: 'Cheap and effective. Got two suitcases and a bin under my bed.', date: '2024-09-07' },
+    ],
+  },
+  {
+    id: 'sleep-mask',
+    name: 'Sleep Mask & Earplugs Set',
+    description: 'Your roommate keeps different hours than you. A good sleep mask and earplugs are non-negotiable survival gear.',
+    category: 'bedding',
+    amazon_url: 'https://www.amazon.com/s?k=sleep+mask+earplugs+set+blackout&tag=roomd05-20',
+    image_emoji: '😴',
+    price_estimate: '$10–$20',
+    priority: 'recommended',
+    tags: ['sleep', 'wellness'],
+    reviews: [
+      { author: 'Finn O.', rating: 5, text: 'My roommate stays up until 2am gaming. These saved my sleep.', date: '2024-09-12' },
+    ],
+  },
+
+  // Bathroom additions
+  {
+    id: 'hair-dryer',
+    name: 'Compact Hair Dryer',
+    description: 'A travel-size or compact dryer takes up less space and usually still has enough power for daily use.',
+    category: 'bathroom',
+    amazon_url: 'https://www.amazon.com/s?k=compact+travel+hair+dryer+dorm&tag=roomd05-20',
+    image_emoji: '💇',
+    price_estimate: '$20–$45',
+    priority: 'recommended',
+    tags: ['bathroom', 'grooming'],
+    reviews: [
+      { author: 'Chloe R.', rating: 4, text: 'Takes up way less space than my one from home. Does the job.', date: '2024-09-03' },
+    ],
+  },
+  {
+    id: 'shower-speaker',
+    name: 'Waterproof Shower Speaker',
+    description: 'Bluetooth shower speaker that suctions to the wall. Makes the dorm bathroom feel a lot less sad.',
+    category: 'bathroom',
+    amazon_url: 'https://www.amazon.com/s?k=waterproof+shower+speaker+bluetooth+suction&tag=roomd05-20',
+    image_emoji: '🎵',
+    price_estimate: '$15–$35',
+    priority: 'nice-to-have',
+    tags: ['bathroom', 'music', 'entertainment'],
+    reviews: [
+      { author: 'Sam K.', rating: 5, text: 'One of my favorite purchases. 10-minute showers fly by now.', date: '2024-09-18' },
+    ],
+  },
+
+  // Tech additions
+  {
+    id: 'usb-hub',
+    name: 'USB-C Hub / Docking Station',
+    description: 'Modern laptops have few ports. A hub adds USB-A, HDMI, SD card, and more. Essential for MacBook users.',
+    category: 'tech',
+    amazon_url: 'https://www.amazon.com/s?k=usb-c+hub+docking+station+laptop&tag=roomd05-20',
+    image_emoji: '🔌',
+    price_estimate: '$25–$60',
+    priority: 'recommended',
+    tags: ['tech', 'laptop', 'accessories'],
+    reviews: [
+      { author: 'Oliver T.', rating: 5, text: 'My MacBook only has 2 USB-C ports. This hub solved everything.', date: '2024-09-01' },
+    ],
+  },
+  {
+    id: 'monitor',
+    name: 'External Monitor (24")',
+    description: 'A second screen makes studying and coding dramatically easier. 24" monitors are compact enough for a desk.',
+    category: 'tech',
+    amazon_url: 'https://www.amazon.com/s?k=24+inch+monitor+college+dorm&tag=roomd05-20',
+    image_emoji: '🖥️',
+    price_estimate: '$120–$200',
+    priority: 'nice-to-have',
+    tags: ['tech', 'study', 'productivity'],
+    reviews: [
+      { author: 'Nina L.', rating: 5, text: 'Game changer for coding assignments. Worth every penny.', date: '2024-09-25' },
+    ],
+  },
+  {
+    id: 'printer',
+    name: 'Compact Inkjet Printer',
+    description: 'Campus printers have queues and fees. Having your own saves time and money, especially during finals.',
+    category: 'tech',
+    amazon_url: 'https://www.amazon.com/s?k=compact+inkjet+printer+dorm+college&tag=roomd05-20',
+    image_emoji: '🖨️',
+    price_estimate: '$60–$120',
+    priority: 'nice-to-have',
+    tags: ['tech', 'school', 'printing'],
+    reviews: [
+      { author: 'Rachel S.', rating: 4, text: 'Split with my roommate. Paid for itself in print credits by November.', date: '2024-11-15' },
+    ],
+  },
+
+  // Kitchen additions
+  {
+    id: 'air-fryer',
+    name: 'Mini Air Fryer',
+    description: 'Check with your RA first (some dorms ban them) but a 2-quart air fryer can cook almost anything fast.',
+    category: 'kitchen',
+    amazon_url: 'https://www.amazon.com/s?k=mini+air+fryer+2+quart+compact&tag=roomd05-20',
+    image_emoji: '🍟',
+    price_estimate: '$30–$60',
+    priority: 'nice-to-have',
+    tags: ['kitchen', 'cooking', 'appliance'],
+    reviews: [
+      { author: 'Leo B.', rating: 5, text: 'Check dorm rules first. Mine allows it. Changed my late-night snack game.', date: '2024-10-05' },
+    ],
+  },
+  {
+    id: 'dish-soap-sponge',
+    name: 'Dish Soap + Sponges Kit',
+    description: 'Even if you just use a few dishes, you need dish soap and a couple of sponges. Easy to forget.',
+    category: 'kitchen',
+    amazon_url: 'https://www.amazon.com/s?k=dish+soap+sponges+kitchen+cleaning+set&tag=roomd05-20',
+    image_emoji: '🧽',
+    price_estimate: '$8–$15',
+    priority: 'essential',
+    tags: ['kitchen', 'cleaning', 'hygiene'],
+    reviews: [
+      { author: 'Grace H.', rating: 5, text: 'Such an obvious thing to forget. Add it to your list now.', date: '2024-08-28' },
+    ],
+  },
+
+  // Laundry additions
+  {
+    id: 'dryer-sheets',
+    name: 'Dryer Sheets / Dryer Balls',
+    description: 'Dryer sheets reduce static and keep clothes smelling fresh. Wool dryer balls are reusable and better for sensitive skin.',
+    category: 'laundry',
+    amazon_url: 'https://www.amazon.com/s?k=dryer+sheets+or+dryer+balls+laundry&tag=roomd05-20',
+    image_emoji: '🌸',
+    price_estimate: '$8–$20',
+    priority: 'recommended',
+    tags: ['laundry', 'cleaning'],
+    reviews: [
+      { author: 'Tia W.', rating: 4, text: 'Wool dryer balls last forever. Better for allergies too.', date: '2024-09-15' },
+    ],
+  },
+  {
+    id: 'laundry-hamper',
+    name: 'Collapsible Laundry Hamper',
+    description: 'A soft, foldable hamper takes up minimal space when empty. Look for one with handles for easy trips to the laundry room.',
+    category: 'laundry',
+    amazon_url: 'https://www.amazon.com/s?k=collapsible+laundry+hamper+dorm&tag=roomd05-20',
+    image_emoji: '🧺',
+    price_estimate: '$12–$25',
+    priority: 'essential',
+    tags: ['laundry', 'storage'],
+    reviews: [
+      { author: 'Devon M.', rating: 5, text: 'Folds flat under my bed when empty. Great for a small room.', date: '2024-09-02' },
+    ],
+  },
+
+  // Storage additions
+  {
+    id: 'shoe-rack',
+    name: 'Over-Door Shoe Organizer',
+    description: 'Hang on the back of your closet or room door. Holds shoes, accessories, snacks — anything small.',
+    category: 'storage',
+    amazon_url: 'https://www.amazon.com/s?k=over+door+shoe+organizer+dorm&tag=roomd05-20',
+    image_emoji: '👟',
+    price_estimate: '$12–$25',
+    priority: 'recommended',
+    tags: ['storage', 'organization', 'shoes'],
+    reviews: [
+      { author: 'Kim R.', rating: 5, text: 'I use it for snacks, chargers, and toiletries. So much more useful than shoes!', date: '2024-09-10' },
+    ],
+  },
+  {
+    id: 'under-bed-bins',
+    name: 'Under-Bed Storage Bins',
+    description: 'Flat plastic or fabric bins that slide under your bed (especially with bed risers). Perfect for seasonal clothes and extra supplies.',
+    category: 'storage',
+    amazon_url: 'https://www.amazon.com/s?k=under+bed+storage+bins+flat+dorm&tag=roomd05-20',
+    image_emoji: '📦',
+    price_estimate: '$20–$40',
+    priority: 'recommended',
+    tags: ['storage', 'organization', 'space-saving'],
+    reviews: [
+      { author: 'Jade F.', rating: 5, text: 'Bought bed risers + these bins together. Hidden storage paradise.', date: '2024-09-04' },
+    ],
+  },
+
+  // Health additions
+  {
+    id: 'hand-sanitizer',
+    name: 'Hand Sanitizer (large bottle)',
+    description: 'Keep one on your desk and one in your bag. Cold season in a dorm hits hard — sanitation is your best defense.',
+    category: 'health',
+    amazon_url: 'https://www.amazon.com/s?k=hand+sanitizer+large+bottle+bulk&tag=roomd05-20',
+    image_emoji: '🧴',
+    price_estimate: '$8–$15',
+    priority: 'recommended',
+    tags: ['health', 'hygiene', 'wellness'],
+    reviews: [
+      { author: 'Chris A.', rating: 5, text: 'Dorm cold season is brutal. I go through a bottle a month.', date: '2024-10-12' },
+    ],
+  },
+
+  // School additions
+  {
+    id: 'blue-light-glasses',
+    name: 'Blue Light Blocking Glasses',
+    description: 'Reduce eye strain during late-night study sessions. Non-prescription, $15-25 versions work just as well as expensive ones.',
+    category: 'school',
+    amazon_url: 'https://www.amazon.com/s?k=blue+light+blocking+glasses+non+prescription&tag=roomd05-20',
+    image_emoji: '👓',
+    price_estimate: '$15–$30',
+    priority: 'nice-to-have',
+    tags: ['health', 'study', 'tech'],
+    reviews: [
+      { author: 'Zara N.', rating: 4, text: 'Noticeable difference in eye strain during late-night problem sets.', date: '2024-10-01' },
+    ],
+  },
+  {
+    id: 'mini-whiteboard',
+    name: 'Mini Whiteboard (desktop)',
+    description: 'A small tabletop whiteboard for quick notes, schedules, and brainstorming. Handy next to your monitor.',
+    category: 'school',
+    amazon_url: 'https://www.amazon.com/s?k=small+desktop+whiteboard+mini&tag=roomd05-20',
+    image_emoji: '📋',
+    price_estimate: '$10–$20',
+    priority: 'nice-to-have',
+    tags: ['school', 'organization', 'study'],
+    reviews: [
+      { author: 'Aaron L.', rating: 4, text: 'Write my daily to-dos on it every morning. Super helpful.', date: '2024-09-22' },
+    ],
+  },
+
+  // Decor additions
+  {
+    id: 'polaroid-camera',
+    name: 'Instant/Polaroid Camera',
+    description: 'Capture and display memories instantly. Polaroid photos on a wall string make any dorm room feel lived-in and personal.',
+    category: 'decor',
+    amazon_url: 'https://www.amazon.com/s?k=instax+mini+polaroid+camera+college&tag=roomd05-20',
+    image_emoji: '📸',
+    price_estimate: '$60–$100',
+    priority: 'nice-to-have',
+    tags: ['decor', 'fun', 'photos'],
+    reviews: [
+      { author: 'Isabelle K.', rating: 5, text: 'My wall is covered in polaroids now. Best college purchase hands down.', date: '2024-09-28' },
+    ],
+  },
+
+  // Fitness additions
+  {
+    id: 'gym-bag',
+    name: 'Drawstring Gym Bag',
+    description: 'A lightweight drawstring or cinch bag for gym trips. Compact enough to hang on your door when not in use.',
+    category: 'fitness',
+    amazon_url: 'https://www.amazon.com/s?k=drawstring+gym+bag+lightweight&tag=roomd05-20',
+    image_emoji: '💪',
+    price_estimate: '$8–$20',
+    priority: 'recommended',
+    tags: ['fitness', 'bags', 'campus'],
+    reviews: [
+      { author: 'Marcus B.', rating: 5, text: 'Throw in a change of clothes, headphones, and water bottle. Perfect gym bag.', date: '2024-09-14' },
+    ],
+  },
+
+  // Campus additions
+  {
+    id: 'bike-lock',
+    name: 'Bike U-Lock',
+    description: 'If you\'re bringing a bike to campus, a U-lock is essential. Cable locks are easy to cut — U-locks are not.',
+    category: 'campus',
+    amazon_url: 'https://www.amazon.com/s?k=bike+u-lock+heavy+duty+campus&tag=roomd05-20',
+    image_emoji: '🚲',
+    price_estimate: '$25–$60',
+    priority: 'recommended',
+    tags: ['campus', 'bike', 'security'],
+    reviews: [
+      { author: 'Pete S.', rating: 5, text: 'Lost a bike freshman year. Never making that mistake again.', date: '2024-09-06' },
+    ],
+  },
+  {
+    id: 'rain-jacket',
+    name: 'Packable Rain Jacket',
+    description: 'A lightweight jacket that compresses into a pouch for your bag. You will absolutely get caught in the rain between classes.',
+    category: 'campus',
+    amazon_url: 'https://www.amazon.com/s?k=packable+rain+jacket+lightweight&tag=roomd05-20',
+    image_emoji: '🌧️',
+    price_estimate: '$30–$70',
+    priority: 'recommended',
+    tags: ['campus', 'weather', 'clothing'],
+    reviews: [
+      { author: 'Sophie L.', rating: 5, text: 'Lives in my backpack. Has saved me from soaking at least a dozen times.', date: '2024-10-10' },
+    ],
+  },
 ]
 
 export const PRESET_LISTS = [

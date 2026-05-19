@@ -256,10 +256,15 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
           </div>
         )}
 
-        {/* Ad banner — placeholder for Google AdSense */}
-        <div className="mt-8 bg-gray-100 rounded-2xl border border-dashed border-gray-300 p-6 text-center">
-          <p className="text-xs text-gray-400 font-semibold uppercase tracking-widest">Sponsored</p>
-          <p className="text-sm text-gray-500 mt-1">Ad space — Google AdSense goes here</p>
+        <div className="mt-8">
+          <ins
+            className="adsbygoogle"
+            style={{ display: 'block' }}
+            data-ad-client="ca-pub-7336988558032518"
+            data-ad-slot="auto"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          />
         </div>
       </main>
 
