@@ -119,8 +119,15 @@ export default function SignupPage() {
           disabled={loading}
           className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors mb-4 disabled:opacity-50"
         >
-          <GoogleIcon />
-          Continue with Google
+          {loading ? (
+            <svg className="animate-spin w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+            </svg>
+          ) : (
+            <GoogleIcon />
+          )}
+          {loading ? 'Redirecting to Google...' : 'Continue with Google'}
         </button>
 
         <div className="flex items-center gap-3 mb-4">

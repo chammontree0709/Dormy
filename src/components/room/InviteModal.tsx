@@ -13,17 +13,24 @@ interface InviteModalProps {
 }
 
 export default function InviteModal({ inviteCode, roomName, members, onClose }: InviteModalProps) {
-  const [copied, setCopied] = useState(false)
-
-  async function copyCode() {
-    await navigator.clipboard.writeText(inviteCode)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+  const [copiedCode, setCopiedCode] = useState(false)
+  const [copiedLink, setCopiedLink] = useState(false)
 
   const joinUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/join/${inviteCode}`
-    : ''
+    : `https://roomdapp.com/join/${inviteCode}`
+
+  async function copyCode() {
+    await navigator.clipboard.writeText(inviteCode)
+    setCopiedCode(true)
+    setTimeout(() => setCopiedCode(false), 2000)
+  }
+
+  async function copyLink() {
+    await navigator.clipboard.writeText(joinUrl)
+    setCopiedLink(true)
+    setTimeout(() => setCopiedLink(false), 2000)
+  }
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4">
@@ -49,15 +56,23 @@ export default function InviteModal({ inviteCode, roomName, members, onClose }: 
               <button
                 onClick={copyCode}
                 className="p-2.5 rounded-xl bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors"
+                title="Copy code"
               >
-                {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
+                {copiedCode ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
               </button>
             </div>
           </div>
 
-          <div className="bg-gray-50 rounded-xl p-3">
-            <p className="text-xs text-gray-500 text-center break-all">{joinUrl}</p>
-          </div>
+          <button
+            onClick={copyLink}
+            className="w-full flex items-center justify-between gap-2 bg-gray-50 hover:bg-indigo-50 border border-gray-200 hover:border-indigo-200 rounded-xl px-3 py-2.5 transition-colors group"
+          >
+            <p className="text-xs text-gray-500 group-hover:text-indigo-600 truncate">{joinUrl}</p>
+            <span className="flex-shrink-0 flex items-center gap-1 text-xs font-semibold text-indigo-600">
+              {copiedLink ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+              {copiedLink ? 'Copied!' : 'Copy link'}
+            </span>
+          </button>
 
           {members.length > 0 && (
             <div>

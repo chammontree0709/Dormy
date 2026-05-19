@@ -165,8 +165,8 @@ export default function LandingPage() {
       <header className="border-b border-gray-100 sticky top-0 bg-white/80 backdrop-blur-md z-40">
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-black text-sm">R</div>
-            <span className="font-black text-gray-900 text-xl">Roomd</span>
+            <span className="text-2xl">🏠</span>
+            <span className="font-black text-indigo-600 text-xl">Roomd</span>
           </div>
           <div className="flex items-center gap-3">
             <Link href="/login" className="text-sm font-semibold text-gray-500 hover:text-gray-900">Log in</Link>
