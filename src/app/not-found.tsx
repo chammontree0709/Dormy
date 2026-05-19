@@ -1,0 +1,23 @@
+import Link from 'next/link'
+
+export default function NotFound() {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white flex flex-col items-center justify-center px-4 text-center">
+      <Link href="/" className="flex items-center gap-2 mb-10">
+        <span className="text-3xl">🏠</span>
+        <span className="font-black text-indigo-600 text-2xl">Roomd</span>
+      </Link>
+      <div className="text-6xl mb-6">🤔</div>
+      <h1 className="text-3xl font-black text-gray-900 mb-3">Page not found</h1>
+      <p className="text-gray-500 mb-8 max-w-sm">That page doesn&apos;t exist. Maybe the link is broken or you mistyped the URL.</p>
+      <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        <Link href="/" className="bg-indigo-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-indigo-700 transition-colors">
+          Go home
+        </Link>
+        <Link href="/dashboard" className="bg-white text-indigo-600 border-2 border-indigo-200 font-bold px-6 py-3 rounded-xl hover:border-indigo-400 transition-colors">
+          My rooms
+        </Link>
+      </div>
+    </div>
+  )
+}

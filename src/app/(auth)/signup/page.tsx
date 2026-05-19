@@ -5,11 +5,13 @@ import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Button from '@/components/ui/Button'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function SignupPage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [inviteCode, setInviteCode] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -21,7 +23,7 @@ export default function SignupPage() {
     setLoading(true)
     setError('')
 
-    const { error: signUpError } = await supabase.auth.signUp({
+    const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: { data: { display_name: name.trim() } },
@@ -33,11 +35,16 @@ export default function SignupPage() {
       return
     }
 
-    if (inviteCode.trim()) {
-      router.push(`/join/${inviteCode.trim().toUpperCase()}`)
-    } else {
-      router.push('/dashboard')
+    // Join room after signup if invite code provided
+    if (inviteCode.trim() && data.user) {
+      const displayName = name.trim() || email.split('@')[0]
+      await supabase.rpc('join_room_by_invite_code', {
+        p_invite_code: inviteCode.trim().toUpperCase(),
+        p_display_name: displayName,
+      })
     }
+
+    router.push('/dashboard')
     router.refresh()
   }
 
@@ -50,7 +57,7 @@ export default function SignupPage() {
 
       <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-gray-100 p-8">
         <h1 className="text-2xl font-black text-gray-900 mb-1">Create your account</h1>
-        <p className="text-gray-500 text-sm mb-6">Free forever. No credit card required.</p>
+        <p className="text-gray-500 text-sm mb-6">Free forever. You&apos;ll be taken to create or join your room.</p>
 
         <form onSubmit={handleSignup} className="space-y-4">
           <div>
@@ -77,15 +84,24 @@ export default function SignupPage() {
           </div>
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">Password</label>
-            <input
-              type="password"
-              required
-              minLength={6}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="At least 6 characters"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                required
+                minLength={6}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="At least 6 characters"
+                className="w-full px-4 py-3 pr-11 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
           </div>
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">

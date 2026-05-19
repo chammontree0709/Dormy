@@ -47,7 +47,7 @@ export default function LandingPage() {
             <Link href="/signup" className="w-full sm:w-auto bg-indigo-600 text-white font-bold text-lg px-8 py-4 rounded-2xl hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">
               Create your room — it&apos;s free
             </Link>
-            <Link href="/templates" className="w-full sm:w-auto bg-white text-indigo-600 font-bold text-lg px-8 py-4 rounded-2xl border-2 border-indigo-200 hover:border-indigo-400 transition-colors">
+            <Link href="/checklists" className="w-full sm:w-auto bg-white text-indigo-600 font-bold text-lg px-8 py-4 rounded-2xl border-2 border-indigo-200 hover:border-indigo-400 transition-colors">
               Browse checklists
             </Link>
           </div>
@@ -124,7 +124,16 @@ export default function LandingPage() {
       </section>
 
       <footer className="border-t border-gray-100 py-8 px-4 text-center text-sm text-gray-400">
-        <p>© 2025 Roomd. Built with ❤️ for college students.</p>
+        <p className="mb-2">
+          <Link href="/checklists" className="hover:underline">Checklists</Link>
+          {' · '}
+          <Link href="/privacy" className="hover:underline">Privacy</Link>
+          {' · '}
+          <Link href="/terms" className="hover:underline">Terms</Link>
+          {' · '}
+          <a href="mailto:support@roomdapp.com" className="hover:underline">Support</a>
+        </p>
+        <p>© {new Date().getFullYear()} Roomd. Built with ❤️ for college students.</p>
         <p className="mt-1 text-xs">As an Amazon Associate, Roomd earns from qualifying purchases.</p>
       </footer>
     </div>

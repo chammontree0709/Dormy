@@ -25,7 +25,10 @@
       "Bash(node node_modules/next/dist/bin/next dev --port 3001)",
       "Bash(curl -s http://localhost:3001)",
       "Bash(kill %1)",
-      "Bash(xargs sed -i '' 's/Dormy/Roomd/g; s/dormy/roomd/g')"
+      "Bash(xargs sed -i '' 's/Dormy/Roomd/g; s/dormy/roomd/g')",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }
