@@ -25,7 +25,7 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
         <div className="flex items-center gap-3">
           <Link href="/dashboard" className="flex items-center gap-2">
             <span className="text-2xl">🏠</span>
-            <span className="font-bold text-indigo-600 text-lg hidden sm:block">Dormy</span>
+            <span className="font-bold text-indigo-600 text-lg hidden sm:block">Roomd</span>
           </Link>
           {roomName && (
             <>

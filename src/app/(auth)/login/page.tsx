@@ -33,12 +33,12 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white flex flex-col items-center justify-center px-4">
       <Link href="/" className="flex items-center gap-2 mb-8">
         <span className="text-3xl">🏠</span>
-        <span className="font-black text-indigo-600 text-2xl">Dormy</span>
+        <span className="font-black text-indigo-600 text-2xl">Roomd</span>
       </Link>
 
       <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-gray-100 p-8">
         <h1 className="text-2xl font-black text-gray-900 mb-1">Welcome back</h1>
-        <p className="text-gray-500 text-sm mb-6">Log in to your Dormy account</p>
+        <p className="text-gray-500 text-sm mb-6">Log in to your Roomd account</p>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>

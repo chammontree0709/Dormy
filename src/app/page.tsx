@@ -8,7 +8,7 @@ const features = [
 ]
 
 const testimonials = [
-  { quote: 'We used to fight about who was buying what. Dormy fixed that.', name: 'Emma & Jake', school: 'Penn State' },
+  { quote: 'We used to fight about who was buying what. Roomd fixed that.', name: 'Emma & Jake', school: 'Penn State' },
   { quote: 'Saved us from buying three shower caddies and forgetting sheets.', name: 'Priya', school: 'UCLA' },
   { quote: 'The preset lists are so good. We just checked off what we had and bought the rest.', name: 'Marcus', school: 'UT Austin' },
 ]
@@ -20,7 +20,7 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-2xl">🏠</span>
-            <span className="font-black text-indigo-600 text-xl">Dormy</span>
+            <span className="font-black text-indigo-600 text-xl">Roomd</span>
           </div>
           <div className="flex items-center gap-3">
             <Link href="/login" className="text-sm font-semibold text-gray-600 hover:text-gray-900">Log in</Link>
@@ -124,8 +124,8 @@ export default function LandingPage() {
       </section>
 
       <footer className="border-t border-gray-100 py-8 px-4 text-center text-sm text-gray-400">
-        <p>© 2025 Dormy. Built with ❤️ for college students.</p>
-        <p className="mt-1 text-xs">As an Amazon Associate, Dormy earns from qualifying purchases.</p>
+        <p>© 2025 Roomd. Built with ❤️ for college students.</p>
+        <p className="mt-1 text-xs">As an Amazon Associate, Roomd earns from qualifying purchases.</p>
       </footer>
     </div>
   )

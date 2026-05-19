@@ -90,7 +90,7 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
             <ShoppingCart size={20} /> Buy on Amazon
           </a>
           <p className="text-center text-xs text-gray-400 mt-2">
-            As an Amazon Associate, Dormy earns from qualifying purchases.
+            As an Amazon Associate, Roomd earns from qualifying purchases.
           </p>
         </Card>
 

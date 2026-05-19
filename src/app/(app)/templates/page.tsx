@@ -173,7 +173,7 @@ export default function TemplatesPage() {
                         <ShoppingCart size={16} /> Buy on Amazon
                       </a>
                       <p className="text-center text-xs text-gray-400 mt-1.5">
-                        Affiliate link — Dormy earns a small commission at no cost to you.
+                        Affiliate link — Roomd earns a small commission at no cost to you.
                       </p>
                     </div>
                   </div>

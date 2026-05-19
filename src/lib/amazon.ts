@@ -1,4 +1,4 @@
-const AFFILIATE_TAG = process.env.NEXT_PUBLIC_AMAZON_AFFILIATE_TAG || 'dormyapp-20'
+const AFFILIATE_TAG = process.env.NEXT_PUBLIC_AMAZON_AFFILIATE_TAG || 'roomdapp-20'
 
 export function buildAffiliateUrl(url: string): string {
   try {

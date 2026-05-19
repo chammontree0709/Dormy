@@ -52,7 +52,7 @@ export default function JoinPage({ params }: { params: Promise<{ code: string }>
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white flex flex-col items-center justify-center px-4">
       <Link href="/" className="flex items-center gap-2 mb-8">
         <span className="text-3xl">🏠</span>
-        <span className="font-black text-indigo-600 text-2xl">Dormy</span>
+        <span className="font-black text-indigo-600 text-2xl">Roomd</span>
       </Link>
 
       <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-gray-100 p-8 text-center">

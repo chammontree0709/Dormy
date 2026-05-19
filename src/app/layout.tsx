@@ -5,10 +5,10 @@ import './globals.css'
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist-sans' })
 
 export const metadata: Metadata = {
-  title: 'Dormy — Shared Dorm Room Checklist',
+  title: 'Roomd — Shared Dorm Room Checklist',
   description: 'The shared dorm room supply list for you and your roommates. Check off items as you buy them, together.',
   manifest: '/manifest.json',
-  appleWebApp: { capable: true, statusBarStyle: 'default', title: 'Dormy' },
+  appleWebApp: { capable: true, statusBarStyle: 'default', title: 'Roomd' },
 }
 
 export const viewport: Viewport = {
