@@ -1,4 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Terms of Service',
+  description: 'Roomd terms of service — the rules for using Roomd.',
+  alternates: { canonical: 'https://roomdapp.com/terms' },
+}
 
 export default function TermsPage() {
   return (

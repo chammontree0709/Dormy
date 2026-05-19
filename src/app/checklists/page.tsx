@@ -1,6 +1,20 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { PRESET_LISTS, PRESET_ITEMS, getItemById } from '@/data/presets'
 import { buildAffiliateUrl } from '@/lib/amazon'
+
+export const metadata: Metadata = {
+  title: 'Dorm Room Checklists',
+  description: 'Free college dorm room packing checklists. Freshman Essentials, Study Setup, Kitchen Starter, and more — with Amazon links for every item.',
+  openGraph: {
+    title: 'Dorm Room Checklists — Roomd',
+    description: 'Free college dorm room packing checklists with Amazon links. Freshman Essentials, Study Setup, Kitchen Starter, and more.',
+    url: 'https://roomdapp.com/checklists',
+  },
+  alternates: {
+    canonical: 'https://roomdapp.com/checklists',
+  },
+}
 
 export default function ChecklistsPage() {
   return (
