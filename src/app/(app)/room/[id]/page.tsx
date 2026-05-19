@@ -76,6 +76,13 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
     await supabase.from('room_items').delete().eq('id', itemId)
   }
 
+  async function claimItem(itemId: string, claim: boolean) {
+    await supabase.from('room_items').update({
+      claimed_by_name: claim ? currentUserName : null,
+      claimed_at: claim ? new Date().toISOString() : null,
+    }).eq('id', itemId)
+  }
+
   async function addItem(
     presetId: string | null,
     customName?: string,
@@ -237,6 +244,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                           item={item}
                           onToggle={toggleItem}
                           onDelete={deleteItem}
+                          onClaim={claimItem}
                           currentUserName={currentUserName}
                         />
                       ))}

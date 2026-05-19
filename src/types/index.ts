@@ -25,6 +25,8 @@ export interface RoomItem {
   is_checked: boolean
   checked_by_name: string | null
   checked_at: string | null
+  claimed_by_name: string | null
+  claimed_at: string | null
   added_by_name: string
   added_at: string
   notes: string | null

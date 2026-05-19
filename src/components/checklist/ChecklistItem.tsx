@@ -3,7 +3,7 @@
 import { RoomItem } from '@/types'
 import { getItemById, getCategoryById } from '@/data/presets'
 import { cn } from '@/lib/utils'
-import { Trash2, ExternalLink, ShoppingCart } from 'lucide-react'
+import { Trash2, ExternalLink, ShoppingCart, Hand } from 'lucide-react'
 import Link from 'next/link'
 import { buildAffiliateUrl } from '@/lib/amazon'
 
@@ -11,13 +11,17 @@ interface ChecklistItemProps {
   item: RoomItem
   onToggle: (id: string, checked: boolean) => void
   onDelete: (id: string) => void
+  onClaim: (id: string, claimed: boolean) => void
   currentUserName: string
 }
 
-export default function ChecklistItem({ item, onToggle, onDelete, currentUserName }: ChecklistItemProps) {
+export default function ChecklistItem({ item, onToggle, onDelete, onClaim, currentUserName }: ChecklistItemProps) {
   const preset = item.preset_id ? getItemById(item.preset_id) : null
   const name = preset?.name ?? item.custom_name ?? 'Unnamed item'
   const buyUrl = preset ? buildAffiliateUrl(preset.amazon_url) : (item.custom_url ?? null)
+
+  const isClaimed = !!item.claimed_by_name
+  const isClaimedByMe = item.claimed_by_name === currentUserName
 
   return (
     <div
@@ -25,6 +29,8 @@ export default function ChecklistItem({ item, onToggle, onDelete, currentUserNam
         'flex items-start gap-3 p-4 rounded-xl border transition-all duration-200',
         item.is_checked
           ? 'bg-green-50 border-green-200 opacity-75'
+          : isClaimed
+          ? 'bg-amber-50 border-amber-200'
           : 'bg-white border-gray-100 hover:border-indigo-100 hover:shadow-sm'
       )}
     >
@@ -52,20 +58,48 @@ export default function ChecklistItem({ item, onToggle, onDelete, currentUserNam
               {preset && <span className="mr-1">{preset.image_emoji}</span>}
               {name}
             </p>
+
             {item.is_checked && item.checked_by_name && (
-              <p className="text-xs text-green-600 mt-0.5">
-                Bought by {item.checked_by_name}
+              <p className="text-xs text-green-600 mt-0.5">✓ Bought by {item.checked_by_name}</p>
+            )}
+
+            {!item.is_checked && isClaimed && (
+              <p className="text-xs text-amber-600 mt-0.5 font-semibold">
+                🙋 {isClaimedByMe ? 'You\'re buying this' : `${item.claimed_by_name} is buying this`}
               </p>
             )}
-            {!item.is_checked && preset && (
+
+            {!item.is_checked && !isClaimed && preset && (
               <p className="text-xs text-gray-500 mt-0.5">{preset.price_estimate}</p>
             )}
+
             {item.notes && (
               <p className="text-xs text-gray-400 mt-1 italic">{item.notes}</p>
             )}
           </div>
 
           <div className="flex items-center gap-1 flex-shrink-0">
+            {!item.is_checked && (
+              <button
+                onClick={() => onClaim(item.id, !isClaimed || !isClaimedByMe)}
+                className={cn(
+                  'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-colors',
+                  isClaimedByMe
+                    ? 'bg-amber-200 text-amber-800 hover:bg-amber-300'
+                    : isClaimed
+                    ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
+                    : 'bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100'
+                )}
+                disabled={isClaimed && !isClaimedByMe}
+                title={isClaimedByMe ? 'Unclaim' : isClaimed ? `${item.claimed_by_name} claimed this` : "I'll buy this"}
+              >
+                <Hand size={12} />
+                <span className="hidden sm:block">
+                  {isClaimedByMe ? 'Claimed' : isClaimed ? 'Taken' : "I'll buy"}
+                </span>
+              </button>
+            )}
+
             {buyUrl && !item.is_checked && (
               <a
                 href={buyUrl}
@@ -78,6 +112,7 @@ export default function ChecklistItem({ item, onToggle, onDelete, currentUserNam
                 <span className="hidden sm:block">Buy</span>
               </a>
             )}
+
             {preset && (
               <Link
                 href={`item/${item.preset_id}`}

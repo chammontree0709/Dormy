@@ -39,6 +39,8 @@ create table if not exists room_items (
   is_checked boolean default false,
   checked_by_name text,
   checked_at timestamptz,
+  claimed_by_name text,
+  claimed_at timestamptz,
   added_by_name text not null,
   added_at timestamptz default now(),
   notes text,
