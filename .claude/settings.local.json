@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/cooperhammontree/**)",
+      "Bash(npx create-next-app@latest Dormy --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --no-git)",
+      "Bash(npm --version)",
+      "Bash(export PATH=\"$PATH:/usr/local/bin:/opt/homebrew/bin\")",
+      "Read(//usr/local/bin/**)",
+      "Read(//opt/homebrew/bin/**)",
+      "Bash(find /usr /opt /Users/cooperhammontree -name \"node\" -type f 2>/dev/null | head -5; ls /Users/cooperhammontree/.nvm 2>/dev/null || echo \"no nvm\")",
+      "Bash(curl -fsSL https://fnm.vercel.app/install)",
+      "Bash(bash)",
+      "Bash(mkdir -p ~/node)",
+      "Bash(tar -xzf /tmp/node.tar.gz -C ~/node --strip-components=1)",
+      "Bash(~/node/bin/node --version)",
+      "Bash(export PATH=\"$HOME/node/bin:$PATH\")",
+      "Bash(npx create-next-app@latest Dormy --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --no-git --yes)",
+      "Bash(npx create-next-app@latest dormy-app --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --no-git --yes)",
+      "Bash(npm install *)",
+      "Bash(mkdir -p src/components/ui src/components/checklist src/components/room src/components/layout src/lib/supabase src/types src/data src/app/\\\\\\(auth\\\\\\)/login src/app/\\\\\\(auth\\\\\\)/signup src/app/\\\\\\(app\\\\\\)/dashboard src/app/\\\\\\(app\\\\\\)/room/\\\\[id\\\\]/item/\\\\[itemId\\\\] src/app/\\\\\\(app\\\\\\)/templates supabase && echo \"dirs created\")",
+      "Bash(npx tsc *)",
+      "Bash(node node_modules/typescript/lib/tsc.js --noEmit)",
+      "Bash(npm run *)",
+      "Bash(node node_modules/next/dist/bin/next build)",
+      "Bash(node node_modules/next/dist/bin/next dev --port 3001)",
+      "Bash(curl -s http://localhost:3001)",
+      "Bash(kill %1)"
+    ]
+  }
+}
