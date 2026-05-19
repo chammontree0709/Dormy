@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 const stats = [
-  { value: '95+', label: 'essential items' },
+  { value: '200+', label: 'essential items' },
   { value: '13', label: 'categories' },
   { value: '9', label: 'starter packs' },
   { value: '100%', label: 'free' },
@@ -21,7 +21,7 @@ const features = [
   },
   {
     emoji: '📦',
-    title: '95+ preset items',
+    title: '200+ preset items',
     description: 'Curated lists by priority — essentials first, nice-to-haves later. Skip the endless Amazon rabbit hole.',
     bg: 'bg-amber-50',
     accent: 'text-amber-600',
