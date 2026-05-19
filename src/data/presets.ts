@@ -530,7 +530,6 @@ export const PRESET_ITEMS: PresetItem[] = [
       { author: 'Kelly S.', rating: 4, text: 'Bought a big pump bottle and smaller travel-size ones. Use them constantly.', date: '2024-09-20' },
     ],
   },
-]
 
   // Kitchen extras
   {
@@ -1055,6 +1054,7 @@ export const PRESET_ITEMS: PresetItem[] = [
       { author: 'Alexis M.', rating: 5, text: 'Use this more than my big backpack honestly. So convenient.', date: '2024-09-20' },
     ],
   },
+]
 
 export const PRESET_LISTS = [
   {

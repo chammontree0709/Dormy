@@ -28,7 +28,8 @@
       "Bash(xargs sed -i '' 's/Dormy/Roomd/g; s/dormy/roomd/g')",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(node -e \"require\\('./src/data/presets.ts'\\)\")"
     ]
   }
 }
