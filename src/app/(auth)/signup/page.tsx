@@ -26,8 +26,11 @@ export default function SignupPage() {
   const [inviteCode, setInviteCode] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [verifyEmail, setVerifyEmail] = useState('')
   const router = useRouter()
   const supabase = createClient()
+
+  const inviteValid = /^[A-Z0-9]{6}$/.test(inviteCode)
 
   async function handleGoogleSignIn() {
     setLoading(true)
@@ -67,8 +70,36 @@ export default function SignupPage() {
       })
     }
 
+    // If Supabase requires email confirmation, session will be null
+    if (!data.session) {
+      setVerifyEmail(email)
+      return
+    }
+
     router.push('/dashboard')
     router.refresh()
+  }
+
+  if (verifyEmail) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white flex flex-col items-center justify-center px-4">
+        <Link href="/" className="flex items-center gap-2 mb-8">
+          <span className="text-3xl">🏠</span>
+          <span className="font-black text-indigo-600 text-2xl">Roomd</span>
+        </Link>
+        <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-gray-100 p-8 text-center">
+          <div className="text-4xl mb-4">📬</div>
+          <h1 className="text-2xl font-black text-gray-900 mb-2">Check your inbox</h1>
+          <p className="text-gray-500 text-sm mb-2">We sent a confirmation link to:</p>
+          <p className="font-bold text-gray-800 mb-4">{verifyEmail}</p>
+          <p className="text-sm text-gray-500 mb-6">Click the link in the email to activate your account, then come back to log in.</p>
+          <p className="text-xs text-gray-400">Didn&apos;t get it? Check spam or <button onClick={() => setVerifyEmail('')} className="text-indigo-600 hover:underline">try again</button>.</p>
+          <div className="mt-6">
+            <Link href="/login" className="text-sm text-indigo-600 font-semibold hover:underline">Go to login →</Link>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -146,15 +177,32 @@ export default function SignupPage() {
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">
               Room Invite Code <span className="text-gray-400 font-normal">(optional)</span>
             </label>
-            <input
-              type="text"
-              value={inviteCode}
-              onChange={(e) => setInviteCode(e.target.value.toUpperCase())}
-              placeholder="e.g. ABC123"
-              maxLength={6}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm uppercase font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-            <p className="text-xs text-gray-400 mt-1">Got a code from a roommate? Enter it here.</p>
+            <div className="relative">
+              <input
+                type="text"
+                value={inviteCode}
+                onChange={(e) => setInviteCode(e.target.value.toUpperCase())}
+                placeholder="e.g. ABC123"
+                maxLength={6}
+                className={`w-full px-4 py-3 pr-10 rounded-xl border text-sm uppercase font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+                  inviteCode.length > 0
+                    ? inviteValid
+                      ? 'border-green-400 bg-green-50'
+                      : 'border-amber-300 bg-amber-50'
+                    : 'border-gray-200'
+                }`}
+              />
+              {inviteCode.length > 0 && (
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-lg">
+                  {inviteValid ? '✅' : '⏳'}
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-gray-400 mt-1">
+              {inviteCode.length > 0 && !inviteValid
+                ? `${inviteCode.length}/6 characters — codes are exactly 6 letters/numbers`
+                : 'Got a code from a roommate? Enter it here.'}
+            </p>
           </div>
 
           {error && (

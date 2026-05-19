@@ -35,7 +35,7 @@ export async function proxy(request: NextRequest) {
   const isProtected = pathname.startsWith('/dashboard') || pathname.startsWith('/room') || pathname.startsWith('/templates')
 
   if (!user && isProtected) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    return NextResponse.redirect(new URL('/login?msg=signin_required', request.url))
   }
 
   if (user && isAuthPage) {
