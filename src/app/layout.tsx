@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Outfit } from 'next/font/google'
+import { Outfit, Playfair_Display } from 'next/font/google'
 import './globals.css'
 
 const outfit = Outfit({
@@ -8,6 +8,14 @@ const outfit = Outfit({
   weight: ['400', '500', '600', '700', '800', '900'],
   display: 'swap',
   fallback: ['system-ui', 'sans-serif'],
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  weight: ['400', '700', '900'],
+  style: ['normal', 'italic'],
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -35,7 +43,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${outfit.variable} h-full`}>
+    <html lang="en" className={`${outfit.variable} ${playfair.variable} h-full`}>
       <head>
         <meta name="google-adsense-account" content="ca-pub-7336988558032518" />
         <script

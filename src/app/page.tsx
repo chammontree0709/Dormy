@@ -16,6 +16,15 @@ import {
   ListChecks,
 } from 'lucide-react'
 
+const marqueeItems = [
+  'Move-in season is here',
+  'Over 200 items curated for dorm life',
+  '100% free, always',
+  'Real-time sync with your roommates',
+  'No credit card required',
+  'Works on any device',
+]
+
 const stats = [
   { value: '200+', label: 'essential items' },
   { value: '13', label: 'categories' },
@@ -41,6 +50,33 @@ const steps = [
     Icon: ListChecks,
     title: 'Check things off together',
     description: "Browse presets, add items, claim what you're buying.",
+  },
+]
+
+const features = [
+  {
+    Icon: Zap,
+    title: 'Real-time sync',
+    description:
+      'The second a roommate checks something off, everyone sees it. No refresh, no confusion, no duplicate buys.',
+  },
+  {
+    Icon: Package,
+    title: '200+ preset items',
+    description:
+      'Curated lists by priority — essentials first, nice-to-haves later. Skip the Amazon rabbit hole.',
+  },
+  {
+    Icon: UserCheck,
+    title: '"I\'ll buy this"',
+    description:
+      'Claim an item before buying so nobody doubles up. No more three shower caddies.',
+  },
+  {
+    Icon: ShoppingCart,
+    title: 'One-click buying',
+    description:
+      'Every item links straight to Amazon. We find the best options so you can just click and move on.',
   },
 ]
 
@@ -118,7 +154,10 @@ function EmailCapture() {
             <Mail className="w-4 h-4 text-emerald-400" strokeWidth={1.5} />
             <span className="text-emerald-400 text-xs font-bold tracking-widest uppercase">Free resource</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-3">
+          <h2
+            className="text-3xl md:text-4xl font-bold italic text-white mb-3 leading-tight"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
             Get the ultimate packing list.
           </h2>
           <p className="text-zinc-400 leading-relaxed max-w-md">
@@ -166,6 +205,25 @@ function EmailCapture() {
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
+      {/* Announcement marquee */}
+      <div className="bg-zinc-950 overflow-hidden py-2.5">
+        <div className="flex animate-marquee whitespace-nowrap">
+          {[0, 1].map((i) => (
+            <span
+              key={i}
+              className="flex items-center gap-0 pr-0 text-white text-xs font-medium tracking-widest uppercase flex-shrink-0"
+            >
+              {marqueeItems.map((item, j) => (
+                <span key={j} className="inline-flex items-center">
+                  <span className="px-6">{item}</span>
+                  <span className="text-emerald-400">—</span>
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* Navbar */}
       <header className="border-b border-zinc-100 sticky top-0 bg-white/90 backdrop-blur-md z-40">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -319,7 +377,10 @@ export default function LandingPage() {
       <section className="py-24 px-6 bg-zinc-950">
         <div className="max-w-7xl mx-auto">
           <p className="text-xs font-bold tracking-widest text-emerald-400 uppercase mb-4">How it works</p>
-          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-16">
+          <h2
+            className="text-4xl md:text-5xl font-bold italic text-white mb-16 leading-tight"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
             Up and running in under 2 minutes.
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-zinc-800">
@@ -335,143 +396,147 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features — Asymmetric grid */}
+      {/* Features — Thaely-style borderless grid */}
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
           <p className="text-xs font-bold tracking-widest text-emerald-600 uppercase mb-4">Features</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-            <h2 className="text-3xl md:text-4xl font-black text-zinc-950 tracking-tight">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
+            <h2
+              className="text-4xl md:text-5xl font-bold italic text-zinc-950 leading-tight"
+              style={{ fontFamily: 'var(--font-playfair)' }}
+            >
               Everything you need.<br />Nothing you don&apos;t.
             </h2>
             <p className="text-zinc-500 leading-relaxed self-end">
               Move-in is stressful enough. We handle the list so you can focus on actually getting there.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <Link
-              href="/signup"
-              className="md:col-span-2 border border-zinc-200 rounded-3xl p-8 block hover:-translate-y-0.5 hover:border-zinc-400 transition-all duration-300 group"
-            >
-              <Zap className="w-8 h-8 text-emerald-500 mb-6" strokeWidth={1.5} />
-              <h3 className="font-black text-zinc-950 mb-3 text-xl tracking-tight">Real-time sync</h3>
-              <p className="text-zinc-500 leading-relaxed mb-5">
-                The second a roommate checks something off, everyone sees it. No refresh, no confusion, no duplicate buys.
-              </p>
-              <span className="text-sm font-bold text-zinc-400 group-hover:text-zinc-950 transition-colors inline-flex items-center gap-1">
-                Try it free <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
-              </span>
-            </Link>
-            <Link
-              href="/signup"
-              className="border border-zinc-200 rounded-3xl p-8 block hover:-translate-y-0.5 hover:border-zinc-400 transition-all duration-300 group"
-            >
-              <Package className="w-8 h-8 text-emerald-500 mb-6" strokeWidth={1.5} />
-              <h3 className="font-black text-zinc-950 mb-3 text-xl tracking-tight">200+ preset items</h3>
-              <p className="text-zinc-500 leading-relaxed mb-5">
-                Curated lists by priority — essentials first, nice-to-haves later. Skip the Amazon rabbit hole.
-              </p>
-              <span className="text-sm font-bold text-zinc-400 group-hover:text-zinc-950 transition-colors inline-flex items-center gap-1">
-                Try it free <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
-              </span>
-            </Link>
-            <Link
-              href="/signup"
-              className="border border-zinc-200 rounded-3xl p-8 block hover:-translate-y-0.5 hover:border-zinc-400 transition-all duration-300 group"
-            >
-              <UserCheck className="w-8 h-8 text-emerald-500 mb-6" strokeWidth={1.5} />
-              <h3 className="font-black text-zinc-950 mb-3 text-xl tracking-tight">&ldquo;I&apos;ll buy this&rdquo;</h3>
-              <p className="text-zinc-500 leading-relaxed mb-5">
-                Claim an item before buying so nobody doubles up. No more three shower caddies.
-              </p>
-              <span className="text-sm font-bold text-zinc-400 group-hover:text-zinc-950 transition-colors inline-flex items-center gap-1">
-                Try it free <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
-              </span>
-            </Link>
-            <Link
-              href="/signup"
-              className="md:col-span-2 border border-zinc-200 rounded-3xl p-8 block hover:-translate-y-0.5 hover:border-zinc-400 transition-all duration-300 group"
-            >
-              <ShoppingCart className="w-8 h-8 text-emerald-500 mb-6" strokeWidth={1.5} />
-              <h3 className="font-black text-zinc-950 mb-3 text-xl tracking-tight">One-click buying</h3>
-              <p className="text-zinc-500 leading-relaxed mb-5">
-                Every item links straight to Amazon. We find the best options so you can just click and move on.
-              </p>
-              <span className="text-sm font-bold text-zinc-400 group-hover:text-zinc-950 transition-colors inline-flex items-center gap-1">
-                Try it free <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
-              </span>
-            </Link>
-          </div>
-        </div>
-      </section>
 
-      {/* Testimonials — Featured layout */}
-      <section className="py-24 px-6 bg-zinc-50">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-xs font-bold tracking-widest text-emerald-600 uppercase mb-10">What people are saying</p>
-          <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-5">
-            <div className="bg-white border border-zinc-200 rounded-3xl p-10 flex flex-col justify-between">
-              <div>
-                <Stars count={5} />
-                <blockquote className="text-2xl md:text-3xl font-black text-zinc-950 tracking-tight leading-tight mb-8">
-                  &ldquo;We used to fight about who was buying what. This fixed that completely — we moved in with zero duplicate purchases.&rdquo;
-                </blockquote>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-zinc-950 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-                  MT
-                </div>
-                <div>
-                  <p className="font-bold text-sm text-zinc-950">Mara &amp; Tyler</p>
-                  <p className="text-xs text-zinc-400">Penn State</p>
-                </div>
-              </div>
+          {/* Borderless structural grid */}
+          <div className="border-t border-zinc-200">
+            <div className="grid grid-cols-1 md:grid-cols-2 border-b border-zinc-200">
+              {features.slice(0, 2).map((f, i) => (
+                <Link
+                  key={f.title}
+                  href="/signup"
+                  className={`group py-10 pr-8 ${
+                    i === 0 ? 'md:border-r border-zinc-200' : 'md:pl-8'
+                  } hover:bg-zinc-50/60 transition-colors duration-300`}
+                >
+                  <f.Icon className="w-7 h-7 text-emerald-500 mb-6" strokeWidth={1.5} />
+                  <h3
+                    className="text-2xl font-bold italic text-zinc-950 mb-3 leading-tight"
+                    style={{ fontFamily: 'var(--font-playfair)' }}
+                  >
+                    {f.title}
+                  </h3>
+                  <p className="text-zinc-500 leading-relaxed mb-6 max-w-[42ch]">{f.description}</p>
+                  <span className="text-sm font-bold text-zinc-400 group-hover:text-zinc-950 transition-colors inline-flex items-center gap-1.5">
+                    Try it free <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  </span>
+                </Link>
+              ))}
             </div>
-            <div className="flex flex-col gap-5">
-              {testimonials.slice(1).map((t) => (
-                <div key={t.name} className="bg-white border border-zinc-200 rounded-3xl p-7 flex-1 flex flex-col justify-between">
-                  <div>
-                    <Stars count={t.stars} />
-                    <blockquote className="text-zinc-700 text-sm leading-relaxed mb-5">
-                      &ldquo;{t.quote}&rdquo;
-                    </blockquote>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-zinc-100 rounded-full flex items-center justify-center text-zinc-950 text-xs font-bold flex-shrink-0">
-                      {t.initials}
-                    </div>
-                    <div>
-                      <p className="font-bold text-sm text-zinc-950">{t.name}</p>
-                      <p className="text-xs text-zinc-400">{t.school}</p>
-                    </div>
-                  </div>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              {features.slice(2).map((f, i) => (
+                <Link
+                  key={f.title}
+                  href="/signup"
+                  className={`group py-10 pr-8 ${
+                    i === 0 ? 'md:border-r border-zinc-200' : 'md:pl-8'
+                  } hover:bg-zinc-50/60 transition-colors duration-300`}
+                >
+                  <f.Icon className="w-7 h-7 text-emerald-500 mb-6" strokeWidth={1.5} />
+                  <h3
+                    className="text-2xl font-bold italic text-zinc-950 mb-3 leading-tight"
+                    style={{ fontFamily: 'var(--font-playfair)' }}
+                  >
+                    {f.title}
+                  </h3>
+                  <p className="text-zinc-500 leading-relaxed mb-6 max-w-[42ch]">{f.description}</p>
+                  <span className="text-sm font-bold text-zinc-400 group-hover:text-zinc-950 transition-colors inline-flex items-center gap-1.5">
+                    Try it free <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  </span>
+                </Link>
               ))}
             </div>
           </div>
         </div>
       </section>
 
+      {/* Testimonials — Editorial blockquote layout */}
+      <section className="py-24 px-6 bg-zinc-50">
+        <div className="max-w-7xl mx-auto">
+          <p className="text-xs font-bold tracking-widest text-emerald-600 uppercase mb-16">What people are saying</p>
+          {/* Featured quote */}
+          <div className="border-t border-zinc-200 pt-12 mb-12">
+            <Stars count={5} />
+            <blockquote
+              className="text-3xl md:text-4xl font-bold italic text-zinc-950 leading-tight mb-10 max-w-[22ch]"
+              style={{ fontFamily: 'var(--font-playfair)' }}
+            >
+              &ldquo;We used to fight about who was buying what. This fixed that completely.&rdquo;
+            </blockquote>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-zinc-950 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                MT
+              </div>
+              <div>
+                <p className="font-bold text-sm text-zinc-950">Mara &amp; Tyler</p>
+                <p className="text-xs text-zinc-400">Penn State — moved in with zero duplicate purchases</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Secondary quotes — structural dividers */}
+          <div className="grid grid-cols-1 md:grid-cols-2 border-t border-zinc-200">
+            {testimonials.slice(1).map((t, i) => (
+              <div
+                key={t.name}
+                className={`py-10 ${i === 0 ? 'md:border-r md:pr-12 border-zinc-200' : 'md:pl-12'}`}
+              >
+                <Stars count={t.stars} />
+                <blockquote
+                  className="text-xl font-bold italic text-zinc-700 leading-snug mb-6"
+                  style={{ fontFamily: 'var(--font-playfair)' }}
+                >
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-zinc-200 rounded-full flex items-center justify-center text-zinc-950 text-xs font-bold flex-shrink-0">
+                    {t.initials}
+                  </div>
+                  <div>
+                    <p className="font-bold text-sm text-zinc-950">{t.name}</p>
+                    <p className="text-xs text-zinc-400">{t.school}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <EmailCapture />
 
-      {/* Final CTA */}
-      <section className="py-28 px-6 bg-white">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_auto] gap-12 items-center">
-          <div>
-            <h2 className="text-4xl md:text-6xl font-black text-zinc-950 tracking-tighter leading-none mb-6">
-              Your room is waiting.<br />
-              <span className="text-emerald-500">Let&apos;s get it packed.</span>
-            </h2>
-            <p className="text-zinc-400 text-lg">Free forever. No credit card. Takes 30 seconds.</p>
-          </div>
-          <div className="flex-shrink-0">
-            <Link
-              href="/signup"
-              className="inline-flex items-center gap-3 bg-zinc-950 text-white font-bold text-lg px-10 py-5 rounded-2xl hover:bg-zinc-800 transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0 shadow-xl shadow-zinc-900/10"
-            >
-              Create your room — free
-              <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
-            </Link>
-          </div>
+      {/* Final CTA — Large serif editorial */}
+      <section className="py-28 px-6 bg-white border-t border-zinc-100">
+        <div className="max-w-7xl mx-auto">
+          <h2
+            className="text-5xl md:text-7xl font-bold italic text-zinc-950 leading-none mb-6 tracking-tight"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            Your room is waiting.<br />
+            <span className="text-emerald-500">Let&apos;s get it packed.</span>
+          </h2>
+          <p className="text-zinc-400 text-lg mb-10">Free forever. No credit card. Takes 30 seconds.</p>
+          <Link
+            href="/signup"
+            className="inline-flex items-center gap-3 bg-zinc-950 text-white font-bold text-base px-8 py-4 rounded-2xl hover:bg-zinc-800 transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0 shadow-xl shadow-zinc-900/10"
+          >
+            Create your room — free
+            <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
+          </Link>
         </div>
       </section>
 
