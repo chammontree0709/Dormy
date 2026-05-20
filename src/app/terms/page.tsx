@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
@@ -13,7 +14,7 @@ export default function TermsPage() {
       <header className="border-b border-gray-100">
         <div className="max-w-3xl mx-auto px-4 h-16 flex items-center">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl">🏠</span>
+            <Image src="/logo.png" alt="Roomd" height={30} width={30} className="rounded-lg" />
             <span className="font-black text-indigo-600 text-xl">Roomd</span>
           </Link>
         </div>

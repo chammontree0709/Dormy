@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 
 const stats = [
@@ -165,7 +166,7 @@ export default function LandingPage() {
       <header className="border-b border-gray-100 sticky top-0 bg-white/80 backdrop-blur-md z-40">
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🏠</span>
+            <Image src="/logo.png" alt="Roomd" height={36} width={36} className="rounded-lg" priority />
             <span className="font-black text-indigo-600 text-xl">Roomd</span>
           </div>
           <div className="flex items-center gap-3">

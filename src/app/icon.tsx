@@ -8,21 +8,29 @@ export default function Icon() {
     (
       <div
         style={{
-          background: '#4f46e5',
+          background: '#a78bfa',
           width: '100%',
           height: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          borderRadius: '7px',
-          color: 'white',
-          fontSize: 20,
-          fontWeight: 900,
-          fontFamily: 'sans-serif',
-          letterSpacing: '-1px',
+          borderRadius: '8px',
         }}
       >
-        R
+        {/* Yellow checkbox square */}
+        <div
+          style={{
+            background: '#fbbf24',
+            width: '18px',
+            height: '18px',
+            borderRadius: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <div style={{ color: '#92400e', fontSize: '12px', fontWeight: 900, lineHeight: 1 }}>✓</div>
+        </div>
       </div>
     ),
     { ...size }

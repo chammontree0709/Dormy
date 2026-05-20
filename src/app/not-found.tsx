@@ -1,11 +1,12 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white flex flex-col items-center justify-center px-4 text-center">
       <Link href="/" className="flex items-center gap-2 mb-10">
-        <span className="text-3xl">🏠</span>
-        <span className="font-black text-indigo-600 text-2xl">Roomd</span>
+        <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
+          <span className="font-black text-indigo-600 text-2xl">Roomd</span>
       </Link>
       <div className="text-6xl mb-6">🤔</div>
       <h1 className="text-3xl font-black text-gray-900 mb-3">Page not found</h1>

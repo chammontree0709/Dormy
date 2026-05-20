@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { LogOut, Home, LayoutTemplate, BookOpen, Sparkles, ClipboardList, Moon, Sun, Check, X, KeyRound } from 'lucide-react'
 
@@ -83,9 +84,9 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
     <header className="bg-white border-b border-gray-100 sticky top-0 z-40">
       <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <span className="text-2xl">🏠</span>
-            <span className="font-bold text-indigo-600 text-lg hidden sm:block">Roomd</span>
+          <Link href="/dashboard" className="flex items-center">
+            <Image src="/logo.png" alt="Roomd" height={36} width={36} className="rounded-lg" priority />
+            <span className="font-bold text-indigo-600 text-lg hidden sm:block ml-2">Roomd</span>
           </Link>
           {roomName && (
             <>
