@@ -3,7 +3,8 @@
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { LogOut, Home, LayoutTemplate, BookOpen, Sparkles } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { LogOut, Home, LayoutTemplate, BookOpen, Sparkles, ClipboardList, Moon, Sun } from 'lucide-react'
 
 interface NavbarProps {
   roomName?: string
@@ -13,6 +14,20 @@ interface NavbarProps {
 export default function Navbar({ roomName, roomId }: NavbarProps) {
   const router = useRouter()
   const supabase = createClient()
+  const [dark, setDark] = useState(false)
+
+  useEffect(() => {
+    const saved = localStorage.getItem('roomd-dark') === 'true'
+    setDark(saved)
+    document.documentElement.classList.toggle('dark', saved)
+  }, [])
+
+  function toggleDark() {
+    const next = !dark
+    setDark(next)
+    localStorage.setItem('roomd-dark', String(next))
+    document.documentElement.classList.toggle('dark', next)
+  }
 
   async function signOut() {
     await supabase.auth.signOut()
@@ -58,6 +73,13 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
             <span className="hidden sm:block">Inspo</span>
           </Link>
           <Link
+            href="/questionnaire"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors"
+          >
+            <ClipboardList size={16} />
+            <span className="hidden sm:block">Quiz</span>
+          </Link>
+          <Link
             href="/guides"
             target="_blank"
             rel="noopener noreferrer"
@@ -66,6 +88,13 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
             <BookOpen size={16} />
             <span className="hidden sm:block">Guides</span>
           </Link>
+          <button
+            onClick={toggleDark}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors"
+            title={dark ? 'Light mode' : 'Dark mode'}
+          >
+            {dark ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
           <button
             onClick={signOut}
             className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors"

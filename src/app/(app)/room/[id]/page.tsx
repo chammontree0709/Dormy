@@ -14,8 +14,16 @@ import Link from 'next/link'
 import { use } from 'react'
 import {
   Plus, Users, ChevronDown, ChevronUp, LayoutTemplate,
-  ShoppingCart, X, CalendarDays, DollarSign,
+  ShoppingCart, X, CalendarDays, DollarSign, Activity,
 } from 'lucide-react'
+
+interface ActivityEvent {
+  id: string
+  user_name: string
+  action: string
+  item_name: string | null
+  created_at: string
+}
 
 function parseLowPrice(str: string): number {
   const match = str.match(/\$(\d+)/)
@@ -39,6 +47,9 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   const [showAdd, setShowAdd] = useState(false)
   const [showInvite, setShowInvite] = useState(false)
   const [collapsedCategories, setCollapsedCategories] = useState<Set<string>>(new Set())
+
+  const [activity, setActivity] = useState<ActivityEvent[]>([])
+  const [showActivity, setShowActivity] = useState(false)
 
   // Feature states
   const [shoppingMode, setShoppingMode] = useState(false)
@@ -74,6 +85,15 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
     setRoom(roomData)
     setItems(itemData ?? [])
     setMembers(memberData ?? [])
+
+    const { data: activityData } = await supabase
+      .from('room_activity')
+      .select('*')
+      .eq('room_id', id)
+      .order('created_at', { ascending: false })
+      .limit(20)
+    setActivity(activityData ?? [])
+
     setLoading(false)
   }, [id])
 
@@ -96,6 +116,30 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
     return () => { supabase.removeChannel(channel) }
   }, [id, loadRoom])
 
+  function logActivity(action: string, itemName: string) {
+    const event: ActivityEvent = {
+      id: crypto.randomUUID(),
+      user_name: currentUserName,
+      action,
+      item_name: itemName,
+      created_at: new Date().toISOString(),
+    }
+    setActivity((prev) => [event, ...prev].slice(0, 20))
+    supabase.from('room_activity').insert({
+      room_id: id,
+      user_name: currentUserName,
+      action,
+      item_name: itemName,
+    }).then(() => {})
+  }
+
+  function getItemName(itemId: string) {
+    const item = items.find((i) => i.id === itemId)
+    if (!item) return 'item'
+    const preset = item.preset_id ? getItemById(item.preset_id) : null
+    return preset?.name ?? item.custom_name ?? 'item'
+  }
+
   async function toggleItem(itemId: string, checked: boolean) {
     const now = new Date().toISOString()
     setItems((prev) => prev.map((item) =>
@@ -108,6 +152,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
       checked_by_name: checked ? currentUserName : null,
       checked_at: checked ? now : null,
     }).eq('id', itemId).then(() => {})
+    logActivity(checked ? 'bought' : 'unchecked', getItemName(itemId))
   }
 
   async function deleteItem(itemId: string) {
@@ -126,6 +171,15 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
       claimed_by_name: claim ? currentUserName : null,
       claimed_at: claim ? now : null,
     }).eq('id', itemId).then(() => {})
+    if (claim) logActivity("claimed — I'll buy this", getItemName(itemId))
+  }
+
+  async function updateOwned(itemId: string, owned: boolean) {
+    setItems((prev) => prev.map((item) =>
+      item.id === itemId ? { ...item, owned } : item
+    ))
+    supabase.from('room_items').update({ owned }).eq('id', itemId).then(() => {})
+    logActivity(owned ? 'bringing from home' : 'removed from home', getItemName(itemId))
   }
 
   async function updateQuantity(itemId: string, quantity: number) {
@@ -272,6 +326,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   onClaim={claimItem}
                   onQuantityChange={updateQuantity}
                   onNoteChange={updateNote}
+                  onOwnedChange={updateOwned}
                   currentUserName={currentUserName}
                   shoppingMode
                 />
@@ -465,6 +520,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                           onClaim={claimItem}
                           onQuantityChange={updateQuantity}
                           onNoteChange={updateNote}
+                          onOwnedChange={updateOwned}
                           currentUserName={currentUserName}
                         />
                       ))}
@@ -473,6 +529,43 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                 </div>
               )
             })}
+          </div>
+        )}
+
+        {/* Activity feed */}
+        {activity.length > 0 && (
+          <div className="mt-6 bg-white rounded-2xl border border-gray-100 overflow-hidden">
+            <button
+              onClick={() => setShowActivity((v) => !v)}
+              className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <Activity size={16} className="text-indigo-500" />
+                <span className="font-bold text-gray-900 text-sm">Recent activity</span>
+              </div>
+              {showActivity ? <ChevronUp size={16} className="text-gray-400" /> : <ChevronDown size={16} className="text-gray-400" />}
+            </button>
+            {showActivity && (
+              <div className="px-5 pb-4 space-y-2.5">
+                {activity.map((ev) => {
+                  const mins = Math.round((Date.now() - new Date(ev.created_at).getTime()) / 60000)
+                  const timeAgo = mins < 1 ? 'just now' : mins < 60 ? `${mins}m ago` : `${Math.round(mins / 60)}h ago`
+                  return (
+                    <div key={ev.id} className="flex items-start gap-2.5 text-sm">
+                      <div className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">
+                        {ev.user_name[0]?.toUpperCase()}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="font-semibold text-gray-900">{ev.user_name}</span>
+                        <span className="text-gray-500"> {ev.action} </span>
+                        {ev.item_name && <span className="font-medium text-gray-700">{ev.item_name}</span>}
+                      </div>
+                      <span className="text-xs text-gray-400 flex-shrink-0">{timeAgo}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
           </div>
         )}
 

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { RoomItem } from '@/types'
 import { getItemById } from '@/data/presets'
 import { cn } from '@/lib/utils'
-import { Trash2, ExternalLink, ShoppingCart, Hand, MessageSquare } from 'lucide-react'
+import { Trash2, ExternalLink, ShoppingCart, Hand, MessageSquare, Home } from 'lucide-react'
 import Link from 'next/link'
 import { buildAffiliateUrl } from '@/lib/amazon'
 
@@ -15,12 +15,13 @@ interface ChecklistItemProps {
   onClaim: (id: string, claimed: boolean) => void
   onQuantityChange: (id: string, quantity: number) => void
   onNoteChange?: (id: string, note: string) => void
+  onOwnedChange?: (id: string, owned: boolean) => void
   currentUserName: string
   shoppingMode?: boolean
 }
 
 export default function ChecklistItem({
-  item, onToggle, onDelete, onClaim, onQuantityChange, onNoteChange, currentUserName, shoppingMode = false
+  item, onToggle, onDelete, onClaim, onQuantityChange, onNoteChange, onOwnedChange, currentUserName, shoppingMode = false
 }: ChecklistItemProps) {
   const [showNote, setShowNote] = useState(false)
   const [draftNote, setDraftNote] = useState(item.notes ?? '')
@@ -78,6 +79,8 @@ export default function ChecklistItem({
         'rounded-xl border transition-all duration-200',
         item.is_checked
           ? 'bg-green-50 border-green-200 opacity-75'
+          : item.owned
+          ? 'bg-sky-50 border-sky-200'
           : isClaimed
           ? 'bg-amber-50 border-amber-200'
           : 'bg-white border-gray-100 hover:border-indigo-100 hover:shadow-sm'
@@ -122,7 +125,10 @@ export default function ChecklistItem({
                   🙋 {isClaimedByMe ? "You're buying this" : `${item.claimed_by_name} is buying this`}
                 </p>
               )}
-              {!item.is_checked && !isClaimed && preset && (
+              {item.owned && !item.is_checked && (
+                <p className="text-xs text-sky-600 mt-0.5 font-semibold">🏠 Bringing from home</p>
+              )}
+              {!item.is_checked && !isClaimed && !item.owned && preset && (
                 <p className="text-xs text-gray-500 mt-0.5">{preset.price_estimate}</p>
               )}
               {item.notes && !showNote && (
@@ -165,6 +171,18 @@ export default function ChecklistItem({
                 </a>
               )}
 
+              <button
+                onClick={() => onOwnedChange?.(item.id, !item.owned)}
+                className={cn(
+                  'p-1.5 rounded-lg transition-colors',
+                  item.owned
+                    ? 'text-sky-600 bg-sky-50 hover:bg-sky-100'
+                    : 'text-gray-400 hover:text-sky-500 hover:bg-sky-50'
+                )}
+                title={item.owned ? 'Mark as need to buy' : 'Bringing from home'}
+              >
+                <Home size={14} />
+              </button>
               <button
                 onClick={() => { setShowNote((v) => !v); setDraftNote(item.notes ?? '') }}
                 className={cn(
