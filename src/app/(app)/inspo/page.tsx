@@ -19,7 +19,7 @@ const LOOKS = [
     vibe: 'Neutral tones, no clutter',
     gradient: 'from-slate-200 to-slate-100',
     emoji: '🤍',
-    image: 'https://images.unsplash.com/photo-1555930112-0159bcdc3fe5?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1646335734996-58f1ed91bdb4?auto=format&fit=crop&w=600&q=80',
     itemIds: ['twin-xl-sheets', 'mattress-topper', 'desk-lamp', 'under-bed-storage', 'command-strips', 'desk-organizer'],
   },
   {
