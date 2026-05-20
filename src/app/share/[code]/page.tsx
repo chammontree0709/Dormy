@@ -81,7 +81,7 @@ export default function SharePage() {
             </p>
             <Link
               href="/"
-              className="inline-block bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
+              className="inline-block bg-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-emerald-700 transition-colors"
             >
               Go to Roomd
             </Link>
@@ -120,11 +120,11 @@ export default function SharePage() {
           <div className="mt-4">
             <div className="flex justify-between text-sm text-gray-500 mb-1">
               <span>Checklist progress</span>
-              <span className="font-semibold text-indigo-600">{progress}%</span>
+              <span className="font-semibold text-emerald-600">{progress}%</span>
             </div>
             <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
               <div
-                className="h-full bg-indigo-500 rounded-full transition-all"
+                className="h-full bg-emerald-500 rounded-full transition-all"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -163,17 +163,17 @@ export default function SharePage() {
         )}
 
         {/* CTA */}
-        <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 text-center">
+        <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-6 text-center">
           <div className="text-3xl mb-3">🎓</div>
-          <h3 className="font-bold text-indigo-900 text-lg mb-2">
+          <h3 className="font-bold text-emerald-900 text-lg mb-2">
             Want to coordinate with your roommates?
           </h3>
-          <p className="text-indigo-700 text-sm mb-4">
+          <p className="text-emerald-700 text-sm mb-4">
             Create a free room on Roomd — claim items, track who&apos;s bringing what, and avoid duplicates.
           </p>
           <Link
             href="/"
-            className="inline-block bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors text-sm"
+            className="inline-block bg-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-emerald-700 transition-colors text-sm"
           >
             Create a free room →
           </Link>
@@ -210,7 +210,7 @@ function ItemCard({ item, checked = false }: { item: RoomItem; checked?: boolean
             <span className="text-xs text-gray-400">{item.price_estimate}</span>
           )}
           {item.claimed_by_name && (
-            <span className="text-xs text-indigo-500">Claimed by {item.claimed_by_name}</span>
+            <span className="text-xs text-emerald-500">Claimed by {item.claimed_by_name}</span>
           )}
         </div>
       </div>
@@ -234,11 +234,11 @@ function PublicHeader() {
       <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-2xl">🏠</span>
-          <span className="font-bold text-indigo-600 text-lg">Roomd</span>
+          <span className="font-bold text-emerald-600 text-lg">Roomd</span>
         </Link>
         <Link
           href="/signup"
-          className="text-sm font-semibold text-indigo-600 hover:text-indigo-700 transition-colors"
+          className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-colors"
         >
           Sign up free →
         </Link>
@@ -252,7 +252,7 @@ function PublicFooter() {
     <footer className="border-t border-gray-100 py-6 text-center text-xs text-gray-400">
       <p>
         Made with ❤️ by{' '}
-        <Link href="/" className="text-indigo-500 hover:underline">
+        <Link href="/" className="text-emerald-500 hover:underline">
           Roomd
         </Link>{' '}
         · Helping roommates coordinate since 2024

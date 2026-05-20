@@ -59,10 +59,10 @@ function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
       <Link href="/" className="flex items-center gap-2 mb-8">
         <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
-          <span className="font-black text-indigo-600 text-2xl">Roomd</span>
+          <span className="font-black text-emerald-600 text-2xl">Roomd</span>
       </Link>
 
       <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-gray-100 p-8">
@@ -70,7 +70,7 @@ function LoginForm() {
         <p className="text-gray-500 text-sm mb-6">Log in to your Roomd account</p>
 
         {redirectMsg === 'signin_required' && (
-          <div className="bg-indigo-50 text-indigo-700 text-sm px-4 py-3 rounded-xl border border-indigo-200 mb-4">
+          <div className="bg-emerald-50 text-emerald-700 text-sm px-4 py-3 rounded-xl border border-emerald-200 mb-4">
             Please sign in to access your room.
           </div>
         )}
@@ -107,13 +107,13 @@ function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@school.edu"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <label className="block text-sm font-semibold text-gray-700">Password</label>
-              <Link href="/forgot-password" className="text-xs text-indigo-600 hover:underline">Forgot password?</Link>
+              <Link href="/forgot-password" className="text-xs text-emerald-600 hover:underline">Forgot password?</Link>
             </div>
             <div className="relative">
               <input
@@ -122,7 +122,7 @@ function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-3 pr-11 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-4 py-3 pr-11 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
               <button
                 type="button"
@@ -147,7 +147,7 @@ function LoginForm() {
 
         <p className="text-center text-sm text-gray-500 mt-6">
           Don&apos;t have an account?{' '}
-          <Link href="/signup" className="text-indigo-600 font-semibold hover:underline">Sign up free</Link>
+          <Link href="/signup" className="text-emerald-600 font-semibold hover:underline">Sign up free</Link>
         </p>
       </div>
     </div>

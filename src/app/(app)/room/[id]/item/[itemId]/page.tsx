@@ -44,11 +44,11 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
 
         <Card className="mb-4">
           <div className="flex items-start gap-4 mb-5">
-            <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-4xl flex-shrink-0">
+            <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-4xl flex-shrink-0">
               {item.image_emoji}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-indigo-600 uppercase tracking-wide mb-1">
+              <p className="text-xs font-semibold text-emerald-600 uppercase tracking-wide mb-1">
                 {category?.icon} {category?.name}
               </p>
               <h1 className="text-2xl font-black text-gray-900 leading-tight">{item.name}</h1>
@@ -102,7 +102,7 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
               {item.reviews.map((review, i) => (
                 <Card key={i}>
                   <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center flex-shrink-0">
+                    <div className="w-9 h-9 rounded-full bg-emerald-100 text-emerald-700 font-bold text-sm flex items-center justify-center flex-shrink-0">
                       {review.author[0]}
                     </div>
                     <div className="flex-1">

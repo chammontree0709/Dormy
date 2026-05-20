@@ -50,11 +50,11 @@ export default function GuidesPage() {
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.png" alt="Roomd" height={30} width={30} className="rounded-lg" />
-            <span className="font-black text-indigo-600 text-xl">Roomd</span>
+            <span className="font-black text-emerald-600 text-xl">Roomd</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/login" className="text-sm font-semibold text-gray-500 hover:text-gray-900">Log in</Link>
-            <Link href="/signup" className="bg-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-xl hover:bg-indigo-700 transition-colors">
+            <Link href="/signup" className="bg-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-xl hover:bg-emerald-700 transition-colors">
               Get started free
             </Link>
           </div>
@@ -72,25 +72,25 @@ export default function GuidesPage() {
             <Link
               key={guide.slug}
               href={`/guides/${guide.slug}`}
-              className="flex items-start gap-5 p-6 bg-gray-50 rounded-2xl border border-gray-100 hover:border-indigo-200 hover:bg-indigo-50/40 transition-all group"
+              className="flex items-start gap-5 p-6 bg-gray-50 rounded-2xl border border-gray-100 hover:border-emerald-200 hover:bg-emerald-50/40 transition-all group"
             >
               <span className="text-4xl flex-shrink-0">{guide.emoji}</span>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full">{guide.tag}</span>
+                  <span className="text-xs font-bold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">{guide.tag}</span>
                   <span className="text-xs text-gray-400">{guide.readTime}</span>
                 </div>
-                <h2 className="text-lg font-black text-gray-900 group-hover:text-indigo-700 transition-colors mb-1">{guide.title}</h2>
+                <h2 className="text-lg font-black text-gray-900 group-hover:text-emerald-700 transition-colors mb-1">{guide.title}</h2>
                 <p className="text-sm text-gray-500 leading-relaxed">{guide.description}</p>
               </div>
             </Link>
           ))}
         </div>
 
-        <div className="mt-12 bg-indigo-50 rounded-2xl p-8 text-center">
+        <div className="mt-12 bg-emerald-50 rounded-2xl p-8 text-center">
           <h2 className="text-2xl font-black text-gray-900 mb-2">Ready to coordinate with your roommates?</h2>
           <p className="text-gray-500 mb-6">Create a free shared checklist, invite your roommates, and check things off together.</p>
-          <Link href="/signup" className="inline-block bg-indigo-600 text-white font-bold text-lg px-8 py-4 rounded-2xl hover:bg-indigo-700 transition-colors">
+          <Link href="/signup" className="inline-block bg-emerald-600 text-white font-bold text-lg px-8 py-4 rounded-2xl hover:bg-emerald-700 transition-colors">
             Create your room — free
           </Link>
         </div>

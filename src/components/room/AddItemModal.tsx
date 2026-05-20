@@ -79,13 +79,13 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
         <div className="flex gap-1 p-4 flex-shrink-0">
           <button
             onClick={() => setTab('preset')}
-            className={cn('flex-1 py-2 rounded-xl text-sm font-semibold transition-colors', tab === 'preset' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200')}
+            className={cn('flex-1 py-2 rounded-xl text-sm font-semibold transition-colors', tab === 'preset' ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200')}
           >
             Browse Items
           </button>
           <button
             onClick={() => setTab('custom')}
-            className={cn('flex-1 py-2 rounded-xl text-sm font-semibold transition-colors', tab === 'custom' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200')}
+            className={cn('flex-1 py-2 rounded-xl text-sm font-semibold transition-colors', tab === 'custom' ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200')}
           >
             Custom Item
           </button>
@@ -101,7 +101,7 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                 placeholder="Search all 205 items…"
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setSelectedCategory(null) }}
-                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 autoFocus
               />
             </div>
@@ -120,7 +120,7 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                       <button
                         key={cat.id}
                         onClick={() => setSelectedCategory(cat.id)}
-                        className="flex flex-col items-start gap-1 p-4 rounded-xl border border-gray-100 bg-gray-50 hover:border-indigo-200 hover:bg-indigo-50 transition-all text-left"
+                        className="flex flex-col items-start gap-1 p-4 rounded-xl border border-gray-100 bg-gray-50 hover:border-emerald-200 hover:bg-emerald-50 transition-all text-left"
                       >
                         <span className="text-2xl">{cat.icon}</span>
                         <p className="font-bold text-sm text-gray-900 leading-tight">{cat.name}</p>
@@ -146,8 +146,8 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                           className={cn(
                             'w-full text-left flex items-start gap-3 p-3 rounded-xl border transition-all group',
                             alreadyAdded
-                              ? 'border-indigo-200 bg-indigo-50 hover:bg-indigo-100'
-                              : 'border-gray-100 hover:border-indigo-200 hover:bg-indigo-50'
+                              ? 'border-emerald-200 bg-emerald-50 hover:bg-emerald-100'
+                              : 'border-gray-100 hover:border-emerald-200 hover:bg-emerald-50'
                           )}
                         >
                           <span className="text-xl flex-shrink-0 mt-0.5">{item.image_emoji}</span>
@@ -156,7 +156,7 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                               <p className="font-semibold text-sm text-gray-900 truncate">{item.name}</p>
                               <div className="flex items-center gap-1.5 flex-shrink-0">
                                 {alreadyAdded && (
-                                  <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-200 text-indigo-800 font-semibold">in room</span>
+                                  <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-800 font-semibold">in room</span>
                                 )}
                                 <span className={cn('text-xs px-2 py-0.5 rounded-full', {
                                   'bg-red-100 text-red-700': item.priority === 'essential',
@@ -168,9 +168,9 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                               </div>
                             </div>
                             <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{item.description}</p>
-                            <p className="text-xs text-indigo-600 font-medium mt-1">{item.price_estimate}</p>
+                            <p className="text-xs text-emerald-600 font-medium mt-1">{item.price_estimate}</p>
                           </div>
-                          <Plus size={16} className="text-indigo-600 flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                          <Plus size={16} className="text-emerald-600 flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </button>
                       )
                     })
@@ -188,7 +188,7 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                 placeholder="e.g. Portable Bluetooth Speaker"
                 value={customName}
                 onChange={(e) => setCustomName(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 autoFocus
               />
             </div>
@@ -197,7 +197,7 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
               <select
                 value={customCategory}
                 onChange={(e) => setCustomCategory(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat.id} value={cat.id}>{cat.icon} {cat.name}</option>
@@ -211,7 +211,7 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                 placeholder="https://amazon.com/..."
                 value={customUrl}
                 onChange={(e) => setCustomUrl(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
             <div>
@@ -221,7 +221,7 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={2}
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
               />
             </div>
             <Button onClick={handleAddCustom} disabled={!customName.trim()} size="lg" className="w-full">

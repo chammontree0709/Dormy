@@ -83,10 +83,10 @@ export default function SignupPage() {
 
   if (verifyEmail) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white flex flex-col items-center justify-center px-4">
+      <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
         <Link href="/" className="flex items-center gap-2 mb-8">
           <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
-          <span className="font-black text-indigo-600 text-2xl">Roomd</span>
+          <span className="font-black text-emerald-600 text-2xl">Roomd</span>
         </Link>
         <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-gray-100 p-8 text-center">
           <div className="text-4xl mb-4">📬</div>
@@ -94,9 +94,9 @@ export default function SignupPage() {
           <p className="text-gray-500 text-sm mb-2">We sent a confirmation link to:</p>
           <p className="font-bold text-gray-800 mb-4">{verifyEmail}</p>
           <p className="text-sm text-gray-500 mb-6">Click the link in the email to activate your account, then come back to log in.</p>
-          <p className="text-xs text-gray-400">Didn&apos;t get it? Check spam or <button onClick={() => setVerifyEmail('')} className="text-indigo-600 hover:underline">try again</button>.</p>
+          <p className="text-xs text-gray-400">Didn&apos;t get it? Check spam or <button onClick={() => setVerifyEmail('')} className="text-emerald-600 hover:underline">try again</button>.</p>
           <div className="mt-6">
-            <Link href="/login" className="text-sm text-indigo-600 font-semibold hover:underline">Go to login →</Link>
+            <Link href="/login" className="text-sm text-emerald-600 font-semibold hover:underline">Go to login →</Link>
           </div>
         </div>
       </div>
@@ -104,10 +104,10 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
       <Link href="/" className="flex items-center gap-2 mb-8">
         <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
-          <span className="font-black text-indigo-600 text-2xl">Roomd</span>
+          <span className="font-black text-emerald-600 text-2xl">Roomd</span>
       </Link>
 
       <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-gray-100 p-8">
@@ -146,7 +146,7 @@ export default function SignupPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Emma"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
           <div>
@@ -157,7 +157,7 @@ export default function SignupPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@school.edu"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
           <div>
@@ -170,7 +170,7 @@ export default function SignupPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="At least 6 characters"
-                className="w-full px-4 py-3 pr-11 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-4 py-3 pr-11 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
               <button
                 type="button"
@@ -192,7 +192,7 @@ export default function SignupPage() {
                 onChange={(e) => setInviteCode(e.target.value.toUpperCase())}
                 placeholder="e.g. ABC123"
                 maxLength={6}
-                className={`w-full px-4 py-3 pr-10 rounded-xl border text-sm uppercase font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+                className={`w-full px-4 py-3 pr-10 rounded-xl border text-sm uppercase font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
                   inviteCode.length > 0
                     ? inviteValid
                       ? 'border-green-400 bg-green-50'
@@ -226,7 +226,7 @@ export default function SignupPage() {
 
         <p className="text-center text-sm text-gray-500 mt-6">
           Already have an account?{' '}
-          <Link href="/login" className="text-indigo-600 font-semibold hover:underline">Log in</Link>
+          <Link href="/login" className="text-emerald-600 font-semibold hover:underline">Log in</Link>
         </p>
       </div>
     </div>

@@ -148,7 +148,7 @@ export default function DashboardPage() {
                   value={newRoomName}
                   onChange={(e) => setNewRoomName(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && createRoom()}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   autoFocus
                 />
                 {actionError && <p className="text-red-600 text-sm">{actionError}</p>}
@@ -167,7 +167,7 @@ export default function DashboardPage() {
                   onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
                   onKeyDown={(e) => e.key === 'Enter' && joinRoom()}
                   maxLength={6}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm uppercase font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm uppercase font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   autoFocus
                 />
                 {actionError && <p className="text-red-600 text-sm">{actionError}</p>}
@@ -199,16 +199,16 @@ export default function DashboardPage() {
           <div className="space-y-3">
             {rooms.map((room) => (
               <Link key={room.id} href={`/room/${room.id}`}>
-                <div className="bg-white rounded-2xl border border-gray-100 p-5 hover:border-indigo-200 hover:shadow-sm transition-all group cursor-pointer">
+                <div className="bg-white rounded-2xl border border-gray-100 p-5 hover:border-emerald-200 hover:shadow-sm transition-all group cursor-pointer">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center text-xl">🏠</div>
+                      <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center text-xl">🏠</div>
                       <div>
-                        <p className="font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">{room.name}</p>
+                        <p className="font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">{room.name}</p>
                         <p className="text-xs text-gray-400">Code: <span className="font-mono font-semibold">{room.invite_code}</span></p>
                       </div>
                     </div>
-                    <ArrowRight size={18} className="text-gray-300 group-hover:text-indigo-500 group-hover:translate-x-0.5 transition-all" />
+                    <ArrowRight size={18} className="text-gray-300 group-hover:text-emerald-500 group-hover:translate-x-0.5 transition-all" />
                   </div>
                 </div>
               </Link>
@@ -221,10 +221,10 @@ export default function DashboardPage() {
             <Users size={16} className="text-gray-400" />
             <p className="text-sm font-semibold text-gray-500">Quick picks</p>
           </div>
-          <Link href="/templates" className="block bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-100 rounded-2xl p-5 hover:border-indigo-300 transition-all group">
+          <Link href="/templates" className="block bg-gradient-to-r from-emerald-50 to-zinc-50 border border-emerald-100 rounded-2xl p-5 hover:border-emerald-300 transition-all group">
             <p className="font-bold text-gray-900 mb-1">Browse preset checklists 📦</p>
             <p className="text-sm text-gray-500">Freshman Essentials, Study Setup, Kitchen Starter, and more.</p>
-            <p className="text-sm text-indigo-600 font-semibold mt-3 group-hover:underline">Explore →</p>
+            <p className="text-sm text-emerald-600 font-semibold mt-3 group-hover:underline">Explore →</p>
           </Link>
         </div>
       </main>

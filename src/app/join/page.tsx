@@ -17,10 +17,10 @@ export default function JoinPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
       <Link href="/" className="flex items-center gap-2 mb-8">
         <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
-          <span className="font-black text-indigo-600 text-2xl">Roomd</span>
+          <span className="font-black text-emerald-600 text-2xl">Roomd</span>
       </Link>
 
       <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-gray-100 p-8">
@@ -34,20 +34,20 @@ export default function JoinPage() {
             onChange={(e) => setCode(e.target.value.toUpperCase())}
             placeholder="ABC123"
             maxLength={6}
-            className="w-full px-4 py-4 rounded-xl border border-gray-200 text-center text-2xl font-black font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500 uppercase"
+            className="w-full px-4 py-4 rounded-xl border border-gray-200 text-center text-2xl font-black font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-emerald-500 uppercase"
             autoFocus
           />
           <button
             type="submit"
             disabled={code.trim().length !== 6}
-            className="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Join Room
           </button>
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-6">
-          Don&apos;t have an account? <Link href="/signup" className="text-indigo-600 font-semibold hover:underline">Sign up free</Link>
+          Don&apos;t have an account? <Link href="/signup" className="text-emerald-600 font-semibold hover:underline">Sign up free</Link>
         </p>
       </div>
     </div>

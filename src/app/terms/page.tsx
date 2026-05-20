@@ -15,7 +15,7 @@ export default function TermsPage() {
         <div className="max-w-3xl mx-auto px-4 h-16 flex items-center">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.png" alt="Roomd" height={30} width={30} className="rounded-lg" />
-            <span className="font-black text-indigo-600 text-xl">Roomd</span>
+            <span className="font-black text-emerald-600 text-xl">Roomd</span>
           </Link>
         </div>
       </header>
@@ -72,7 +72,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-gray-900 mb-3">10. Contact</h2>
-            <p>For questions about these Terms, contact us at <a href="mailto:support@roomdapp.com" className="text-indigo-600 hover:underline">support@roomdapp.com</a>.</p>
+            <p>For questions about these Terms, contact us at <a href="mailto:support@roomdapp.com" className="text-emerald-600 hover:underline">support@roomdapp.com</a>.</p>
           </section>
         </div>
       </main>

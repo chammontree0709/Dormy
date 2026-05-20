@@ -288,11 +288,11 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   if (shoppingMode) {
     return (
       <div className="min-h-screen bg-white">
-        <div className="sticky top-0 bg-indigo-600 z-40 px-4 py-3 flex items-center justify-between shadow-md">
+        <div className="sticky top-0 bg-emerald-600 z-40 px-4 py-3 flex items-center justify-between shadow-md">
           <div className="flex items-center gap-2">
             <ShoppingCart size={18} className="text-white" />
             <span className="font-bold text-white text-sm">Shopping Mode</span>
-            <span className="text-indigo-300 text-xs ml-1">{checkedItems}/{totalItems} bought</span>
+            <span className="text-emerald-300 text-xs ml-1">{checkedItems}/{totalItems} bought</span>
           </div>
           <button
             onClick={() => setShoppingMode(false)}
@@ -308,7 +308,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               <div className="text-5xl mb-4">🎉</div>
               <p className="text-2xl font-bold text-gray-900">All done!</p>
               <p className="text-gray-500 mt-2 mb-6">Everything on your list has been bought.</p>
-              <button onClick={() => setShoppingMode(false)} className="bg-indigo-600 text-white font-bold px-6 py-3 rounded-2xl hover:bg-indigo-700">
+              <button onClick={() => setShoppingMode(false)} className="bg-emerald-600 text-white font-bold px-6 py-3 rounded-2xl hover:bg-emerald-700">
                 Back to room
               </button>
             </div>
@@ -353,7 +353,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               <div className="flex items-center gap-1.5 mt-1">
                 <div className="flex -space-x-1">
                   {members.slice(0, 4).map((m) => (
-                    <div key={m.user_id} className="w-6 h-6 rounded-full bg-indigo-100 border-2 border-white flex items-center justify-center text-xs font-bold text-indigo-700">
+                    <div key={m.user_id} className="w-6 h-6 rounded-full bg-emerald-100 border-2 border-white flex items-center justify-center text-xs font-bold text-emerald-700">
                       {m.display_name[0].toUpperCase()}
                     </div>
                   ))}
@@ -371,10 +371,10 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
             <div className="mb-4">
               <div className="flex justify-between text-xs font-semibold text-gray-500 mb-1.5">
                 <span>{checkedItems} of {totalItems} items bought</span>
-                <span className="text-indigo-600">{progressPct}%</span>
+                <span className="text-emerald-600">{progressPct}%</span>
               </div>
               <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full bg-indigo-500 rounded-full transition-all duration-500" style={{ width: `${progressPct}%` }} />
+                <div className="h-full bg-emerald-500 rounded-full transition-all duration-500" style={{ width: `${progressPct}%` }} />
               </div>
             </div>
           )}
@@ -392,17 +392,17 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   onChange={(e) => setBudgetDraft(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && saveBudget()}
                   placeholder="e.g. 600"
-                  className="w-24 text-sm border border-indigo-300 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                  className="w-24 text-sm border border-emerald-300 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-emerald-300"
                 />
-                <button onClick={saveBudget} className="text-xs font-bold text-indigo-600 hover:underline">Save</button>
+                <button onClick={saveBudget} className="text-xs font-bold text-emerald-600 hover:underline">Save</button>
                 <button onClick={() => setShowBudgetInput(false)} className="text-xs text-gray-400 hover:underline">Cancel</button>
               </div>
             ) : (
               <button
                 onClick={() => { setBudgetDraft(budget ? String(budget) : ''); setShowBudgetInput(true) }}
-                className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-indigo-600 transition-colors group"
+                className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-emerald-600 transition-colors group"
               >
-                <DollarSign size={14} className="text-gray-400 group-hover:text-indigo-500" />
+                <DollarSign size={14} className="text-gray-400 group-hover:text-emerald-500" />
                 {budget ? (
                   <span>
                     <span className={estimatedTotal > budget ? 'text-red-600 font-bold' : 'text-emerald-600 font-bold'}>
@@ -411,7 +411,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     <span className="text-gray-400"> / ${budget} budget</span>
                   </span>
                 ) : estimatedTotal > 0 ? (
-                  <span className="text-gray-500">~${estimatedTotal} est. · <span className="text-indigo-500 font-semibold">set budget</span></span>
+                  <span className="text-gray-500">~${estimatedTotal} est. · <span className="text-emerald-500 font-semibold">set budget</span></span>
                 ) : (
                   <span className="text-gray-400">Set a budget</span>
                 )}
@@ -426,23 +426,23 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   type="date"
                   value={dateDraft}
                   onChange={(e) => setDateDraft(e.target.value)}
-                  className="text-sm border border-indigo-300 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                  className="text-sm border border-emerald-300 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-emerald-300"
                 />
-                <button onClick={saveMoveInDate} className="text-xs font-bold text-indigo-600 hover:underline">Save</button>
+                <button onClick={saveMoveInDate} className="text-xs font-bold text-emerald-600 hover:underline">Save</button>
                 <button onClick={() => setShowDateInput(false)} className="text-xs text-gray-400 hover:underline">Cancel</button>
               </div>
             ) : (
               <button
                 onClick={() => { setDateDraft(moveInDate); setShowDateInput(true) }}
-                className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-indigo-600 transition-colors group"
+                className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-emerald-600 transition-colors group"
               >
-                <CalendarDays size={14} className="text-gray-400 group-hover:text-indigo-500" />
+                <CalendarDays size={14} className="text-gray-400 group-hover:text-emerald-500" />
                 {days !== null ? (
                   days > 0
-                    ? <span><span className="font-bold text-indigo-600">{days} days</span> until move-in</span>
+                    ? <span><span className="font-bold text-emerald-600">{days} days</span> until move-in</span>
                     : days === 0
                     ? <span className="font-bold text-emerald-600">Move-in day! 🎉</span>
-                    : <span className="text-gray-400">Move-in was {Math.abs(days)}d ago · <span className="text-indigo-500">update</span></span>
+                    : <span className="text-gray-400">Move-in was {Math.abs(days)}d ago · <span className="text-emerald-500">update</span></span>
                 ) : (
                   <span className="text-gray-400">Set move-in date</span>
                 )}
@@ -464,7 +464,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
             <ShoppingCart size={16} className="mr-1.5" />
             <span className="hidden sm:inline">Shop</span>
             {uncheckedItems.length > 0 && (
-              <span className="ml-1.5 bg-indigo-100 text-indigo-700 text-xs font-bold px-1.5 py-0.5 rounded-full">
+              <span className="ml-1.5 bg-emerald-100 text-emerald-700 text-xs font-bold px-1.5 py-0.5 rounded-full">
                 {uncheckedItems.length}
               </span>
             )}
@@ -542,7 +542,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <Activity size={16} className="text-indigo-500" />
+                <Activity size={16} className="text-emerald-500" />
                 <span className="font-bold text-gray-900 text-sm">Recent activity</span>
               </div>
               {showActivity ? <ChevronUp size={16} className="text-gray-400" /> : <ChevronDown size={16} className="text-gray-400" />}
@@ -554,7 +554,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   const timeAgo = mins < 1 ? 'just now' : mins < 60 ? `${mins}m ago` : `${Math.round(mins / 60)}h ago`
                   return (
                     <div key={ev.id} className="flex items-start gap-2.5 text-sm">
-                      <div className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">
                         {ev.user_name[0]?.toUpperCase()}
                       </div>
                       <div className="flex-1 min-w-0">

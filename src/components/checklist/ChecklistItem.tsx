@@ -66,7 +66,7 @@ export default function ChecklistItem({
           <p className={cn('font-semibold text-lg text-gray-900', item.is_checked && 'line-through text-gray-400')}>
             {preset && <span className="mr-1.5">{preset.image_emoji}</span>}
             {name}
-            {qty > 1 && <span className="ml-2 text-sm font-bold text-indigo-600">×{qty}</span>}
+            {qty > 1 && <span className="ml-2 text-sm font-bold text-emerald-600">×{qty}</span>}
           </p>
           {preset && <p className="text-sm text-gray-400 mt-0.5">{preset.price_estimate}</p>}
         </div>
@@ -84,7 +84,7 @@ export default function ChecklistItem({
           ? 'bg-sky-50 dark:bg-sky-950/40 border-sky-200 dark:border-sky-900'
           : isClaimed
           ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900'
-          : 'bg-white border-gray-100 hover:border-indigo-100 hover:shadow-sm'
+          : 'bg-white border-gray-100 hover:border-emerald-100 hover:shadow-sm'
       )}
     >
       <div className="flex items-start gap-3 p-4">
@@ -94,7 +94,7 @@ export default function ChecklistItem({
             'flex-shrink-0 w-6 h-6 mt-0.5 rounded-full border-2 flex items-center justify-center transition-all duration-150',
             item.is_checked
               ? 'bg-green-500 border-green-500 text-white'
-              : 'border-gray-300 hover:border-indigo-400'
+              : 'border-gray-300 hover:border-emerald-400'
           )}
           aria-label={item.is_checked ? 'Mark as needed' : 'Mark as bought'}
         >
@@ -114,7 +114,7 @@ export default function ChecklistItem({
                   {name}
                 </p>
                 {qty > 1 && (
-                  <span className="flex-shrink-0 text-xs font-bold bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded-md">×{qty}</span>
+                  <span className="flex-shrink-0 text-xs font-bold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-md">×{qty}</span>
                 )}
               </div>
 
@@ -133,7 +133,7 @@ export default function ChecklistItem({
                 <p className="text-xs text-gray-500 mt-0.5">{preset.price_estimate}</p>
               )}
               {item.notes && !showNote && (
-                <p className="text-xs text-indigo-500 mt-1 italic">💬 {item.notes}</p>
+                <p className="text-xs text-emerald-500 mt-1 italic">💬 {item.notes}</p>
               )}
             </div>
 
@@ -189,8 +189,8 @@ export default function ChecklistItem({
                 className={cn(
                   'p-1.5 rounded-lg transition-colors',
                   showNote || item.notes
-                    ? 'text-indigo-500 bg-indigo-50 hover:bg-indigo-100'
-                    : 'text-gray-400 hover:text-indigo-500 hover:bg-indigo-50'
+                    ? 'text-emerald-500 bg-emerald-50 hover:bg-emerald-100'
+                    : 'text-gray-400 hover:text-emerald-500 hover:bg-emerald-50'
                 )}
                 title={item.notes ? 'Edit note' : 'Add note'}
               >
@@ -200,7 +200,7 @@ export default function ChecklistItem({
               {preset && (
                 <Link
                   href={`/room/${roomId}/item/${item.preset_id}`}
-                  className="p-1.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                  className="p-1.5 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
                   title="View details & reviews"
                 >
                   <ExternalLink size={14} />
@@ -237,12 +237,12 @@ export default function ChecklistItem({
             value={draftNote}
             onChange={(e) => setDraftNote(e.target.value)}
             placeholder="Add a note for your roommates…"
-            className="flex-1 text-sm border border-indigo-200 rounded-xl px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-300 text-gray-700 placeholder-gray-400"
+            className="flex-1 text-sm border border-emerald-200 rounded-xl px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-300 text-gray-700 placeholder-gray-400"
           />
           <div className="flex flex-col gap-1.5">
             <button
               onClick={saveNote}
-              className="px-3 py-1.5 bg-indigo-600 text-white text-xs font-bold rounded-lg hover:bg-indigo-700"
+              className="px-3 py-1.5 bg-emerald-600 text-white text-xs font-bold rounded-lg hover:bg-emerald-700"
             >Save</button>
             <button
               onClick={() => setShowNote(false)}

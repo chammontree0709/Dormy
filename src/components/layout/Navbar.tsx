@@ -86,7 +86,7 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
         <div className="flex items-center gap-3">
           <Link href="/dashboard" className="flex items-center">
             <Image src="/logo.png" alt="Roomd" height={36} width={36} className="rounded-lg" priority />
-            <span className="font-bold text-indigo-600 text-lg hidden sm:block ml-2">Roomd</span>
+            <span className="font-bold text-emerald-600 text-lg hidden sm:block ml-2">Roomd</span>
           </Link>
           {roomName && (
             <>
@@ -139,7 +139,7 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => { setShowProfile((v) => !v); setEditingName(false) }}
-              className="w-8 h-8 rounded-full bg-indigo-600 text-white text-sm font-bold flex items-center justify-center hover:bg-indigo-700 transition-colors ml-1 flex-shrink-0"
+              className="w-8 h-8 rounded-full bg-emerald-600 text-white text-sm font-bold flex items-center justify-center hover:bg-emerald-700 transition-colors ml-1 flex-shrink-0"
               title="Profile & settings"
             >
               {initials}
@@ -150,7 +150,7 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
                 {/* Header */}
                 <div className="px-4 pt-4 pb-3 border-b border-gray-100">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-indigo-600 text-white text-base font-bold flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-emerald-600 text-white text-base font-bold flex items-center justify-center flex-shrink-0">
                       {initials}
                     </div>
                     <div className="min-w-0">
@@ -161,7 +161,7 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
                             value={nameDraft}
                             onChange={(e) => setNameDraft(e.target.value)}
                             onKeyDown={(e) => { if (e.key === 'Enter') saveName(); if (e.key === 'Escape') setEditingName(false) }}
-                            className="text-sm font-semibold text-gray-900 border border-indigo-300 rounded-lg px-2 py-1 w-full focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                            className="text-sm font-semibold text-gray-900 border border-emerald-300 rounded-lg px-2 py-1 w-full focus:outline-none focus:ring-2 focus:ring-emerald-300"
                           />
                           <button
                             onClick={saveName}
@@ -182,7 +182,7 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
                       ) : (
                         <button
                           onClick={() => setEditingName(true)}
-                          className="text-sm font-semibold text-gray-900 hover:text-indigo-600 transition-colors text-left truncate max-w-full block"
+                          className="text-sm font-semibold text-gray-900 hover:text-emerald-600 transition-colors text-left truncate max-w-full block"
                           title="Click to edit name"
                         >
                           {userName}
@@ -194,7 +194,7 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
                   {!editingName && (
                     <button
                       onClick={() => setEditingName(true)}
-                      className="mt-2.5 w-full text-xs text-indigo-600 hover:text-indigo-700 font-medium text-left"
+                      className="mt-2.5 w-full text-xs text-emerald-600 hover:text-emerald-700 font-medium text-left"
                     >
                       ✏️ Edit display name
                     </button>
@@ -209,10 +209,10 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
                     className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
-                      {dark ? <Sun size={15} className="text-amber-500" /> : <Moon size={15} className="text-indigo-500" />}
+                      {dark ? <Sun size={15} className="text-amber-500" /> : <Moon size={15} className="text-emerald-500" />}
                       <span>{dark ? 'Light mode' : 'Dark mode'}</span>
                     </div>
-                    <div className={`w-9 h-5 rounded-full transition-colors relative ${dark ? 'bg-indigo-600' : 'bg-gray-200'}`}>
+                    <div className={`w-9 h-5 rounded-full transition-colors relative ${dark ? 'bg-emerald-600' : 'bg-gray-200'}`}>
                       <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${dark ? 'translate-x-4' : 'translate-x-0.5'}`} />
                     </div>
                   </button>

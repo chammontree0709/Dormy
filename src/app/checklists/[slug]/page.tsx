@@ -66,11 +66,11 @@ export default async function ChecklistSlugPage({ params }: Props) {
         <div className="max-w-3xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.png" alt="Roomd" height={30} width={30} className="rounded-lg" />
-            <span className="font-black text-indigo-600 text-xl">Roomd</span>
+            <span className="font-black text-emerald-600 text-xl">Roomd</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/login" className="text-sm font-semibold text-gray-500 hover:text-gray-900">Log in</Link>
-            <Link href="/signup" className="bg-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-xl hover:bg-indigo-700 transition-colors">
+            <Link href="/signup" className="bg-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-xl hover:bg-emerald-700 transition-colors">
               Get started free
             </Link>
           </div>
@@ -80,9 +80,9 @@ export default async function ChecklistSlugPage({ params }: Props) {
       <main className="max-w-3xl mx-auto px-4 py-10">
         {/* Breadcrumb */}
         <nav className="text-sm text-gray-400 mb-6 flex items-center gap-1.5">
-          <Link href="/" className="hover:text-indigo-600 transition-colors">Home</Link>
+          <Link href="/" className="hover:text-emerald-600 transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/checklists" className="hover:text-indigo-600 transition-colors">Checklists</Link>
+          <Link href="/checklists" className="hover:text-emerald-600 transition-colors">Checklists</Link>
           <span>/</span>
           <span className="text-gray-700 font-medium">{list.name}</span>
         </nav>
@@ -97,7 +97,7 @@ export default async function ChecklistSlugPage({ params }: Props) {
           <div className="flex flex-wrap gap-3 text-sm">
             <span className="bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-semibold">{items.length} items</span>
             <span className="bg-red-50 text-red-700 px-3 py-1.5 rounded-full font-semibold">{essentialCount} must-haves</span>
-            <span className="bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full font-semibold">Starting from ~${totalPrice}</span>
+            <span className="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full font-semibold">Starting from ~${totalPrice}</span>
           </div>
         </div>
 
@@ -107,7 +107,7 @@ export default async function ChecklistSlugPage({ params }: Props) {
             if (!item) return null
             const buyUrl = buildAffiliateUrl(item.amazon_url)
             return (
-              <div key={item.id} className="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-3 border border-gray-100 hover:border-indigo-100 hover:bg-indigo-50/30 transition-all">
+              <div key={item.id} className="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-3 border border-gray-100 hover:border-emerald-100 hover:bg-emerald-50/30 transition-all">
                 <div className="flex items-center gap-3 min-w-0">
                   <span className="text-xl flex-shrink-0">{item.image_emoji}</span>
                   <div className="min-w-0">
@@ -139,14 +139,14 @@ export default async function ChecklistSlugPage({ params }: Props) {
         </div>
 
         {/* CTA */}
-        <div className="bg-indigo-50 rounded-2xl p-8 text-center mb-12">
+        <div className="bg-emerald-50 rounded-2xl p-8 text-center mb-12">
           <h2 className="text-2xl font-black text-gray-900 mb-2">Share this list with your roommates</h2>
           <p className="text-gray-500 mb-6 max-w-md mx-auto">
             Create a free room, invite your roommates with a code, and check items off together in real time. No more duplicate purchases.
           </p>
           <Link
             href="/signup"
-            className="inline-block bg-indigo-600 text-white font-bold text-lg px-8 py-4 rounded-2xl hover:bg-indigo-700 transition-colors"
+            className="inline-block bg-emerald-600 text-white font-bold text-lg px-8 py-4 rounded-2xl hover:bg-emerald-700 transition-colors"
           >
             Copy this list to my room — free
           </Link>
@@ -161,7 +161,7 @@ export default async function ChecklistSlugPage({ params }: Props) {
                 <Link
                   key={other.id}
                   href={`/checklists/${other.id}`}
-                  className="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3 border border-gray-100 hover:border-indigo-200 hover:bg-indigo-50 transition-all"
+                  className="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3 border border-gray-100 hover:border-emerald-200 hover:bg-emerald-50 transition-all"
                 >
                   <span className="text-2xl">{other.emoji}</span>
                   <div>
@@ -172,7 +172,7 @@ export default async function ChecklistSlugPage({ params }: Props) {
               ))}
             </div>
             <div className="text-center mt-4">
-              <Link href="/checklists" className="text-sm text-indigo-600 font-semibold hover:underline">
+              <Link href="/checklists" className="text-sm text-emerald-600 font-semibold hover:underline">
                 View all checklists →
               </Link>
             </div>

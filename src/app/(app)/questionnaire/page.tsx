@@ -208,7 +208,7 @@ export default function QuestionnairePage() {
             <select
               value={selectedRoomId ?? ''}
               onChange={(e) => setSelectedRoomId(e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300"
             >
               {rooms.map((r) => (
                 <option key={r.id} value={r.id}>{r.name}</option>
@@ -261,8 +261,8 @@ export default function QuestionnairePage() {
                       onClick={() => setDraft((prev) => ({ ...prev, [q.id]: opt }))}
                       className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
                         draft[q.id] === opt
-                          ? 'bg-indigo-600 text-white border-indigo-600'
-                          : 'bg-white text-gray-600 border-gray-200 hover:border-indigo-300 hover:text-indigo-600'
+                          ? 'bg-emerald-600 text-white border-emerald-600'
+                          : 'bg-white text-gray-600 border-gray-200 hover:border-emerald-300 hover:text-emerald-600'
                       }`}
                     >
                       {opt}
@@ -276,7 +276,7 @@ export default function QuestionnairePage() {
           <button
             onClick={handleSave}
             disabled={saveState === 'saving'}
-            className="mt-8 w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition-colors"
+            className="mt-8 w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition-colors"
           >
             {saveState === 'saving' ? 'Saving...' : hasSubmitted ? 'Update answers' : 'Save my answers'}
           </button>

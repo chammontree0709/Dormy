@@ -3,6 +3,18 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
+import {
+  Zap,
+  Package,
+  ShoppingCart,
+  UserCheck,
+  ArrowRight,
+  Mail,
+  CheckCircle2,
+  Plus,
+  Share2,
+  ListChecks,
+} from 'lucide-react'
 
 const stats = [
   { value: '200+', label: 'essential items' },
@@ -11,79 +23,57 @@ const stats = [
   { value: '100%', label: 'free' },
 ]
 
-const features = [
-  {
-    emoji: '⚡',
-    title: 'Real-time sync',
-    description: 'The second a roommate checks something off, everyone sees it. No refresh, no confusion.',
-    bg: 'bg-violet-50',
-    accent: 'text-violet-600',
-    border: 'border-violet-100',
-  },
-  {
-    emoji: '📦',
-    title: '200+ preset items',
-    description: 'Curated lists by priority — essentials first, nice-to-haves later. Skip the endless Amazon rabbit hole.',
-    bg: 'bg-amber-50',
-    accent: 'text-amber-600',
-    border: 'border-amber-100',
-  },
-  {
-    emoji: '🛒',
-    title: 'One-click buying',
-    description: 'Every item links straight to Amazon. We find the best options so you can just click and move on.',
-    bg: 'bg-emerald-50',
-    accent: 'text-emerald-600',
-    border: 'border-emerald-100',
-  },
-  {
-    emoji: '🙋',
-    title: '"I\'ll buy this"',
-    description: 'Claim an item before buying so nobody doubles up. No more three shower caddies.',
-    bg: 'bg-indigo-50',
-    accent: 'text-indigo-600',
-    border: 'border-indigo-100',
-  },
-]
-
 const steps = [
-  { number: '01', title: 'Create your room', description: 'Takes 30 seconds. Give it a name, done.' },
-  { number: '02', title: 'Invite your roommates', description: 'Share a 6-digit code or a link. They join instantly.' },
-  { number: '03', title: 'Check things off together', description: 'Browse presets, add items, claim what you\'re buying.' },
+  {
+    number: '01',
+    Icon: Plus,
+    title: 'Create your room',
+    description: 'Takes 30 seconds. Give it a name, done.',
+  },
+  {
+    number: '02',
+    Icon: Share2,
+    title: 'Invite your roommates',
+    description: 'Share a 6-digit code or a link. They join instantly.',
+  },
+  {
+    number: '03',
+    Icon: ListChecks,
+    title: 'Check things off together',
+    description: "Browse presets, add items, claim what you're buying.",
+  },
 ]
 
 const testimonials = [
   {
-    quote: 'We used to fight about who was buying what. This fixed that.',
-    name: 'Emma & Jake',
+    quote:
+      'We used to fight about who was buying what. This fixed that completely — we moved in with zero duplicate purchases.',
+    name: 'Mara & Tyler',
     school: 'Penn State',
-    avatar: 'EJ',
-    color: 'bg-violet-500',
+    initials: 'MT',
     stars: 5,
   },
   {
-    quote: 'Saved us from buying three shower caddies and forgetting sheets.',
-    name: 'Priya S.',
+    quote: "Saved us from buying three shower caddies and forgetting sheets.",
+    name: 'Divya S.',
     school: 'UCLA',
-    avatar: 'PS',
-    color: 'bg-emerald-500',
+    initials: 'DS',
     stars: 5,
   },
   {
-    quote: 'The preset lists are so good. We just checked off what we had and bought the rest.',
+    quote: 'The preset lists are so good. We checked off what we had and bought the rest.',
     name: 'Marcus T.',
     school: 'UT Austin',
-    avatar: 'MT',
-    color: 'bg-amber-500',
+    initials: 'MT',
     stars: 5,
   },
 ]
 
 function Stars({ count }: { count: number }) {
   return (
-    <div className="flex gap-0.5 mb-3">
+    <div className="flex gap-0.5 mb-4">
       {Array.from({ length: count }).map((_, i) => (
-        <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b">
+        <svg key={i} width="13" height="13" viewBox="0 0 24 24" fill="#10b981">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
         </svg>
       ))}
@@ -121,39 +111,53 @@ function EmailCapture() {
   }
 
   return (
-    <section className="py-16 px-4 bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700">
-      <div className="max-w-xl mx-auto text-center">
-        <div className="text-3xl mb-3">📬</div>
-        <h2 className="text-2xl font-black text-white mb-2">Get the ultimate packing list</h2>
-        <p className="text-indigo-200 text-sm mb-6">
-          Free move-in checklist PDF + early access to new features. No spam, ever.
-        </p>
-        {status === 'success' ? (
-          <div className="bg-white/20 text-white font-semibold px-6 py-4 rounded-2xl">
-            {message}
+    <section className="py-20 px-6 bg-zinc-950">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_auto] gap-10 items-center">
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <Mail className="w-4 h-4 text-emerald-400" strokeWidth={1.5} />
+            <span className="text-emerald-400 text-xs font-bold tracking-widest uppercase">Free resource</span>
           </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
-              className="flex-1 px-4 py-3 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
-            />
-            <button
-              type="submit"
-              disabled={status === 'loading'}
-              className="bg-white text-indigo-700 font-bold px-6 py-3 rounded-xl hover:bg-indigo-50 transition-colors disabled:opacity-60 whitespace-nowrap"
-            >
-              {status === 'loading' ? 'Joining...' : 'Send it →'}
-            </button>
-          </form>
-        )}
-        {status === 'error' && (
-          <p className="text-red-300 text-xs mt-2">{message}</p>
-        )}
+          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-3">
+            Get the ultimate packing list.
+          </h2>
+          <p className="text-zinc-400 leading-relaxed max-w-md">
+            Free move-in checklist PDF plus early access to new features. No spam, ever.
+          </p>
+        </div>
+        <div className="w-full md:min-w-[340px]">
+          {status === 'success' ? (
+            <div className="flex items-center gap-3 bg-emerald-900/30 border border-emerald-700/40 text-emerald-400 font-semibold px-6 py-4 rounded-2xl">
+              <CheckCircle2 className="w-5 h-5 flex-shrink-0" strokeWidth={1.5} />
+              <span>{message}</span>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+              <div className="flex-1">
+                <label htmlFor="email-capture" className="sr-only">Email address</label>
+                <input
+                  id="email-capture"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  className="w-full px-4 py-3 rounded-xl text-sm text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={status === 'loading'}
+                className="bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl hover:bg-emerald-400 transition-all duration-200 disabled:opacity-60 whitespace-nowrap active:scale-[0.98]"
+              >
+                {status === 'loading' ? 'Joining...' : 'Send it'}
+              </button>
+            </form>
+          )}
+          {status === 'error' && (
+            <p className="text-red-400 text-xs mt-2">{message}</p>
+          )}
+        </div>
       </div>
     </section>
   )
@@ -163,110 +167,283 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navbar */}
-      <header className="border-b border-gray-100 sticky top-0 bg-white/80 backdrop-blur-md z-40">
-        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Image src="/logo.png" alt="Roomd" height={36} width={36} className="rounded-lg" priority />
-            <span className="font-black text-indigo-600 text-xl">Roomd</span>
+      <header className="border-b border-zinc-100 sticky top-0 bg-white/90 backdrop-blur-md z-40">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <Image src="/logo.png" alt="Roomd" height={32} width={32} className="rounded-lg" priority />
+            <span className="font-black text-zinc-950 text-xl tracking-tight">Roomd</span>
           </div>
-          <div className="flex items-center gap-3">
-            <Link href="/guides" className="text-sm font-semibold text-gray-500 hover:text-gray-900 hidden sm:block">Guides</Link>
-            <Link href="/login" className="text-sm font-semibold text-gray-500 hover:text-gray-900">Log in</Link>
-            <Link href="/signup" className="bg-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-xl hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-200">
-              Get started free
+          <nav className="flex items-center gap-4">
+            <Link
+              href="/guides"
+              className="text-sm font-semibold text-zinc-500 hover:text-zinc-950 transition-colors duration-200 hidden sm:block"
+            >
+              Guides
             </Link>
-          </div>
+            <Link
+              href="/login"
+              className="text-sm font-semibold text-zinc-500 hover:text-zinc-950 transition-colors duration-200"
+            >
+              Log in
+            </Link>
+            <Link
+              href="/signup"
+              className="bg-zinc-950 text-white text-sm font-bold px-4 py-2 rounded-xl hover:bg-zinc-800 transition-colors duration-200 active:scale-[0.98]"
+            >
+              Get started
+            </Link>
+          </nav>
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden py-20 px-4" style={{ background: 'radial-gradient(ellipse 80% 60% at 50% -10%, #e0e7ff 0%, #ffffff 70%)' }}>
-        {/* Decorative blobs */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-100 rounded-full opacity-40 blur-3xl -translate-y-1/2 pointer-events-none" />
-        <div className="absolute top-0 right-1/4 w-80 h-80 bg-indigo-100 rounded-full opacity-50 blur-3xl -translate-y-1/3 pointer-events-none" />
+      {/* Hero — Split screen */}
+      <section
+        className="min-h-[100dvh] px-6 flex items-center overflow-hidden"
+        style={{ background: 'radial-gradient(ellipse 70% 60% at 100% 50%, #d1fae5 0%, #ffffff 65%)' }}
+      >
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center py-20">
+          {/* Left: Content */}
+          <div>
+            <div className="inline-flex items-center gap-2 bg-zinc-950 text-white text-xs font-bold px-4 py-1.5 rounded-full mb-8">
+              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+              Move-in season is coming
+            </div>
 
-        <div className="relative max-w-3xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-white border border-indigo-100 text-indigo-700 text-xs font-bold px-4 py-1.5 rounded-full mb-6 shadow-sm">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            Move-in season is coming
+            <h1 className="text-5xl md:text-6xl xl:text-7xl font-black text-zinc-950 leading-none tracking-tighter mb-6">
+              Stop the<br />
+              group chat<br />
+              <span className="text-emerald-500">chaos.</span>
+            </h1>
+
+            <p className="text-lg text-zinc-500 mb-10 max-w-[44ch] leading-relaxed">
+              One checklist for you and your roommates. See who&apos;s buying what, in real time. No more doubles.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 mb-14">
+              <Link
+                href="/signup"
+                className="inline-flex items-center justify-center gap-2 bg-zinc-950 text-white font-bold text-base px-7 py-3.5 rounded-2xl hover:bg-zinc-800 transition-all duration-200 shadow-lg shadow-zinc-900/10 hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0"
+              >
+                Create your room — free
+                <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+              </Link>
+              <Link
+                href="/checklists"
+                className="inline-flex items-center justify-center gap-2 bg-white text-zinc-700 font-bold text-base px-7 py-3.5 rounded-2xl border border-zinc-200 hover:border-zinc-400 hover:text-zinc-950 transition-all duration-200"
+              >
+                Browse checklists
+              </Link>
+            </div>
+
+            {/* Stats */}
+            <div className="flex gap-8 flex-wrap">
+              {stats.map((s) => (
+                <div key={s.label}>
+                  <p className="text-2xl font-black text-zinc-950 leading-none">{s.value}</p>
+                  <p className="text-xs text-zinc-400 font-medium mt-0.5">{s.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <h1 className="text-5xl sm:text-6xl font-black text-gray-900 leading-[1.05] tracking-tight mb-6">
-            Stop the group chat chaos.<br />
-            <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-              Get a shared list.
-            </span>
-          </h1>
-
-          <p className="text-xl text-gray-500 mb-10 max-w-lg mx-auto leading-relaxed">
-            One checklist for you and your roommates. See who&apos;s buying what, in real time. No more doubles.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
-            <Link href="/signup" className="w-full sm:w-auto bg-indigo-600 text-white font-bold text-lg px-8 py-4 rounded-2xl hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 hover:shadow-indigo-300 hover:-translate-y-0.5">
-              Create your room — free
-            </Link>
-            <Link href="/checklists" className="w-full sm:w-auto bg-white text-gray-700 font-bold text-lg px-8 py-4 rounded-2xl border border-gray-200 hover:border-indigo-300 hover:text-indigo-600 transition-all">
-              Browse checklists →
-            </Link>
+          {/* Right: App mockup */}
+          <div
+            className="relative flex items-center justify-center lg:justify-end"
+            style={{ animation: 'float 6s ease-in-out infinite' }}
+          >
+            <div className="absolute inset-0 bg-emerald-100/70 rounded-3xl blur-3xl scale-110 pointer-events-none" />
+            <div className="relative bg-white rounded-3xl shadow-2xl shadow-zinc-900/10 border border-zinc-100 overflow-hidden w-full max-w-sm">
+              <div className="bg-zinc-950 px-5 py-4 flex items-center justify-between">
+                <div>
+                  <p className="text-white font-bold text-sm">Room 204 — Johnson Hall</p>
+                  <p className="text-zinc-400 text-xs mt-0.5">Mara · Tyler · Divya · 3 members</p>
+                </div>
+                <div className="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full">
+                  8 / 14
+                </div>
+              </div>
+              <div className="p-4 space-y-2">
+                {[
+                  { name: 'Twin XL Sheet Set', done: true, by: 'Mara' },
+                  { name: 'Surge Protector', done: true, by: 'Tyler' },
+                  { name: 'Shower Caddy', done: false, claimer: 'Divya' },
+                  { name: 'Electric Kettle', done: false },
+                  { name: 'LED Desk Lamp', done: false },
+                ].map((item) => (
+                  <div
+                    key={item.name}
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl ${
+                      item.done ? 'bg-emerald-50' : 'bg-zinc-50'
+                    }`}
+                  >
+                    <div
+                      className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
+                        item.done ? 'bg-emerald-500' : 'border-2 border-zinc-300'
+                      }`}
+                    >
+                      {item.done && (
+                        <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                    </div>
+                    <span
+                      className={`text-sm font-medium flex-1 ${
+                        item.done ? 'line-through text-zinc-400' : 'text-zinc-800'
+                      }`}
+                    >
+                      {item.name}
+                    </span>
+                    {item.done && (
+                      <span className="text-xs text-emerald-600 font-semibold">{item.by}</span>
+                    )}
+                    {'claimer' in item && item.claimer && (
+                      <span className="text-xs bg-zinc-900 text-white px-2 py-0.5 rounded-full font-semibold">
+                        {item.claimer}
+                      </span>
+                    )}
+                    {!item.done && !('claimer' in item && item.claimer) && (
+                      <span className="text-xs bg-zinc-100 text-zinc-600 px-2 py-0.5 rounded-full font-semibold">
+                        Buy
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
 
-          {/* Stats strip */}
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
-            {stats.map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="text-2xl font-black text-indigo-600 leading-none">{s.value}</p>
-                <p className="text-xs text-gray-400 font-medium mt-0.5">{s.label}</p>
+      {/* How it works */}
+      <section className="py-24 px-6 bg-zinc-950">
+        <div className="max-w-7xl mx-auto">
+          <p className="text-xs font-bold tracking-widest text-emerald-400 uppercase mb-4">How it works</p>
+          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-16">
+            Up and running in under 2 minutes.
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-zinc-800">
+            {steps.map((step) => (
+              <div key={step.number} className="bg-zinc-950 p-8 md:p-10">
+                <p className="text-7xl font-black text-zinc-800 leading-none mb-6 select-none">{step.number}</p>
+                <step.Icon className="w-6 h-6 text-emerald-400 mb-4" strokeWidth={1.5} />
+                <h3 className="text-lg font-bold text-white mb-2">{step.title}</h3>
+                <p className="text-zinc-400 text-sm leading-relaxed">{step.description}</p>
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* App preview */}
-        <div className="relative max-w-sm mx-auto mt-16">
-          <div className="absolute inset-0 bg-gradient-to-b from-indigo-200/40 to-violet-200/40 rounded-3xl blur-2xl scale-105" />
-          <div className="relative bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
-            <div className="bg-gradient-to-r from-indigo-600 to-violet-600 px-5 py-4 flex items-center justify-between">
+      {/* Features — Asymmetric grid */}
+      <section className="py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <p className="text-xs font-bold tracking-widest text-emerald-600 uppercase mb-4">Features</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <h2 className="text-3xl md:text-4xl font-black text-zinc-950 tracking-tight">
+              Everything you need.<br />Nothing you don&apos;t.
+            </h2>
+            <p className="text-zinc-500 leading-relaxed self-end">
+              Move-in is stressful enough. We handle the list so you can focus on actually getting there.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <Link
+              href="/signup"
+              className="md:col-span-2 border border-zinc-200 rounded-3xl p-8 block hover:-translate-y-0.5 hover:border-zinc-400 transition-all duration-300 group"
+            >
+              <Zap className="w-8 h-8 text-emerald-500 mb-6" strokeWidth={1.5} />
+              <h3 className="font-black text-zinc-950 mb-3 text-xl tracking-tight">Real-time sync</h3>
+              <p className="text-zinc-500 leading-relaxed mb-5">
+                The second a roommate checks something off, everyone sees it. No refresh, no confusion, no duplicate buys.
+              </p>
+              <span className="text-sm font-bold text-zinc-400 group-hover:text-zinc-950 transition-colors inline-flex items-center gap-1">
+                Try it free <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+              </span>
+            </Link>
+            <Link
+              href="/signup"
+              className="border border-zinc-200 rounded-3xl p-8 block hover:-translate-y-0.5 hover:border-zinc-400 transition-all duration-300 group"
+            >
+              <Package className="w-8 h-8 text-emerald-500 mb-6" strokeWidth={1.5} />
+              <h3 className="font-black text-zinc-950 mb-3 text-xl tracking-tight">200+ preset items</h3>
+              <p className="text-zinc-500 leading-relaxed mb-5">
+                Curated lists by priority — essentials first, nice-to-haves later. Skip the Amazon rabbit hole.
+              </p>
+              <span className="text-sm font-bold text-zinc-400 group-hover:text-zinc-950 transition-colors inline-flex items-center gap-1">
+                Try it free <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+              </span>
+            </Link>
+            <Link
+              href="/signup"
+              className="border border-zinc-200 rounded-3xl p-8 block hover:-translate-y-0.5 hover:border-zinc-400 transition-all duration-300 group"
+            >
+              <UserCheck className="w-8 h-8 text-emerald-500 mb-6" strokeWidth={1.5} />
+              <h3 className="font-black text-zinc-950 mb-3 text-xl tracking-tight">&ldquo;I&apos;ll buy this&rdquo;</h3>
+              <p className="text-zinc-500 leading-relaxed mb-5">
+                Claim an item before buying so nobody doubles up. No more three shower caddies.
+              </p>
+              <span className="text-sm font-bold text-zinc-400 group-hover:text-zinc-950 transition-colors inline-flex items-center gap-1">
+                Try it free <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+              </span>
+            </Link>
+            <Link
+              href="/signup"
+              className="md:col-span-2 border border-zinc-200 rounded-3xl p-8 block hover:-translate-y-0.5 hover:border-zinc-400 transition-all duration-300 group"
+            >
+              <ShoppingCart className="w-8 h-8 text-emerald-500 mb-6" strokeWidth={1.5} />
+              <h3 className="font-black text-zinc-950 mb-3 text-xl tracking-tight">One-click buying</h3>
+              <p className="text-zinc-500 leading-relaxed mb-5">
+                Every item links straight to Amazon. We find the best options so you can just click and move on.
+              </p>
+              <span className="text-sm font-bold text-zinc-400 group-hover:text-zinc-950 transition-colors inline-flex items-center gap-1">
+                Try it free <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials — Featured layout */}
+      <section className="py-24 px-6 bg-zinc-50">
+        <div className="max-w-7xl mx-auto">
+          <p className="text-xs font-bold tracking-widest text-emerald-600 uppercase mb-10">What people are saying</p>
+          <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-5">
+            <div className="bg-white border border-zinc-200 rounded-3xl p-10 flex flex-col justify-between">
               <div>
-                <p className="text-white font-bold text-sm">Room 204 — Johnson Hall</p>
-                <p className="text-indigo-200 text-xs mt-0.5">Emma · Jake · Priya · 3 members</p>
+                <Stars count={5} />
+                <blockquote className="text-2xl md:text-3xl font-black text-zinc-950 tracking-tight leading-tight mb-8">
+                  &ldquo;We used to fight about who was buying what. This fixed that completely — we moved in with zero duplicate purchases.&rdquo;
+                </blockquote>
               </div>
-              <div className="bg-white/20 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full">8/14 ✓</div>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-zinc-950 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                  MT
+                </div>
+                <div>
+                  <p className="font-bold text-sm text-zinc-950">Mara &amp; Tyler</p>
+                  <p className="text-xs text-zinc-400">Penn State</p>
+                </div>
+              </div>
             </div>
-            <div className="p-4 space-y-2">
-              {[
-                { name: 'Twin XL Sheet Set', emoji: '🛏️', done: true, by: 'Emma' },
-                { name: 'Surge Protector', emoji: '🔌', done: true, by: 'Jake' },
-                { name: 'Shower Caddy', emoji: '🚿', done: false, claimer: 'Priya' },
-                { name: 'Electric Kettle', emoji: '☕', done: false },
-                { name: 'LED Desk Lamp', emoji: '💡', done: false },
-              ].map((item) => (
-                <div
-                  key={item.name}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors ${
-                    item.done ? 'bg-emerald-50' : 'bg-gray-50'
-                  }`}
-                >
-                  <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    item.done ? 'bg-emerald-500' : 'border-2 border-gray-300'
-                  }`}>
-                    {item.done && (
-                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    )}
+            <div className="flex flex-col gap-5">
+              {testimonials.slice(1).map((t) => (
+                <div key={t.name} className="bg-white border border-zinc-200 rounded-3xl p-7 flex-1 flex flex-col justify-between">
+                  <div>
+                    <Stars count={t.stars} />
+                    <blockquote className="text-zinc-700 text-sm leading-relaxed mb-5">
+                      &ldquo;{t.quote}&rdquo;
+                    </blockquote>
                   </div>
-                  <span className="text-sm mr-0.5">{item.emoji}</span>
-                  <span className={`text-sm font-medium flex-1 ${item.done ? 'line-through text-gray-400' : 'text-gray-800'}`}>
-                    {item.name}
-                  </span>
-                  {item.done && <span className="text-xs text-emerald-600 font-semibold">{item.by}</span>}
-                  {'claimer' in item && item.claimer && (
-                    <span className="text-xs bg-violet-100 text-violet-700 px-2 py-0.5 rounded-full font-semibold">{item.claimer} →</span>
-                  )}
-                  {!item.done && !('claimer' in item && item.claimer) && (
-                    <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-semibold">Buy</span>
-                  )}
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-zinc-100 rounded-full flex items-center justify-center text-zinc-950 text-xs font-bold flex-shrink-0">
+                      {t.initials}
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm text-zinc-950">{t.name}</p>
+                      <p className="text-xs text-zinc-400">{t.school}</p>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -274,127 +451,68 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="py-20 px-4 bg-gray-950">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-center text-xs font-bold tracking-widest text-indigo-400 uppercase mb-4">How it works</p>
-          <h2 className="text-3xl font-black text-center text-white mb-16">Up and running in under 2 minutes.</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-            {steps.map((step) => (
-              <div key={step.number} className="relative">
-                <p className="text-6xl font-black text-indigo-900 leading-none mb-4">{step.number}</p>
-                <h3 className="text-lg font-bold text-white mb-2">{step.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{step.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-center text-xs font-bold tracking-widest text-indigo-500 uppercase mb-4">Features</p>
-          <h2 className="text-3xl font-black text-center text-gray-900 mb-3">Everything you need. Nothing you don&apos;t.</h2>
-          <p className="text-center text-gray-400 mb-12">Move-in is stressful enough. We handle the list.</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {features.map((f) => (
-              <Link key={f.title} href="/signup" className={`${f.bg} border ${f.border} rounded-2xl p-6 block hover:shadow-md hover:-translate-y-0.5 transition-all group`}>
-                <div className="text-3xl mb-4">{f.emoji}</div>
-                <h3 className="font-bold text-gray-900 mb-2 text-lg">{f.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-3">{f.description}</p>
-                <span className="text-xs font-bold text-indigo-600 group-hover:underline">Try it free →</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-20 px-4 bg-gray-50">
-        <div className="max-w-3xl mx-auto">
-          <p className="text-center text-xs font-bold tracking-widest text-indigo-500 uppercase mb-4">Reviews</p>
-          <h2 className="text-3xl font-black text-center text-gray-900 mb-12">Roommates love it.</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {testimonials.map((t) => (
-              <div key={t.name} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <Stars count={t.stars} />
-                <p className="text-gray-700 text-sm leading-relaxed mb-5">&ldquo;{t.quote}&rdquo;</p>
-                <div className="flex items-center gap-3">
-                  <div className={`w-9 h-9 ${t.color} rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0`}>
-                    {t.avatar}
-                  </div>
-                  <div>
-                    <p className="font-bold text-sm text-gray-900">{t.name}</p>
-                    <p className="text-xs text-gray-400">{t.school}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <EmailCapture />
 
       {/* Final CTA */}
-      <section className="py-24 px-4 text-center bg-white">
-        <div className="max-w-xl mx-auto">
-          <div className="text-5xl mb-6">🎉</div>
-          <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4 leading-tight tracking-tight">
-            Your room is waiting.<br />
-            <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-              Let&apos;s get it packed.
-            </span>
-          </h2>
-          <p className="text-gray-400 mb-10 text-lg">Free forever. No credit card. Takes 30 seconds.</p>
-          <Link
-            href="/signup"
-            className="inline-block bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold text-lg px-12 py-4 rounded-2xl hover:opacity-90 transition-all shadow-xl shadow-indigo-200 hover:shadow-indigo-300 hover:-translate-y-0.5"
-          >
-            Create your room — free
-          </Link>
+      <section className="py-28 px-6 bg-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_auto] gap-12 items-center">
+          <div>
+            <h2 className="text-4xl md:text-6xl font-black text-zinc-950 tracking-tighter leading-none mb-6">
+              Your room is waiting.<br />
+              <span className="text-emerald-500">Let&apos;s get it packed.</span>
+            </h2>
+            <p className="text-zinc-400 text-lg">Free forever. No credit card. Takes 30 seconds.</p>
+          </div>
+          <div className="flex-shrink-0">
+            <Link
+              href="/signup"
+              className="inline-flex items-center gap-3 bg-zinc-950 text-white font-bold text-lg px-10 py-5 rounded-2xl hover:bg-zinc-800 transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0 shadow-xl shadow-zinc-900/10"
+            >
+              Create your room — free
+              <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
+            </Link>
+          </div>
         </div>
       </section>
 
-      <footer className="border-t border-gray-100 py-8 px-4 text-center text-sm text-gray-400">
-        <div className="flex items-center justify-center gap-4 mb-4">
-          <a
-            href="https://www.tiktok.com/@roomdapp"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Roomd on TikTok"
-            className="text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.77 1.52V6.76a4.85 4.85 0 0 1-1-.07z"/>
-            </svg>
-          </a>
-          <a
-            href="https://www.instagram.com/roomdapp"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Roomd on Instagram"
-            className="text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-            </svg>
-          </a>
+      <footer className="border-t border-zinc-100 py-8 px-6 text-sm text-zinc-400">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <a
+              href="https://www.tiktok.com/@roomdapp"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Roomd on TikTok"
+              className="hover:text-zinc-600 transition-colors"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.77 1.52V6.76a4.85 4.85 0 0 1-1-.07z" />
+              </svg>
+            </a>
+            <a
+              href="https://www.instagram.com/roomdapp"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Roomd on Instagram"
+              className="hover:text-zinc-600 transition-colors"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-zinc-400">
+            <Link href="/checklists" className="hover:text-zinc-950 transition-colors">Checklists</Link>
+            <Link href="/guides" className="hover:text-zinc-950 transition-colors">Guides</Link>
+            <Link href="/privacy" className="hover:text-zinc-950 transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-zinc-950 transition-colors">Terms</Link>
+            <a href="mailto:support@roomdapp.com" className="hover:text-zinc-950 transition-colors">Support</a>
+          </div>
+          <p className="text-xs text-zinc-300">&copy; {new Date().getFullYear()} Roomd</p>
         </div>
-        <p className="mb-2">
-          <Link href="/checklists" className="hover:underline">Checklists</Link>
-          {' · '}
-          <Link href="/guides" className="hover:underline">Guides</Link>
-          {' · '}
-          <Link href="/privacy" className="hover:underline">Privacy</Link>
-          {' · '}
-          <Link href="/terms" className="hover:underline">Terms</Link>
-          {' · '}
-          <a href="mailto:support@roomdapp.com" className="hover:underline">Support</a>
+        <p className="max-w-7xl mx-auto mt-3 text-xs text-zinc-300 text-center sm:text-left">
+          As an Amazon Associate, Roomd earns from qualifying purchases.
         </p>
-        <p>© {new Date().getFullYear()} Roomd. Built with ❤️ for college students.</p>
-        <p className="mt-1 text-xs">As an Amazon Associate, Roomd earns from qualifying purchases.</p>
       </footer>
     </div>
   )

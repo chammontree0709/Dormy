@@ -50,12 +50,12 @@ export default function InviteModal({ inviteCode, roomName, members, onClose }: 
           <div className="text-center">
             <p className="text-xs font-medium text-gray-400 uppercase tracking-widest mb-2">Room Code</p>
             <div className="flex items-center justify-center gap-3">
-              <span className="text-4xl font-black tracking-widest text-indigo-600 font-mono">
+              <span className="text-4xl font-black tracking-widest text-emerald-600 font-mono">
                 {inviteCode}
               </span>
               <button
                 onClick={copyCode}
-                className="p-2.5 rounded-xl bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors"
+                className="p-2.5 rounded-xl bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-colors"
                 title="Copy code"
               >
                 {copiedCode ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
@@ -65,10 +65,10 @@ export default function InviteModal({ inviteCode, roomName, members, onClose }: 
 
           <button
             onClick={copyLink}
-            className="w-full flex items-center justify-between gap-2 bg-gray-50 hover:bg-indigo-50 border border-gray-200 hover:border-indigo-200 rounded-xl px-3 py-2.5 transition-colors group"
+            className="w-full flex items-center justify-between gap-2 bg-gray-50 hover:bg-emerald-50 border border-gray-200 hover:border-emerald-200 rounded-xl px-3 py-2.5 transition-colors group"
           >
-            <p className="text-xs text-gray-500 group-hover:text-indigo-600 truncate">{joinUrl}</p>
-            <span className="flex-shrink-0 flex items-center gap-1 text-xs font-semibold text-indigo-600">
+            <p className="text-xs text-gray-500 group-hover:text-emerald-600 truncate">{joinUrl}</p>
+            <span className="flex-shrink-0 flex items-center gap-1 text-xs font-semibold text-emerald-600">
               {copiedLink ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
               {copiedLink ? 'Copied!' : 'Copy link'}
             </span>
@@ -85,7 +85,7 @@ export default function InviteModal({ inviteCode, roomName, members, onClose }: 
               <div className="space-y-2">
                 {members.map((m) => (
                   <div key={m.user_id} className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center">
+                    <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center">
                       {m.display_name[0].toUpperCase()}
                     </div>
                     <span className="text-sm text-gray-700">{m.display_name}</span>

@@ -53,8 +53,8 @@ export default function TemplatesPage() {
               className={cn(
                 'text-left p-4 rounded-2xl border-2 transition-all',
                 selectedList === list.id
-                  ? 'border-indigo-500 bg-indigo-50'
-                  : 'border-gray-200 bg-white hover:border-indigo-200 hover:bg-indigo-50/50'
+                  ? 'border-emerald-500 bg-emerald-50'
+                  : 'border-gray-200 bg-white hover:border-emerald-200 hover:bg-emerald-50/50'
               )}
             >
               <p className="text-2xl mb-2">{list.emoji}</p>
@@ -83,7 +83,7 @@ export default function TemplatesPage() {
           {(selectedCategory || selectedList) && (
             <button
               onClick={() => { setSelectedCategory(null); setSelectedList(null) }}
-              className="text-xs text-indigo-600 font-semibold hover:underline"
+              className="text-xs text-emerald-600 font-semibold hover:underline"
             >
               Clear
             </button>
@@ -99,7 +99,7 @@ export default function TemplatesPage() {
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className="flex flex-col items-start gap-1 p-4 rounded-2xl border-2 border-gray-200 bg-white hover:border-indigo-300 hover:bg-indigo-50/50 transition-all text-left"
+                  className="flex flex-col items-start gap-1 p-4 rounded-2xl border-2 border-gray-200 bg-white hover:border-emerald-300 hover:bg-emerald-50/50 transition-all text-left"
                 >
                   <span className="text-2xl">{cat.icon}</span>
                   <p className="font-bold text-gray-900 text-sm leading-tight">{cat.name}</p>
@@ -133,7 +133,7 @@ export default function TemplatesPage() {
                       <div className="min-w-0">
                         <p className="font-bold text-gray-900 text-sm">{item.name}</p>
                         <div className="flex items-center gap-2 mt-1 flex-wrap">
-                          <span className="text-sm font-semibold text-indigo-600">{item.price_estimate}</span>
+                          <span className="text-sm font-semibold text-emerald-600">{item.price_estimate}</span>
                           <span className={cn('text-xs px-2 py-0.5 rounded-full font-semibold', {
                             'bg-red-100 text-red-700': item.priority === 'essential',
                             'bg-blue-100 text-blue-700': item.priority === 'recommended',
@@ -174,7 +174,7 @@ export default function TemplatesPage() {
                         <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Student Reviews</p>
                         {item.reviews.map((review, i) => (
                           <div key={i} className="flex gap-3">
-                            <div className="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center flex-shrink-0">
+                            <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center flex-shrink-0">
                               {review.author[0]}
                             </div>
                             <div>

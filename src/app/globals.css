@@ -25,13 +25,13 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-plus-jakarta);
+  --font-sans: var(--font-outfit);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-plus-jakarta), system-ui, sans-serif;
+  font-family: var(--font-outfit), system-ui, sans-serif;
 }
 
 /* ─── Dark mode component theming ─────────────────────────────────────
@@ -95,8 +95,8 @@ body {
   color: #4b5e72;
 }
 
-/* ── Button: secondary variant (bg-white border-indigo-200) ── */
-.dark .border-indigo-200 { border-color: #4338ca; }
+/* ── Button: secondary variant (bg-white border-emerald-200) ── */
+.dark .border-emerald-200 { border-color: #059669; }
 
 /* ── Shadows — deepen in dark mode ── */
 .dark .shadow-sm  { box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4); }
@@ -110,6 +110,11 @@ body {
 
 /* ── Animations ── */
 .dark .animate-pulse { opacity: 0.6; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
 
 @layer utilities {
   .line-clamp-2 {

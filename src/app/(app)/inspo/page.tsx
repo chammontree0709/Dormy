@@ -35,7 +35,7 @@ const LOOKS = [
     id: 'study',
     title: 'Study Grind',
     vibe: 'Built for long focus sessions',
-    gradient: 'from-indigo-200 to-blue-100',
+    gradient: 'from-emerald-200 to-blue-100',
     emoji: '📚',
     image: 'https://images.unsplash.com/photo-1486304873000-235643847519?auto=format&fit=crop&w=600&q=80',
     itemIds: ['desk-lamp', 'laptop-stand', 'monitor', 'noise-cancelling-headphones', 'whiteboard', 'planner'],
@@ -53,7 +53,7 @@ const LOOKS = [
     id: 'tech',
     title: 'Tech Setup',
     vibe: 'Gaming, streaming, vibing',
-    gradient: 'from-violet-200 to-purple-100',
+    gradient: 'from-emerald-200 to-zinc-100',
     emoji: '🎮',
     image: 'https://images.unsplash.com/photo-1614179924047-e1ab49a0a0cf?auto=format&fit=crop&w=600&q=80',
     itemIds: ['surge-protector', 'monitor', 'gaming-headset', 'bluetooth-speaker', 'streaming-stick', 'portable-charger'],
@@ -147,14 +147,14 @@ export default function InspoPage() {
         <div className="mb-8 relative">
           {rooms.length === 0 ? (
             <p className="text-sm text-gray-400 bg-white border border-gray-200 rounded-xl px-4 py-3">
-              No rooms yet — <a href="/dashboard" className="text-indigo-600 font-semibold hover:underline">create one</a> to start adding items.
+              No rooms yet — <a href="/dashboard" className="text-emerald-600 font-semibold hover:underline">create one</a> to start adding items.
             </p>
           ) : (
             <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3">
               <span className="text-sm text-gray-500 font-medium whitespace-nowrap">Adding to:</span>
               <button
                 onClick={() => setShowRoomPicker((v) => !v)}
-                className="flex items-center gap-2 text-sm font-bold text-indigo-600 hover:text-indigo-700"
+                className="flex items-center gap-2 text-sm font-bold text-emerald-600 hover:text-emerald-700"
               >
                 {selectedRoom?.name ?? 'Pick a room'}
                 <ChevronDown size={14} />
@@ -165,7 +165,7 @@ export default function InspoPage() {
                     <button
                       key={r.id}
                       onClick={() => { setSelectedRoomId(r.id); setShowRoomPicker(false) }}
-                      className={`w-full text-left px-4 py-3 text-sm font-semibold hover:bg-indigo-50 transition-colors ${r.id === selectedRoomId ? 'text-indigo-600 bg-indigo-50' : 'text-gray-800'}`}
+                      className={`w-full text-left px-4 py-3 text-sm font-semibold hover:bg-emerald-50 transition-colors ${r.id === selectedRoomId ? 'text-emerald-600 bg-emerald-50' : 'text-gray-800'}`}
                     >
                       {r.name}
                     </button>
@@ -212,7 +212,7 @@ export default function InspoPage() {
                     return (
                       <div
                         key={item.id}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-100 hover:border-indigo-100 hover:bg-indigo-50/30 transition-all"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-100 hover:border-emerald-100 hover:bg-emerald-50/30 transition-all"
                       >
                         <span className="text-xl flex-shrink-0">{item.image_emoji}</span>
                         <div className="flex-1 min-w-0">
@@ -237,7 +237,7 @@ export default function InspoPage() {
                                 ? 'bg-emerald-100 text-emerald-700'
                                 : rooms.length === 0
                                 ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                                : 'bg-emerald-600 text-white hover:bg-emerald-700'
                             }`}
                           >
                             {isAdded ? (

@@ -15,7 +15,7 @@ export default function PrivacyPage() {
         <div className="max-w-3xl mx-auto px-4 h-16 flex items-center">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.png" alt="Roomd" height={30} width={30} className="rounded-lg" />
-            <span className="font-black text-indigo-600 text-xl">Roomd</span>
+            <span className="font-black text-emerald-600 text-xl">Roomd</span>
           </Link>
         </div>
       </header>
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-xl font-bold text-gray-900 mb-3">4. Advertising</h2>
-            <p>Roomd uses Google AdSense to display advertisements. Google may use cookies to serve ads based on your visits to this and other websites. You can opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" className="text-indigo-600 hover:underline">Google Ads Settings</a>.</p>
+            <p>Roomd uses Google AdSense to display advertisements. Google may use cookies to serve ads based on your visits to this and other websites. You can opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" className="text-emerald-600 hover:underline">Google Ads Settings</a>.</p>
           </section>
 
           <section>
@@ -57,7 +57,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-xl font-bold text-gray-900 mb-3">7. Your Rights</h2>
-            <p>You have the right to access, correct, or delete your personal data at any time. To exercise these rights, contact us at <a href="mailto:support@roomdapp.com" className="text-indigo-600 hover:underline">support@roomdapp.com</a>.</p>
+            <p>You have the right to access, correct, or delete your personal data at any time. To exercise these rights, contact us at <a href="mailto:support@roomdapp.com" className="text-emerald-600 hover:underline">support@roomdapp.com</a>.</p>
           </section>
 
           <section>
@@ -67,7 +67,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-xl font-bold text-gray-900 mb-3">9. Contact</h2>
-            <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:support@roomdapp.com" className="text-indigo-600 hover:underline">support@roomdapp.com</a>.</p>
+            <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:support@roomdapp.com" className="text-emerald-600 hover:underline">support@roomdapp.com</a>.</p>
           </section>
         </div>
       </main>

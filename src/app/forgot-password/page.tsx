@@ -30,10 +30,10 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
       <Link href="/" className="flex items-center gap-2 mb-8">
         <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
-          <span className="font-black text-indigo-600 text-2xl">Roomd</span>
+          <span className="font-black text-emerald-600 text-2xl">Roomd</span>
       </Link>
 
       <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-gray-100 p-8">
@@ -43,7 +43,7 @@ export default function ForgotPasswordPage() {
             <h1 className="text-2xl font-black text-gray-900 mb-2">Check your inbox</h1>
             <p className="text-gray-500 text-sm mb-2">We sent a password reset link to:</p>
             <p className="font-bold text-gray-800 mb-6">{email}</p>
-            <p className="text-xs text-gray-400">Didn&apos;t get it? Check your spam folder or <button onClick={() => setSent(false)} className="text-indigo-600 hover:underline">try again</button>.</p>
+            <p className="text-xs text-gray-400">Didn&apos;t get it? Check your spam folder or <button onClick={() => setSent(false)} className="text-emerald-600 hover:underline">try again</button>.</p>
           </div>
         ) : (
           <>
@@ -57,21 +57,21 @@ export default function ForgotPasswordPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@school.edu"
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 autoFocus
               />
               {error && <p className="text-red-600 text-sm">{error}</p>}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-50"
+                className="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-700 transition-colors disabled:opacity-50"
               >
                 {loading ? 'Sending...' : 'Send reset link'}
               </button>
             </form>
 
             <p className="text-center text-sm text-gray-500 mt-6">
-              <Link href="/login" className="text-indigo-600 font-semibold hover:underline">← Back to login</Link>
+              <Link href="/login" className="text-emerald-600 font-semibold hover:underline">← Back to login</Link>
             </p>
           </>
         )}

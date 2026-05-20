@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from 'next'
-import { Plus_Jakarta_Sans } from 'next/font/google'
+import { Outfit } from 'next/font/google'
 import './globals.css'
 
-const plusJakarta = Plus_Jakarta_Sans({
+const outfit = Outfit({
   subsets: ['latin'],
-  variable: '--font-plus-jakarta',
-  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-outfit',
+  weight: ['400', '500', '600', '700', '800', '900'],
   display: 'swap',
   fallback: ['system-ui', 'sans-serif'],
 })
@@ -35,7 +35,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} h-full`}>
+    <html lang="en" className={`${outfit.variable} h-full`}>
       <head>
         <meta name="google-adsense-account" content="ca-pub-7336988558032518" />
         <script

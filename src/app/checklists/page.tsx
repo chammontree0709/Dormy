@@ -24,11 +24,11 @@ export default function ChecklistsPage() {
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.png" alt="Roomd" height={30} width={30} className="rounded-lg" />
-            <span className="font-black text-indigo-600 text-xl">Roomd</span>
+            <span className="font-black text-emerald-600 text-xl">Roomd</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/login" className="text-sm font-semibold text-gray-600 hover:text-gray-900">Log in</Link>
-            <Link href="/signup" className="bg-indigo-600 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-indigo-700 transition-colors">
+            <Link href="/signup" className="bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-emerald-700 transition-colors">
               Get started free
             </Link>
           </div>
@@ -50,7 +50,7 @@ export default function ChecklistsPage() {
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">{list.emoji}</span>
                     <div>
-                      <Link href={`/checklists/${list.id}`} className="hover:text-indigo-600 transition-colors">
+                      <Link href={`/checklists/${list.id}`} className="hover:text-emerald-600 transition-colors">
                         <h2 className="text-xl font-black text-gray-900">{list.name}</h2>
                       </Link>
                       <p className="text-sm text-gray-500">{list.description}</p>
@@ -58,7 +58,7 @@ export default function ChecklistsPage() {
                   </div>
                   <Link
                     href={`/checklists/${list.id}`}
-                    className="flex-shrink-0 text-xs font-semibold text-indigo-600 hover:underline hidden sm:block"
+                    className="flex-shrink-0 text-xs font-semibold text-emerald-600 hover:underline hidden sm:block"
                   >
                     View all {items.length} →
                   </Link>
@@ -73,7 +73,7 @@ export default function ChecklistsPage() {
                         <div className="flex items-center gap-2">
                           <span>{item.image_emoji}</span>
                           <span className="text-sm font-medium text-gray-800">{item.name}</span>
-                          <span className="text-xs text-indigo-600 font-semibold">{item.price_estimate}</span>
+                          <span className="text-xs text-emerald-600 font-semibold">{item.price_estimate}</span>
                         </div>
                         <a
                           href={buyUrl}
@@ -89,7 +89,7 @@ export default function ChecklistsPage() {
                   {items.length > 5 && (
                     <Link
                       href={`/checklists/${list.id}`}
-                      className="block text-sm text-indigo-600 font-semibold text-center pt-2 hover:underline"
+                      className="block text-sm text-emerald-600 font-semibold text-center pt-2 hover:underline"
                     >
                       + {items.length - 5} more items →
                     </Link>
@@ -99,13 +99,13 @@ export default function ChecklistsPage() {
                 <div className="flex gap-2">
                   <Link
                     href={`/checklists/${list.id}`}
-                    className="flex-1 text-center bg-white border border-indigo-200 text-indigo-600 font-bold py-3 rounded-xl hover:bg-indigo-50 transition-colors text-sm"
+                    className="flex-1 text-center bg-white border border-emerald-200 text-emerald-600 font-bold py-3 rounded-xl hover:bg-emerald-50 transition-colors text-sm"
                   >
                     View full list
                   </Link>
                   <Link
                     href="/signup"
-                    className="flex-1 text-center bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700 transition-colors text-sm"
+                    className="flex-1 text-center bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-700 transition-colors text-sm"
                   >
                     Copy to my room →
                   </Link>
@@ -115,10 +115,10 @@ export default function ChecklistsPage() {
           })}
         </div>
 
-        <div className="mt-12 bg-indigo-50 rounded-2xl p-8 text-center">
+        <div className="mt-12 bg-emerald-50 rounded-2xl p-8 text-center">
           <h2 className="text-2xl font-black text-gray-900 mb-2">Want to share this list with your roommates?</h2>
           <p className="text-gray-500 mb-6">Create a free account, invite your roommates with a code, and check things off together in real time.</p>
-          <Link href="/signup" className="inline-block bg-indigo-600 text-white font-bold text-lg px-8 py-4 rounded-2xl hover:bg-indigo-700 transition-colors">
+          <Link href="/signup" className="inline-block bg-emerald-600 text-white font-bold text-lg px-8 py-4 rounded-2xl hover:bg-emerald-700 transition-colors">
             Create your room — free
           </Link>
         </div>
