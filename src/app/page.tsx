@@ -169,6 +169,7 @@ export default function LandingPage() {
             <span className="font-black text-indigo-600 text-xl">Roomd</span>
           </div>
           <div className="flex items-center gap-3">
+            <Link href="/guides" className="text-sm font-semibold text-gray-500 hover:text-gray-900 hidden sm:block">Guides</Link>
             <Link href="/login" className="text-sm font-semibold text-gray-500 hover:text-gray-900">Log in</Link>
             <Link href="/signup" className="bg-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-xl hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-200">
               Get started free
@@ -381,6 +382,8 @@ export default function LandingPage() {
         </div>
         <p className="mb-2">
           <Link href="/checklists" className="hover:underline">Checklists</Link>
+          {' · '}
+          <Link href="/guides" className="hover:underline">Guides</Link>
           {' · '}
           <Link href="/privacy" className="hover:underline">Privacy</Link>
           {' · '}
