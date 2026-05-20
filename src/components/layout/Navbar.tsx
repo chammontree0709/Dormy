@@ -86,7 +86,7 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
         <div className="flex items-center gap-3">
           <Link href="/dashboard" className="flex items-center">
             <Image src="/logo.png" alt="Roomd" height={36} width={36} className="rounded-lg" priority />
-            <span className="font-bold text-emerald-600 text-lg hidden sm:block ml-2">Roomd</span>
+            <span className="font-bold text-zinc-950 text-lg hidden sm:block ml-2">Roomd</span>
           </Link>
           {roomName && (
             <>

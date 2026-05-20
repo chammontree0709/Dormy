@@ -62,15 +62,15 @@ export default async function ChecklistSlugPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-white">
-      <header className="border-b border-gray-100 sticky top-0 bg-white/80 backdrop-blur-md z-40">
-        <div className="max-w-3xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+      <header className="border-b border-zinc-100 sticky top-0 bg-white/90 backdrop-blur-md z-40">
+        <div className="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5">
             <Image src="/logo.png" alt="Roomd" height={30} width={30} className="rounded-lg" />
-            <span className="font-black text-emerald-600 text-xl">Roomd</span>
+            <span className="font-black text-zinc-950 text-xl">Roomd</span>
           </Link>
-          <div className="flex items-center gap-3">
-            <Link href="/login" className="text-sm font-semibold text-gray-500 hover:text-gray-900">Log in</Link>
-            <Link href="/signup" className="bg-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-xl hover:bg-emerald-700 transition-colors">
+          <div className="flex items-center gap-4">
+            <Link href="/login" className="text-sm font-semibold text-zinc-500 hover:text-zinc-950 transition-colors">Log in</Link>
+            <Link href="/signup" className="bg-zinc-950 text-white text-sm font-bold px-4 py-2 rounded-xl hover:bg-zinc-800 transition-colors active:scale-[0.98]">
               Get started free
             </Link>
           </div>
@@ -88,14 +88,16 @@ export default async function ChecklistSlugPage({ params }: Props) {
         </nav>
 
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="text-4xl">{list.emoji}</span>
-            <h1 className="text-3xl font-black text-gray-900">{list.name}</h1>
-          </div>
-          <p className="text-gray-500 text-lg mb-4">{list.description}</p>
+        <div className="border-b border-zinc-200 pb-8 mb-8">
+          <h1
+            className="text-3xl md:text-4xl font-bold italic text-zinc-950 mb-3 leading-tight"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            {list.name}
+          </h1>
+          <p className="text-zinc-500 text-lg mb-4">{list.description}</p>
           <div className="flex flex-wrap gap-3 text-sm">
-            <span className="bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-semibold">{items.length} items</span>
+            <span className="bg-zinc-100 text-zinc-600 px-3 py-1.5 rounded-full font-semibold">{items.length} items</span>
             <span className="bg-red-50 text-red-700 px-3 py-1.5 rounded-full font-semibold">{essentialCount} must-haves</span>
             <span className="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full font-semibold">Starting from ~${totalPrice}</span>
           </div>
@@ -139,14 +141,20 @@ export default async function ChecklistSlugPage({ params }: Props) {
         </div>
 
         {/* CTA */}
-        <div className="bg-emerald-50 rounded-2xl p-8 text-center mb-12">
-          <h2 className="text-2xl font-black text-gray-900 mb-2">Share this list with your roommates</h2>
-          <p className="text-gray-500 mb-6 max-w-md mx-auto">
-            Create a free room, invite your roommates with a code, and check items off together in real time. No more duplicate purchases.
+        <div className="bg-zinc-950 rounded-3xl p-8 mb-12">
+          <p className="text-xs font-bold tracking-widest text-emerald-400 uppercase mb-3">Share with roommates</p>
+          <h2
+            className="text-2xl font-bold italic text-white mb-3 leading-tight"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            Share this list with your roommates.
+          </h2>
+          <p className="text-zinc-400 mb-6 max-w-md">
+            Create a free room, invite your roommates with a code, and check items off together in real time.
           </p>
           <Link
             href="/signup"
-            className="inline-block bg-emerald-600 text-white font-bold text-lg px-8 py-4 rounded-2xl hover:bg-emerald-700 transition-colors"
+            className="inline-flex items-center gap-2 bg-emerald-500 text-white font-bold px-7 py-3.5 rounded-2xl hover:bg-emerald-400 transition-colors active:scale-[0.98]"
           >
             Copy this list to my room — free
           </Link>
@@ -155,33 +163,38 @@ export default async function ChecklistSlugPage({ params }: Props) {
         {/* Other lists */}
         {otherLists.length > 0 && (
           <div>
-            <h2 className="text-xl font-black text-gray-900 mb-4">More checklists</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <h2
+              className="text-xl font-bold italic text-zinc-950 mb-5"
+              style={{ fontFamily: 'var(--font-playfair)' }}
+            >
+              More checklists
+            </h2>
+            <div className="border-t border-zinc-200">
               {otherLists.map((other) => (
                 <Link
                   key={other.id}
                   href={`/checklists/${other.id}`}
-                  className="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3 border border-gray-100 hover:border-emerald-200 hover:bg-emerald-50 transition-all"
+                  className="flex items-center justify-between py-4 border-b border-zinc-200 hover:bg-zinc-50 -mx-4 px-4 transition-colors group"
                 >
-                  <span className="text-2xl">{other.emoji}</span>
                   <div>
-                    <p className="font-bold text-sm text-gray-900">{other.name}</p>
-                    <p className="text-xs text-gray-500">{other.itemIds.length} items</p>
+                    <p className="font-bold text-sm text-zinc-950">{other.name}</p>
+                    <p className="text-xs text-zinc-400">{other.itemIds.length} items</p>
                   </div>
+                  <span className="text-xs font-bold text-zinc-400 group-hover:text-zinc-950 transition-colors">View →</span>
                 </Link>
               ))}
             </div>
-            <div className="text-center mt-4">
-              <Link href="/checklists" className="text-sm text-emerald-600 font-semibold hover:underline">
-                View all checklists →
+            <div className="mt-4">
+              <Link href="/checklists" className="text-sm text-zinc-400 font-semibold hover:text-zinc-950 transition-colors">
+                View all checklists
               </Link>
             </div>
           </div>
         )}
       </main>
 
-      <footer className="border-t border-gray-100 py-8 px-4 text-center text-sm text-gray-400 mt-8">
-        <p>© {new Date().getFullYear()} Roomd. <Link href="/terms" className="hover:underline">Terms</Link> · <Link href="/privacy" className="hover:underline">Privacy</Link> · <a href="mailto:support@roomdapp.com" className="hover:underline">Support</a></p>
+      <footer className="border-t border-zinc-100 py-8 px-6 text-center text-sm text-zinc-400 mt-8">
+        <p>&copy; {new Date().getFullYear()} Roomd. <Link href="/terms" className="hover:text-zinc-950 transition-colors">Terms</Link> · <Link href="/privacy" className="hover:text-zinc-950 transition-colors">Privacy</Link> · <a href="mailto:support@roomdapp.com" className="hover:text-zinc-950 transition-colors">Support</a></p>
         <p className="mt-1 text-xs">As an Amazon Associate, Roomd earns from qualifying purchases.</p>
       </footer>
     </div>

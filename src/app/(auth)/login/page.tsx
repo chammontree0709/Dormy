@@ -62,12 +62,12 @@ function LoginForm() {
     <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
       <Link href="/" className="flex items-center gap-2 mb-8">
         <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
-          <span className="font-black text-emerald-600 text-2xl">Roomd</span>
+          <span className="font-black text-zinc-950 text-2xl">Roomd</span>
       </Link>
 
-      <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-gray-100 p-8">
-        <h1 className="text-2xl font-black text-gray-900 mb-1">Welcome back</h1>
-        <p className="text-gray-500 text-sm mb-6">Log in to your Roomd account</p>
+      <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-zinc-100 p-8">
+        <h1 className="text-2xl font-black text-zinc-950 mb-1">Welcome back</h1>
+        <p className="text-zinc-500 text-sm mb-6">Log in to your Roomd account</p>
 
         {redirectMsg === 'signin_required' && (
           <div className="bg-emerald-50 text-emerald-700 text-sm px-4 py-3 rounded-xl border border-emerald-200 mb-4">
@@ -79,10 +79,10 @@ function LoginForm() {
           type="button"
           onClick={handleGoogleSignIn}
           disabled={loading}
-          className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors mb-4 disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm font-semibold text-zinc-700 hover:bg-zinc-50 transition-colors mb-4 disabled:opacity-50"
         >
           {loading ? (
-            <svg className="animate-spin w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24">
+            <svg className="animate-spin w-4 h-4 text-zinc-500" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
             </svg>
@@ -94,25 +94,25 @@ function LoginForm() {
 
         <div className="flex items-center gap-3 mb-4">
           <div className="h-px bg-gray-200 flex-1" />
-          <span className="text-xs text-gray-400 font-medium">or</span>
+          <span className="text-xs text-zinc-400 font-medium">or</span>
           <div className="h-px bg-gray-200 flex-1" />
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
+            <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Email</label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@school.edu"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-sm font-semibold text-gray-700">Password</label>
+              <label className="block text-sm font-semibold text-zinc-700">Password</label>
               <Link href="/forgot-password" className="text-xs text-emerald-600 hover:underline">Forgot password?</Link>
             </div>
             <div className="relative">
@@ -122,12 +122,12 @@ function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-3 pr-11 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-4 py-3 pr-11 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -145,7 +145,7 @@ function LoginForm() {
           </Button>
         </form>
 
-        <p className="text-center text-sm text-gray-500 mt-6">
+        <p className="text-center text-sm text-zinc-500 mt-6">
           Don&apos;t have an account?{' '}
           <Link href="/signup" className="text-emerald-600 font-semibold hover:underline">Sign up free</Link>
         </p>

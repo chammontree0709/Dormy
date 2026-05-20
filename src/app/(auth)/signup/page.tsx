@@ -86,15 +86,15 @@ export default function SignupPage() {
       <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
         <Link href="/" className="flex items-center gap-2 mb-8">
           <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
-          <span className="font-black text-emerald-600 text-2xl">Roomd</span>
+          <span className="font-black text-zinc-950 text-2xl">Roomd</span>
         </Link>
-        <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-gray-100 p-8 text-center">
+        <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-zinc-100 p-8 text-center">
           <div className="text-4xl mb-4">📬</div>
-          <h1 className="text-2xl font-black text-gray-900 mb-2">Check your inbox</h1>
-          <p className="text-gray-500 text-sm mb-2">We sent a confirmation link to:</p>
-          <p className="font-bold text-gray-800 mb-4">{verifyEmail}</p>
-          <p className="text-sm text-gray-500 mb-6">Click the link in the email to activate your account, then come back to log in.</p>
-          <p className="text-xs text-gray-400">Didn&apos;t get it? Check spam or <button onClick={() => setVerifyEmail('')} className="text-emerald-600 hover:underline">try again</button>.</p>
+          <h1 className="text-2xl font-black text-zinc-950 mb-2">Check your inbox</h1>
+          <p className="text-zinc-500 text-sm mb-2">We sent a confirmation link to:</p>
+          <p className="font-bold text-zinc-900 mb-4">{verifyEmail}</p>
+          <p className="text-sm text-zinc-500 mb-6">Click the link in the email to activate your account, then come back to log in.</p>
+          <p className="text-xs text-zinc-400">Didn&apos;t get it? Check spam or <button onClick={() => setVerifyEmail('')} className="text-emerald-600 hover:underline">try again</button>.</p>
           <div className="mt-6">
             <Link href="/login" className="text-sm text-emerald-600 font-semibold hover:underline">Go to login →</Link>
           </div>
@@ -107,21 +107,21 @@ export default function SignupPage() {
     <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
       <Link href="/" className="flex items-center gap-2 mb-8">
         <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
-          <span className="font-black text-emerald-600 text-2xl">Roomd</span>
+          <span className="font-black text-zinc-950 text-2xl">Roomd</span>
       </Link>
 
-      <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-gray-100 p-8">
-        <h1 className="text-2xl font-black text-gray-900 mb-1">Create your account</h1>
-        <p className="text-gray-500 text-sm mb-6">Free forever. You&apos;ll be taken to create or join your room.</p>
+      <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-zinc-100 p-8">
+        <h1 className="text-2xl font-black text-zinc-950 mb-1">Create your account</h1>
+        <p className="text-zinc-500 text-sm mb-6">Free forever. You&apos;ll be taken to create or join your room.</p>
 
         <button
           type="button"
           onClick={handleGoogleSignIn}
           disabled={loading}
-          className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors mb-4 disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm font-semibold text-zinc-700 hover:bg-zinc-50 transition-colors mb-4 disabled:opacity-50"
         >
           {loading ? (
-            <svg className="animate-spin w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24">
+            <svg className="animate-spin w-4 h-4 text-zinc-500" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
             </svg>
@@ -133,35 +133,35 @@ export default function SignupPage() {
 
         <div className="flex items-center gap-3 mb-4">
           <div className="h-px bg-gray-200 flex-1" />
-          <span className="text-xs text-gray-400 font-medium">or</span>
+          <span className="text-xs text-zinc-400 font-medium">or</span>
           <div className="h-px bg-gray-200 flex-1" />
         </div>
 
         <form onSubmit={handleSignup} className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Your Name</label>
+            <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Your Name</label>
             <input
               type="text"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Emma"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
+            <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Email</label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@school.edu"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Password</label>
+            <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -170,20 +170,20 @@ export default function SignupPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="At least 6 characters"
-                className="w-full px-4 py-3 pr-11 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-4 py-3 pr-11 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-              Room Invite Code <span className="text-gray-400 font-normal">(optional)</span>
+            <label className="block text-sm font-semibold text-zinc-700 mb-1.5">
+              Room Invite Code <span className="text-zinc-400 font-normal">(optional)</span>
             </label>
             <div className="relative">
               <input
@@ -197,7 +197,7 @@ export default function SignupPage() {
                     ? inviteValid
                       ? 'border-green-400 bg-green-50'
                       : 'border-amber-300 bg-amber-50'
-                    : 'border-gray-200'
+                    : 'border-zinc-200'
                 }`}
               />
               {inviteCode.length > 0 && (
@@ -206,7 +206,7 @@ export default function SignupPage() {
                 </span>
               )}
             </div>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-zinc-400 mt-1">
               {inviteCode.length > 0 && !inviteValid
                 ? `${inviteCode.length}/6 characters — codes are exactly 6 letters/numbers`
                 : 'Got a code from a roommate? Enter it here.'}
@@ -224,7 +224,7 @@ export default function SignupPage() {
           </Button>
         </form>
 
-        <p className="text-center text-sm text-gray-500 mt-6">
+        <p className="text-center text-sm text-zinc-500 mt-6">
           Already have an account?{' '}
           <Link href="/login" className="text-emerald-600 font-semibold hover:underline">Log in</Link>
         </p>

@@ -493,96 +493,118 @@ export default async function GuidePage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-white">
-      <header className="border-b border-gray-100 sticky top-0 bg-white/80 backdrop-blur-md z-40">
-        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+      <header className="border-b border-zinc-100 sticky top-0 bg-white/90 backdrop-blur-md z-40">
+        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5">
             <Image src="/logo.png" alt="Roomd" height={30} width={30} className="rounded-lg" />
-            <span className="font-black text-emerald-600 text-xl">Roomd</span>
+            <span className="font-black text-zinc-950 text-xl">Roomd</span>
           </Link>
-          <div className="flex items-center gap-3">
-            <Link href="/login" className="text-sm font-semibold text-gray-500 hover:text-gray-900">Log in</Link>
-            <Link href="/signup" className="bg-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-xl hover:bg-emerald-700 transition-colors">
+          <div className="flex items-center gap-4">
+            <Link href="/login" className="text-sm font-semibold text-zinc-500 hover:text-zinc-950 transition-colors">Log in</Link>
+            <Link href="/signup" className="bg-zinc-950 text-white text-sm font-bold px-4 py-2 rounded-xl hover:bg-zinc-800 transition-colors active:scale-[0.98]">
               Get started free
             </Link>
           </div>
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto px-4 py-12">
+      <main className="max-w-2xl mx-auto px-6 py-12">
         {/* Breadcrumb */}
-        <nav className="text-sm text-gray-400 mb-8 flex items-center gap-1.5">
-          <Link href="/" className="hover:text-emerald-600 transition-colors">Home</Link>
+        <nav className="text-sm text-zinc-400 mb-10 flex items-center gap-1.5">
+          <Link href="/" className="hover:text-zinc-950 transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/guides" className="hover:text-emerald-600 transition-colors">Guides</Link>
+          <Link href="/guides" className="hover:text-zinc-950 transition-colors">Guides</Link>
           <span>/</span>
-          <span className="text-gray-700 font-medium truncate">{article.title}</span>
+          <span className="text-zinc-700 font-medium truncate">{article.title}</span>
         </nav>
 
         {/* Article header */}
-        <div className="mb-10">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="text-xs font-bold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">{article.tag}</span>
-            <span className="text-xs text-gray-400">{article.readTime}</span>
+        <div className="border-b border-zinc-200 pb-10 mb-10">
+          <div className="flex items-center gap-2 mb-5">
+            <span className="text-xs font-bold tracking-wider text-zinc-400 uppercase">{article.tag}</span>
+            <span className="text-zinc-300">·</span>
+            <span className="text-xs text-zinc-400">{article.readTime}</span>
           </div>
-          <h1 className="text-4xl font-black text-gray-900 leading-tight mb-4">{article.title}</h1>
-          <p className="text-lg text-gray-500 leading-relaxed">{article.description}</p>
+          <h1
+            className="text-4xl font-bold italic text-zinc-950 leading-tight mb-4"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            {article.title}
+          </h1>
+          <p className="text-lg text-zinc-500 leading-relaxed">{article.description}</p>
         </div>
 
         {/* Article body */}
         <article className="
-          text-gray-700 leading-relaxed
+          text-zinc-700 leading-relaxed
           [&_p]:mb-5 [&_p]:text-base [&_p]:leading-7
-          [&_h2]:text-2xl [&_h2]:font-black [&_h2]:text-gray-900 [&_h2]:mt-10 [&_h2]:mb-4
+          [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:italic [&_h2]:text-zinc-950 [&_h2]:mt-10 [&_h2]:mb-4
           [&_ul]:mb-5 [&_ul]:space-y-2 [&_ul]:pl-5 [&_ul]:list-disc
           [&_li]:text-base [&_li]:leading-6
-          [&_strong]:font-bold [&_strong]:text-gray-900
+          [&_strong]:font-bold [&_strong]:text-zinc-950
           [&_em]:italic
-        ">
+        "
+          style={{ '--font-playfair': 'var(--font-playfair)' } as React.CSSProperties}
+        >
           <ContentComponent />
         </article>
 
         {/* CTA */}
-        <div className="mt-14 bg-emerald-50 rounded-2xl p-8 text-center">
-          <h2 className="text-2xl font-black text-gray-900 mb-2">Coordinate with your roommates</h2>
-          <p className="text-gray-500 mb-6 max-w-sm mx-auto">
+        <div className="mt-14 bg-zinc-950 rounded-3xl p-8">
+          <p className="text-xs font-bold tracking-widest text-emerald-400 uppercase mb-3">Get organized</p>
+          <h2
+            className="text-2xl font-bold italic text-white mb-3 leading-tight"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            Coordinate with your roommates.
+          </h2>
+          <p className="text-zinc-400 mb-6 max-w-sm">
             Create a free shared checklist, invite your roommates, and track who&apos;s buying what — all in one place.
           </p>
-          <Link href="/signup" className="inline-block bg-emerald-600 text-white font-bold text-lg px-8 py-4 rounded-2xl hover:bg-emerald-700 transition-colors">
+          <Link
+            href="/signup"
+            className="inline-flex items-center gap-2 bg-emerald-500 text-white font-bold px-7 py-3.5 rounded-2xl hover:bg-emerald-400 transition-colors active:scale-[0.98]"
+          >
             Create your room — free
           </Link>
         </div>
 
         {/* Other guides */}
         <div className="mt-12">
-          <h2 className="text-xl font-black text-gray-900 mb-4">More guides</h2>
-          <div className="space-y-3">
+          <h2
+            className="text-xl font-bold italic text-zinc-950 mb-5"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            More guides
+          </h2>
+          <div className="border-t border-zinc-200">
             {otherSlugs.map((s) => {
               const a = articles[s]
               return (
                 <Link
                   key={s}
                   href={`/guides/${s}`}
-                  className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl border border-gray-100 hover:border-emerald-200 hover:bg-emerald-50/40 transition-all group"
+                  className="flex items-center justify-between py-4 border-b border-zinc-200 hover:bg-zinc-50 -mx-4 px-4 transition-colors group"
                 >
-                  <span className="text-3xl flex-shrink-0">{a.emoji}</span>
                   <div>
-                    <p className="font-bold text-gray-900 group-hover:text-emerald-700 transition-colors text-sm">{a.title}</p>
-                    <p className="text-xs text-gray-400 mt-0.5">{a.readTime}</p>
+                    <p className="font-bold text-zinc-950 text-sm mb-0.5">{a.title}</p>
+                    <p className="text-xs text-zinc-400">{a.readTime}</p>
                   </div>
+                  <span className="text-xs font-bold text-zinc-400 group-hover:text-zinc-950 transition-colors flex-shrink-0 ml-4">Read →</span>
                 </Link>
               )
             })}
           </div>
-          <div className="text-center mt-4">
-            <Link href="/guides" className="text-sm text-emerald-600 font-semibold hover:underline">
-              View all guides →
+          <div className="mt-4">
+            <Link href="/guides" className="text-sm text-zinc-400 font-semibold hover:text-zinc-950 transition-colors">
+              View all guides
             </Link>
           </div>
         </div>
       </main>
 
-      <footer className="border-t border-gray-100 py-8 px-4 text-center text-sm text-gray-400 mt-8">
-        <p>© {new Date().getFullYear()} Roomd. <Link href="/terms" className="hover:underline">Terms</Link> · <Link href="/privacy" className="hover:underline">Privacy</Link> · <a href="mailto:support@roomdapp.com" className="hover:underline">Support</a></p>
+      <footer className="border-t border-zinc-100 py-8 px-6 text-center text-sm text-zinc-400 mt-8">
+        <p>&copy; {new Date().getFullYear()} Roomd. <Link href="/terms" className="hover:text-zinc-950 transition-colors">Terms</Link> · <Link href="/privacy" className="hover:text-zinc-950 transition-colors">Privacy</Link> · <a href="mailto:support@roomdapp.com" className="hover:text-zinc-950 transition-colors">Support</a></p>
         <p className="mt-1 text-xs">As an Amazon Associate, Roomd earns from qualifying purchases.</p>
       </footer>
     </div>
