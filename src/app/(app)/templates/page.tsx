@@ -34,32 +34,38 @@ export default function TemplatesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-white">
       <Navbar />
 
       <main className="max-w-3xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-black text-gray-900">Dorm Checklists</h1>
-          <p className="text-gray-500 mt-1">Curated lists of everything you need. Click any item to buy.</p>
+        <div className="border-b border-zinc-200 pb-8 mb-8">
+          <p className="text-xs font-bold tracking-widest text-emerald-600 uppercase mb-3">Curated lists</p>
+          <h1
+            className="text-3xl font-bold italic text-zinc-950 leading-tight"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            Dorm Checklists
+          </h1>
+          <p className="text-zinc-500 mt-1">Curated lists of everything you need. Click any item to buy.</p>
         </div>
 
-        {/* Preset list packs */}
-        <h2 className="font-black text-xl text-gray-900 mb-4">Starter Packs</h2>
-        <div className="grid grid-cols-2 gap-3 mb-8">
+        {/* Starter Packs */}
+        <h2 className="font-bold text-sm tracking-widest text-zinc-400 uppercase mb-4">Starter Packs</h2>
+        <div className="grid grid-cols-2 gap-3 mb-10">
           {PRESET_LISTS.map((list) => (
             <button
               key={list.id}
               onClick={() => { setSelectedList(selectedList === list.id ? null : list.id); setSelectedCategory(null) }}
               className={cn(
-                'text-left p-4 rounded-2xl border-2 transition-all',
+                'text-left p-4 rounded-2xl border transition-all',
                 selectedList === list.id
-                  ? 'border-emerald-500 bg-emerald-50'
-                  : 'border-gray-200 bg-white hover:border-emerald-200 hover:bg-emerald-50/50'
+                  ? 'border-zinc-950 bg-zinc-950 text-white'
+                  : 'border-zinc-200 bg-white hover:border-zinc-400 hover:bg-zinc-50'
               )}
             >
               <p className="text-2xl mb-2">{list.emoji}</p>
-              <p className="font-bold text-gray-900 text-sm">{list.name}</p>
-              <p className="text-xs text-gray-500 mt-0.5">{list.itemIds.length} items</p>
+              <p className={cn('font-bold text-sm', selectedList === list.id ? 'text-white' : 'text-zinc-950')}>{list.name}</p>
+              <p className={cn('text-xs mt-0.5', selectedList === list.id ? 'text-zinc-400' : 'text-zinc-400')}>{list.itemIds.length} items</p>
             </button>
           ))}
         </div>
@@ -69,28 +75,28 @@ export default function TemplatesPage() {
           {selectedCategory ? (
             <button
               onClick={() => setSelectedCategory(null)}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 font-bold text-xl"
+              className="flex items-center gap-2 text-zinc-600 hover:text-zinc-950 font-bold text-xl"
             >
               <ArrowLeft size={20} />
               {CATEGORIES.find((c) => c.id === selectedCategory)?.icon}{' '}
               {CATEGORIES.find((c) => c.id === selectedCategory)?.name}
             </button>
           ) : (
-            <h2 className="font-black text-xl text-gray-900">
+            <h2 className="font-bold text-sm tracking-widest text-zinc-400 uppercase">
               {selectedList ? PRESET_LISTS.find((l) => l.id === selectedList)?.name : 'Browse by Category'}
             </h2>
           )}
           {(selectedCategory || selectedList) && (
             <button
               onClick={() => { setSelectedCategory(null); setSelectedList(null) }}
-              className="text-xs text-emerald-600 font-semibold hover:underline"
+              className="text-xs text-zinc-400 font-semibold hover:text-zinc-950 transition-colors"
             >
               Clear
             </button>
           )}
         </div>
 
-        {/* Category grid (shown when no category or list selected) */}
+        {/* Category grid */}
         {!selectedCategory && !selectedList && (
           <div className="grid grid-cols-2 gap-3 mb-8">
             {CATEGORIES.map((cat) => {
@@ -99,18 +105,18 @@ export default function TemplatesPage() {
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className="flex flex-col items-start gap-1 p-4 rounded-2xl border-2 border-gray-200 bg-white hover:border-emerald-300 hover:bg-emerald-50/50 transition-all text-left"
+                  className="flex flex-col items-start gap-1 p-4 rounded-2xl border border-zinc-200 bg-white hover:border-zinc-400 hover:bg-zinc-50 transition-all text-left"
                 >
                   <span className="text-2xl">{cat.icon}</span>
-                  <p className="font-bold text-gray-900 text-sm leading-tight">{cat.name}</p>
-                  <p className="text-xs text-gray-400">{count} items</p>
+                  <p className="font-bold text-zinc-950 text-sm leading-tight">{cat.name}</p>
+                  <p className="text-xs text-zinc-400">{count} items</p>
                 </button>
               )
             })}
           </div>
         )}
 
-        {/* Item list (shown when category or starter pack selected) */}
+        {/* Item list */}
         {(selectedCategory || selectedList) && (
         <div ref={listRef} className="space-y-3">
           {(displayItems as ReturnType<typeof getItemById>[]).map((item) => {
@@ -131,20 +137,20 @@ export default function TemplatesPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">
-                        <p className="font-bold text-gray-900 text-sm">{item.name}</p>
+                        <p className="font-bold text-zinc-950 text-sm">{item.name}</p>
                         <div className="flex items-center gap-2 mt-1 flex-wrap">
                           <span className="text-sm font-semibold text-emerald-600">{item.price_estimate}</span>
                           <span className={cn('text-xs px-2 py-0.5 rounded-full font-semibold', {
                             'bg-red-100 text-red-700': item.priority === 'essential',
                             'bg-blue-100 text-blue-700': item.priority === 'recommended',
-                            'bg-gray-100 text-gray-600': item.priority === 'nice-to-have',
+                            'bg-zinc-100 text-zinc-600': item.priority === 'nice-to-have',
                           })}>
                             {item.priority}
                           </span>
                           {avgRating && (
                             <div className="flex items-center gap-0.5">
                               <Star size={11} className="text-amber-500 fill-amber-500" />
-                              <span className="text-xs text-gray-500">{avgRating}</span>
+                              <span className="text-xs text-zinc-500">{avgRating}</span>
                             </div>
                           )}
                         </div>
@@ -159,34 +165,37 @@ export default function TemplatesPage() {
                         >
                           <ShoppingCart size={12} /> Buy
                         </a>
-                        {isExpanded ? <ChevronUp size={16} className="text-gray-400" /> : <ChevronDown size={16} className="text-gray-400" />}
+                        {isExpanded
+                          ? <ChevronUp size={16} className="text-zinc-400" />
+                          : <ChevronDown size={16} className="text-zinc-400" />
+                        }
                       </div>
                     </div>
                   </div>
                 </button>
 
                 {isExpanded && (
-                  <div className="px-4 pb-4 border-t border-gray-100 pt-4">
-                    <p className="text-sm text-gray-600 leading-relaxed mb-4">{item.description}</p>
+                  <div className="px-4 pb-4 border-t border-zinc-100 pt-4">
+                    <p className="text-sm text-zinc-600 leading-relaxed mb-4">{item.description}</p>
 
                     {item.reviews.length > 0 && (
                       <div className="space-y-3">
-                        <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Student Reviews</p>
+                        <p className="text-xs font-bold text-zinc-400 uppercase tracking-wide">Student Reviews</p>
                         {item.reviews.map((review, i) => (
                           <div key={i} className="flex gap-3">
-                            <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center flex-shrink-0">
+                            <div className="w-7 h-7 rounded-full bg-zinc-100 text-zinc-700 font-bold text-xs flex items-center justify-center flex-shrink-0">
                               {review.author[0]}
                             </div>
                             <div>
                               <div className="flex items-center gap-2 mb-0.5">
-                                <p className="text-xs font-bold text-gray-900">{review.author}</p>
+                                <p className="text-xs font-bold text-zinc-950">{review.author}</p>
                                 <div className="flex items-center gap-0.5">
                                   {[1, 2, 3, 4, 5].map((s) => (
-                                    <Star key={s} size={10} className={s <= review.rating ? 'text-amber-500 fill-amber-500' : 'text-gray-200 fill-gray-200'} />
+                                    <Star key={s} size={10} className={s <= review.rating ? 'text-amber-500 fill-amber-500' : 'text-zinc-200 fill-zinc-200'} />
                                   ))}
                                 </div>
                               </div>
-                              <p className="text-xs text-gray-600">{review.text}</p>
+                              <p className="text-xs text-zinc-600">{review.text}</p>
                             </div>
                           </div>
                         ))}
@@ -202,7 +211,7 @@ export default function TemplatesPage() {
                       >
                         <ShoppingCart size={16} /> Buy on Amazon
                       </a>
-                      <p className="text-center text-xs text-gray-400 mt-1.5">
+                      <p className="text-center text-xs text-zinc-400 mt-1.5">
                         Affiliate link — Roomd earns a small commission at no cost to you.
                       </p>
                     </div>

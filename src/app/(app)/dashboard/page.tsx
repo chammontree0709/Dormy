@@ -8,7 +8,7 @@ import Navbar from '@/components/layout/Navbar'
 import Button from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import Link from 'next/link'
-import { Plus, DoorOpen, Users, ArrowRight } from 'lucide-react'
+import { Plus, DoorOpen, ArrowRight, Home, LayoutTemplate } from 'lucide-react'
 
 export default function DashboardPage() {
   const [rooms, setRooms] = useState<Room[]>([])
@@ -119,13 +119,18 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-white">
       <Navbar />
 
       <main className="max-w-3xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-black text-gray-900">Hey, {userName} 👋</h1>
-          <p className="text-gray-500 mt-1">Your dorm rooms and checklists.</p>
+        <div className="border-b border-zinc-200 pb-8 mb-8">
+          <h1
+            className="text-3xl font-bold italic text-zinc-950 leading-tight"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            Hey, {userName}.
+          </h1>
+          <p className="text-zinc-500 mt-1">Your dorm rooms and checklists.</p>
         </div>
 
         <div className="flex gap-3 mb-8">
@@ -141,14 +146,14 @@ export default function DashboardPage() {
           <Card className="mb-6">
             {showCreate ? (
               <div className="space-y-4">
-                <h2 className="font-bold text-gray-900">Create a new room</h2>
+                <h2 className="font-bold text-zinc-950">Create a new room</h2>
                 <input
                   type="text"
                   placeholder="e.g. Johnson Hall 204"
                   value={newRoomName}
                   onChange={(e) => setNewRoomName(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && createRoom()}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   autoFocus
                 />
                 {actionError && <p className="text-red-600 text-sm">{actionError}</p>}
@@ -159,7 +164,7 @@ export default function DashboardPage() {
               </div>
             ) : (
               <div className="space-y-4">
-                <h2 className="font-bold text-gray-900">Join with invite code</h2>
+                <h2 className="font-bold text-zinc-950">Join with invite code</h2>
                 <input
                   type="text"
                   placeholder="Enter 6-digit code"
@@ -167,7 +172,7 @@ export default function DashboardPage() {
                   onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
                   onKeyDown={(e) => e.key === 'Enter' && joinRoom()}
                   maxLength={6}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm uppercase font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm uppercase font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   autoFocus
                 />
                 {actionError && <p className="text-red-600 text-sm">{actionError}</p>}
@@ -183,48 +188,55 @@ export default function DashboardPage() {
         {loading ? (
           <div className="space-y-3">
             {[1, 2].map((i) => (
-              <div key={i} className="h-24 bg-white rounded-2xl border border-gray-100 animate-pulse" />
+              <div key={i} className="h-24 bg-zinc-50 rounded-2xl border border-zinc-100 animate-pulse" />
             ))}
           </div>
         ) : rooms.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="text-5xl mb-4">🏠</div>
-            <h2 className="font-bold text-gray-900 text-xl mb-2">No rooms yet</h2>
-            <p className="text-gray-500 text-sm mb-6">Create a room to get started, or join one with a roommate&apos;s invite code.</p>
+          <div className="border-t border-zinc-200 pt-12 text-center py-16">
+            <div className="w-14 h-14 rounded-2xl bg-zinc-100 flex items-center justify-center mx-auto mb-4">
+              <Home className="w-7 h-7 text-zinc-400" strokeWidth={1.5} />
+            </div>
+            <h2 className="font-bold text-zinc-950 text-xl mb-2">No rooms yet</h2>
+            <p className="text-zinc-500 text-sm mb-6">Create a room to get started, or join one with a roommate&apos;s invite code.</p>
             <Button onClick={() => setShowCreate(true)}>
               <Plus size={16} className="mr-1.5" /> Create your first room
             </Button>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="border-t border-zinc-200">
             {rooms.map((room) => (
               <Link key={room.id} href={`/room/${room.id}`}>
-                <div className="bg-white rounded-2xl border border-gray-100 p-5 hover:border-emerald-200 hover:shadow-sm transition-all group cursor-pointer">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center text-xl">🏠</div>
-                      <div>
-                        <p className="font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">{room.name}</p>
-                        <p className="text-xs text-gray-400">Code: <span className="font-mono font-semibold">{room.invite_code}</span></p>
-                      </div>
+                <div className="flex items-center justify-between py-4 border-b border-zinc-200 hover:bg-zinc-50 -mx-4 px-4 transition-colors group cursor-pointer">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-zinc-100 flex items-center justify-center flex-shrink-0">
+                      <Home className="w-4 h-4 text-zinc-500" strokeWidth={1.5} />
                     </div>
-                    <ArrowRight size={18} className="text-gray-300 group-hover:text-emerald-500 group-hover:translate-x-0.5 transition-all" />
+                    <div>
+                      <p className="font-bold text-zinc-950 group-hover:text-emerald-600 transition-colors">{room.name}</p>
+                      <p className="text-xs text-zinc-400">Code: <span className="font-mono font-semibold">{room.invite_code}</span></p>
+                    </div>
                   </div>
+                  <ArrowRight size={18} className="text-zinc-300 group-hover:text-zinc-950 group-hover:translate-x-0.5 transition-all" />
                 </div>
               </Link>
             ))}
           </div>
         )}
 
-        <div className="mt-10 pt-6 border-t border-gray-200">
-          <div className="flex items-center gap-2 mb-4">
-            <Users size={16} className="text-gray-400" />
-            <p className="text-sm font-semibold text-gray-500">Quick picks</p>
-          </div>
-          <Link href="/templates" className="block bg-gradient-to-r from-emerald-50 to-zinc-50 border border-emerald-100 rounded-2xl p-5 hover:border-emerald-300 transition-all group">
-            <p className="font-bold text-gray-900 mb-1">Browse preset checklists 📦</p>
-            <p className="text-sm text-gray-500">Freshman Essentials, Study Setup, Kitchen Starter, and more.</p>
-            <p className="text-sm text-emerald-600 font-semibold mt-3 group-hover:underline">Explore →</p>
+        {/* Quick picks */}
+        <div className="mt-10 pt-6 border-t border-zinc-200">
+          <p className="text-xs font-bold tracking-widest text-zinc-400 uppercase mb-4">Quick picks</p>
+          <Link href="/templates" className="flex items-center justify-between bg-zinc-50 border border-zinc-200 rounded-2xl p-5 hover:border-zinc-400 hover:bg-white transition-all group">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-zinc-100 flex items-center justify-center flex-shrink-0">
+                <LayoutTemplate className="w-4 h-4 text-zinc-500" strokeWidth={1.5} />
+              </div>
+              <div>
+                <p className="font-bold text-zinc-950 mb-0.5">Browse preset checklists</p>
+                <p className="text-sm text-zinc-500">Freshman Essentials, Study Setup, Kitchen Starter, and more.</p>
+              </div>
+            </div>
+            <ArrowRight size={16} className="text-zinc-300 group-hover:text-zinc-950 flex-shrink-0 ml-4 transition-colors" />
           </Link>
         </div>
       </main>
