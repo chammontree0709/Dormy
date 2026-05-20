@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${geist.variable} h-full`}>
       <head>
-        {/* AdSense verification — must be in <head> for Google's crawler */}
+        <meta name="google-adsense-account" content="ca-pub-7336988558032518" />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7336988558032518"
