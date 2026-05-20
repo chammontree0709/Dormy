@@ -3,7 +3,7 @@
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { LogOut, Home, LayoutTemplate } from 'lucide-react'
+import { LogOut, Home, LayoutTemplate, BookOpen } from 'lucide-react'
 
 interface NavbarProps {
   roomName?: string
@@ -49,6 +49,13 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
           >
             <LayoutTemplate size={16} />
             <span className="hidden sm:block">Templates</span>
+          </Link>
+          <Link
+            href="/guides"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors"
+          >
+            <BookOpen size={16} />
+            <span className="hidden sm:block">Guides</span>
           </Link>
           <button
             onClick={signOut}
