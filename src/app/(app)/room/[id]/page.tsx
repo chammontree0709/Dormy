@@ -65,26 +65,41 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
   async function toggleItem(itemId: string, checked: boolean) {
     const now = new Date().toISOString()
-    await supabase.from('room_items').update({
+    setItems((prev) => prev.map((item) =>
+      item.id === itemId
+        ? { ...item, is_checked: checked, checked_by_name: checked ? currentUserName : null, checked_at: checked ? now : null }
+        : item
+    ))
+    supabase.from('room_items').update({
       is_checked: checked,
       checked_by_name: checked ? currentUserName : null,
       checked_at: checked ? now : null,
-    }).eq('id', itemId)
+    }).eq('id', itemId).then(() => {})
   }
 
   async function deleteItem(itemId: string) {
-    await supabase.from('room_items').delete().eq('id', itemId)
+    setItems((prev) => prev.filter((item) => item.id !== itemId))
+    supabase.from('room_items').delete().eq('id', itemId).then(() => {})
   }
 
   async function claimItem(itemId: string, claim: boolean) {
-    await supabase.from('room_items').update({
+    const now = new Date().toISOString()
+    setItems((prev) => prev.map((item) =>
+      item.id === itemId
+        ? { ...item, claimed_by_name: claim ? currentUserName : null, claimed_at: claim ? now : null }
+        : item
+    ))
+    supabase.from('room_items').update({
       claimed_by_name: claim ? currentUserName : null,
       claimed_at: claim ? new Date().toISOString() : null,
-    }).eq('id', itemId)
+    }).eq('id', itemId).then(() => {})
   }
 
   async function updateQuantity(itemId: string, quantity: number) {
-    await supabase.from('room_items').update({ quantity }).eq('id', itemId)
+    setItems((prev) => prev.map((item) =>
+      item.id === itemId ? { ...item, quantity } : item
+    ))
+    supabase.from('room_items').update({ quantity }).eq('id', itemId).then(() => {})
   }
 
   async function addItem(
