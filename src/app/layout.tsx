@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist } from 'next/font/google'
-import Script from 'next/script'
 import './globals.css'
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist-sans' })
@@ -34,14 +33,16 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${geist.variable} h-full`}>
-      <body className="min-h-full antialiased">
-        {children}
-        <Script
+      <head>
+        {/* AdSense verification — must be in <head> for Google's crawler */}
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7336988558032518"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
         />
+      </head>
+      <body className="min-h-full antialiased">
+        {children}
       </body>
     </html>
   )
