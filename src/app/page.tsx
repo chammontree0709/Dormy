@@ -298,11 +298,12 @@ export default function LandingPage() {
           <p className="text-center text-gray-400 mb-12">Move-in is stressful enough. We handle the list.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {features.map((f) => (
-              <div key={f.title} className={`${f.bg} border ${f.border} rounded-2xl p-6`}>
-                <div className={`text-3xl mb-4`}>{f.emoji}</div>
+              <Link key={f.title} href="/signup" className={`${f.bg} border ${f.border} rounded-2xl p-6 block hover:shadow-md hover:-translate-y-0.5 transition-all group`}>
+                <div className="text-3xl mb-4">{f.emoji}</div>
                 <h3 className="font-bold text-gray-900 mb-2 text-lg">{f.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{f.description}</p>
-              </div>
+                <p className="text-gray-600 text-sm leading-relaxed mb-3">{f.description}</p>
+                <span className="text-xs font-bold text-indigo-600 group-hover:underline">Try it free →</span>
+              </Link>
             ))}
           </div>
         </div>
