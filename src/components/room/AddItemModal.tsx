@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { X, Search, Plus } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { X, Search, Plus, ArrowLeft } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import { PRESET_ITEMS, CATEGORIES } from '@/data/presets'
 import { PresetItem } from '@/types'
@@ -21,6 +21,14 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
   const [customUrl, setCustomUrl] = useState('')
   const [customCategory, setCustomCategory] = useState('storage')
   const [notes, setNotes] = useState('')
+  const listRef = useRef<HTMLDivElement>(null)
+
+  // Scroll list to top whenever category or search changes
+  useEffect(() => {
+    listRef.current?.scrollTo({ top: 0 })
+  }, [selectedCategory, search])
+
+  const isSearching = search.trim().length > 0
 
   const filtered = PRESET_ITEMS.filter((item) => {
     const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -28,6 +36,10 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
     const matchesCategory = !selectedCategory || item.category === selectedCategory
     return matchesSearch && matchesCategory
   })
+
+  const categoryItemCounts = Object.fromEntries(
+    CATEGORIES.map((cat) => [cat.id, PRESET_ITEMS.filter((i) => i.category === cat.id).length])
+  )
 
   function handleAddPreset(item: PresetItem) {
     onAdd(item.id, undefined, undefined, item.category)
@@ -40,16 +52,30 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
     onClose()
   }
 
+  const showCategoryGrid = !isSearching && !selectedCategory
+
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4">
       <div className="bg-white rounded-2xl w-full max-w-md shadow-xl flex flex-col max-h-[85vh]">
+        {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-gray-100 flex-shrink-0">
-          <h2 className="font-bold text-lg text-gray-900">Add Item</h2>
+          {selectedCategory && !isSearching ? (
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 font-semibold text-sm"
+            >
+              <ArrowLeft size={16} />
+              {CATEGORIES.find((c) => c.id === selectedCategory)?.name}
+            </button>
+          ) : (
+            <h2 className="font-bold text-lg text-gray-900">Add Item</h2>
+          )}
           <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
             <X size={18} className="text-gray-500" />
           </button>
         </div>
 
+        {/* Tabs */}
         <div className="flex gap-1 p-4 flex-shrink-0">
           <button
             onClick={() => setTab('preset')}
@@ -67,77 +93,89 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
 
         {tab === 'preset' ? (
           <div className="flex flex-col flex-1 overflow-hidden px-4 pb-4 gap-3">
+            {/* Search */}
             <div className="relative flex-shrink-0">
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search items..."
+                placeholder="Search all 205 items…"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => { setSearch(e.target.value); setSelectedCategory(null) }}
                 className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 autoFocus
               />
             </div>
 
-            <div className="flex gap-2 overflow-x-auto pb-1 flex-shrink-0 -mx-4 px-4">
-              <button
-                onClick={() => setSelectedCategory(null)}
-                className={cn('flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors', !selectedCategory ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200')}
-              >
-                All
-              </button>
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(selectedCategory === cat.id ? null : cat.id)}
-                  className={cn('flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors whitespace-nowrap', selectedCategory === cat.id ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200')}
-                >
-                  {cat.icon} {cat.name}
-                </button>
-              ))}
-            </div>
-
-            <div className="overflow-y-auto flex-1 space-y-2">
-              {filtered.length === 0 ? (
-                <p className="text-center text-gray-400 text-sm py-8">No items found.</p>
+            {/* Category grid or item list */}
+            <div ref={listRef} className="overflow-y-auto flex-1">
+              {showCategoryGrid ? (
+                // Category picker
+                <div className="grid grid-cols-2 gap-2">
+                  {CATEGORIES.map((cat) => {
+                    const count = categoryItemCounts[cat.id] ?? 0
+                    const addedInCat = PRESET_ITEMS.filter(
+                      (i) => i.category === cat.id && existingPresetIds.includes(i.id)
+                    ).length
+                    return (
+                      <button
+                        key={cat.id}
+                        onClick={() => setSelectedCategory(cat.id)}
+                        className="flex flex-col items-start gap-1 p-4 rounded-xl border border-gray-100 bg-gray-50 hover:border-indigo-200 hover:bg-indigo-50 transition-all text-left"
+                      >
+                        <span className="text-2xl">{cat.icon}</span>
+                        <p className="font-bold text-sm text-gray-900 leading-tight">{cat.name}</p>
+                        <p className="text-xs text-gray-400">
+                          {count} items{addedInCat > 0 ? ` · ${addedInCat} in room` : ''}
+                        </p>
+                      </button>
+                    )
+                  })}
+                </div>
               ) : (
-                filtered.map((item) => {
-                  const alreadyAdded = existingPresetIds.includes(item.id)
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => handleAddPreset(item)}
-                      className={cn(
-                        'w-full text-left flex items-start gap-3 p-3 rounded-xl border transition-all group',
-                        alreadyAdded
-                          ? 'border-indigo-200 bg-indigo-50 hover:bg-indigo-100'
-                          : 'border-gray-100 hover:border-indigo-200 hover:bg-indigo-50'
-                      )}
-                    >
-                      <span className="text-xl flex-shrink-0 mt-0.5">{item.image_emoji}</span>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between gap-2">
-                          <p className="font-semibold text-sm text-gray-900 truncate">{item.name}</p>
-                          <div className="flex items-center gap-1.5 flex-shrink-0">
-                            {alreadyAdded && (
-                              <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-200 text-indigo-800 font-semibold">in room</span>
-                            )}
-                            <span className={cn('text-xs px-2 py-0.5 rounded-full', {
-                              'bg-red-100 text-red-700': item.priority === 'essential',
-                              'bg-blue-100 text-blue-700': item.priority === 'recommended',
-                              'bg-gray-100 text-gray-600': item.priority === 'nice-to-have',
-                            })}>
-                              {item.priority}
-                            </span>
+                // Item list (filtered by search or category)
+                <div className="space-y-2">
+                  {filtered.length === 0 ? (
+                    <p className="text-center text-gray-400 text-sm py-8">No items found.</p>
+                  ) : (
+                    filtered.map((item) => {
+                      const alreadyAdded = existingPresetIds.includes(item.id)
+                      return (
+                        <button
+                          key={item.id}
+                          onClick={() => handleAddPreset(item)}
+                          className={cn(
+                            'w-full text-left flex items-start gap-3 p-3 rounded-xl border transition-all group',
+                            alreadyAdded
+                              ? 'border-indigo-200 bg-indigo-50 hover:bg-indigo-100'
+                              : 'border-gray-100 hover:border-indigo-200 hover:bg-indigo-50'
+                          )}
+                        >
+                          <span className="text-xl flex-shrink-0 mt-0.5">{item.image_emoji}</span>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between gap-2">
+                              <p className="font-semibold text-sm text-gray-900 truncate">{item.name}</p>
+                              <div className="flex items-center gap-1.5 flex-shrink-0">
+                                {alreadyAdded && (
+                                  <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-200 text-indigo-800 font-semibold">in room</span>
+                                )}
+                                <span className={cn('text-xs px-2 py-0.5 rounded-full', {
+                                  'bg-red-100 text-red-700': item.priority === 'essential',
+                                  'bg-blue-100 text-blue-700': item.priority === 'recommended',
+                                  'bg-gray-100 text-gray-600': item.priority === 'nice-to-have',
+                                })}>
+                                  {item.priority}
+                                </span>
+                              </div>
+                            </div>
+                            <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{item.description}</p>
+                            <p className="text-xs text-indigo-600 font-medium mt-1">{item.price_estimate}</p>
                           </div>
-                        </div>
-                        <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{item.description}</p>
-                        <p className="text-xs text-indigo-600 font-medium mt-1">{item.price_estimate}</p>
-                      </div>
-                      <Plus size={16} className="text-indigo-600 flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </button>
-                  )
-                })
+                          <Plus size={16} className="text-indigo-600 flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </button>
+                      )
+                    })
+                  )}
+                </div>
               )}
             </div>
           </div>
