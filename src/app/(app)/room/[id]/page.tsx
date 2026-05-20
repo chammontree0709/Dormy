@@ -10,6 +10,7 @@ import AddItemModal from '@/components/room/AddItemModal'
 import InviteModal from '@/components/room/InviteModal'
 import Button from '@/components/ui/Button'
 import { Plus, Users, ChevronDown, ChevronUp, LayoutTemplate } from 'lucide-react'
+import AdUnit from '@/components/ui/AdUnit'
 import Link from 'next/link'
 import { use } from 'react'
 
@@ -277,14 +278,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
         )}
 
         <div className="mt-8">
-          <ins
-            className="adsbygoogle"
-            style={{ display: 'block' }}
-            data-ad-client="ca-pub-7336988558032518"
-            data-ad-slot="auto"
-            data-ad-format="auto"
-            data-full-width-responsive="true"
-          />
+          <AdUnit slot="XXXXXXXXXX" />
         </div>
       </main>
 

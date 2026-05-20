@@ -6,6 +6,7 @@ import { buildAffiliateUrl } from '@/lib/amazon'
 import Navbar from '@/components/layout/Navbar'
 import { Card } from '@/components/ui/Card'
 import { ShoppingCart, Star, ChevronDown, ChevronUp, ArrowLeft } from 'lucide-react'
+import AdUnit from '@/components/ui/AdUnit'
 import { cn } from '@/lib/utils'
 
 export default function TemplatesPage() {
@@ -214,14 +215,7 @@ export default function TemplatesPage() {
         )}
 
         <div className="mt-8">
-          <ins
-            className="adsbygoogle"
-            style={{ display: 'block' }}
-            data-ad-client="ca-pub-7336988558032518"
-            data-ad-slot="auto"
-            data-ad-format="auto"
-            data-full-width-responsive="true"
-          />
+          <AdUnit slot="XXXXXXXXXX" />
         </div>
       </main>
     </div>

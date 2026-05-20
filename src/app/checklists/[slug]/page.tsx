@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { PRESET_LISTS, getItemById } from '@/data/presets'
 import { buildAffiliateUrl } from '@/lib/amazon'
+import AdUnit from '@/components/ui/AdUnit'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -129,6 +130,11 @@ export default async function ChecklistSlugPage({ params }: Props) {
               </div>
             )
           })}
+        </div>
+
+        {/* Ad — between item list and CTA */}
+        <div className="my-8">
+          <AdUnit slot="XXXXXXXXXX" />
         </div>
 
         {/* CTA */}

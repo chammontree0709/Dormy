@@ -6,6 +6,7 @@ import Navbar from '@/components/layout/Navbar'
 import Button from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { ArrowLeft, Star, ShoppingCart, Tag } from 'lucide-react'
+import AdUnit from '@/components/ui/AdUnit'
 import Link from 'next/link'
 import { use } from 'react'
 import { cn } from '@/lib/utils'
@@ -127,14 +128,7 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
         )}
 
         <div className="mt-8">
-          <ins
-            className="adsbygoogle"
-            style={{ display: 'block' }}
-            data-ad-client="ca-pub-7336988558032518"
-            data-ad-slot="auto"
-            data-ad-format="auto"
-            data-full-width-responsive="true"
-          />
+          <AdUnit slot="XXXXXXXXXX" />
         </div>
       </main>
     </div>
