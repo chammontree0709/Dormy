@@ -19,7 +19,7 @@ const LOOKS = [
     vibe: 'Neutral tones, no clutter',
     gradient: 'from-slate-200 to-slate-100',
     emoji: '🤍',
-    image: 'https://images.unsplash.com/photo-1555854508-be96e09a1d94?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1555930112-0159bcdc3fe5?auto=format&fit=crop&w=600&q=80',
     itemIds: ['twin-xl-sheets', 'mattress-topper', 'desk-lamp', 'under-bed-storage', 'command-strips', 'desk-organizer'],
   },
   {
@@ -28,7 +28,7 @@ const LOOKS = [
     vibe: 'String lights, soft textures',
     gradient: 'from-amber-200 to-orange-100',
     emoji: '🕯️',
-    image: 'https://images.unsplash.com/photo-1513694203232-719a899e4135?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1541004995602-b3e898709909?auto=format&fit=crop&w=600&q=80',
     itemIds: ['fairy-lights', 'area-rug', 'comforter', 'electric-kettle', 'coffee-maker', 'pillow'],
   },
   {
@@ -37,7 +37,7 @@ const LOOKS = [
     vibe: 'Built for long focus sessions',
     gradient: 'from-indigo-200 to-blue-100',
     emoji: '📚',
-    image: 'https://images.unsplash.com/photo-1588702547919-fd7e3ed8ddc6?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1486304873000-235643847519?auto=format&fit=crop&w=600&q=80',
     itemIds: ['desk-lamp', 'laptop-stand', 'monitor', 'noise-cancelling-headphones', 'whiteboard', 'planner'],
   },
   {
@@ -46,7 +46,7 @@ const LOOKS = [
     vibe: 'Every inch maximized',
     gradient: 'from-emerald-200 to-teal-100',
     emoji: '📦',
-    image: 'https://images.unsplash.com/photo-1484301548518-d0e0a5db0fc8?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=600&q=80',
     itemIds: ['over-door-hooks', 'under-bed-storage', 'closet-organizer', 'command-strips', 'desk-organizer', 'packing-cubes'],
   },
   {
@@ -55,7 +55,7 @@ const LOOKS = [
     vibe: 'Gaming, streaming, vibing',
     gradient: 'from-violet-200 to-purple-100',
     emoji: '🎮',
-    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1614179924047-e1ab49a0a0cf?auto=format&fit=crop&w=600&q=80',
     itemIds: ['surge-protector', 'monitor', 'gaming-headset', 'bluetooth-speaker', 'streaming-stick', 'portable-charger'],
   },
   {
@@ -64,7 +64,7 @@ const LOOKS = [
     vibe: 'Greenery makes it feel like home',
     gradient: 'from-green-200 to-lime-100',
     emoji: '🌿',
-    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1611866972879-3f7c79e1282d?auto=format&fit=crop&w=600&q=80',
     itemIds: ['succulent-set', 'pothos-plant', 'plant-pots', 'fairy-lights', 'area-rug', 'reusable-water-bottle'],
   },
 ]
