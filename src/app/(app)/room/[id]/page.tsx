@@ -321,6 +321,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                 <ChecklistItem
                   key={item.id}
                   item={item}
+                  roomId={id}
                   onToggle={toggleItem}
                   onDelete={deleteItem}
                   onClaim={claimItem}
@@ -515,6 +516,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                         <ChecklistItem
                           key={item.id}
                           item={item}
+                          roomId={id}
                           onToggle={toggleItem}
                           onDelete={deleteItem}
                           onClaim={claimItem}

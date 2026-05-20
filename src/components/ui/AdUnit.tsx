@@ -20,15 +20,14 @@ export default function AdUnit({ slot, format = 'auto', className }: AdUnitProps
     } catch {}
   }, [])
 
+  // Don't render anything until a real slot ID is configured
+  if (!slot || slot === 'XXXXXXXXXX') return null
+
   return (
-    <div className={`relative w-full${className ? ` ${className}` : ''}`}>
-      {/* Placeholder visible until the ad loads */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg pointer-events-none z-0">
-        <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Ad</span>
-      </div>
+    <div className={`w-full${className ? ` ${className}` : ''}`}>
       <ins
-        className="adsbygoogle relative z-10"
-        style={{ display: 'block', minHeight: '90px' }}
+        className="adsbygoogle"
+        style={{ display: 'block' }}
         data-ad-client="ca-pub-7336988558032518"
         data-ad-slot={slot}
         data-ad-format={format}
