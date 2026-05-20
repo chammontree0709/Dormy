@@ -52,6 +52,8 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
           </Link>
           <Link
             href="/guides"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors"
           >
             <BookOpen size={16} />
