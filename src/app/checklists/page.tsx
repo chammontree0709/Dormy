@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { PRESET_LISTS, PRESET_ITEMS, getItemById } from '@/data/presets'
+import { PRESET_LISTS, getItemById } from '@/data/presets'
 import { buildAffiliateUrl } from '@/lib/amazon'
 
 export const metadata: Metadata = {
@@ -41,16 +41,26 @@ export default function ChecklistsPage() {
         </div>
 
         <div className="space-y-10">
-          {PRESET_LISTS.slice(0, 4).map((list) => {
+          {PRESET_LISTS.map((list) => {
             const items = list.itemIds.map((id) => getItemById(id)).filter(Boolean)
             return (
               <div key={list.id} className="bg-gray-50 rounded-2xl p-6">
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="text-3xl">{list.emoji}</span>
-                  <div>
-                    <h2 className="text-xl font-black text-gray-900">{list.name}</h2>
-                    <p className="text-sm text-gray-500">{list.description}</p>
+                <div className="flex items-center justify-between gap-3 mb-5">
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl">{list.emoji}</span>
+                    <div>
+                      <Link href={`/checklists/${list.id}`} className="hover:text-indigo-600 transition-colors">
+                        <h2 className="text-xl font-black text-gray-900">{list.name}</h2>
+                      </Link>
+                      <p className="text-sm text-gray-500">{list.description}</p>
+                    </div>
                   </div>
+                  <Link
+                    href={`/checklists/${list.id}`}
+                    className="flex-shrink-0 text-xs font-semibold text-indigo-600 hover:underline hidden sm:block"
+                  >
+                    View all {items.length} →
+                  </Link>
                 </div>
 
                 <div className="space-y-2 mb-5">
@@ -76,16 +86,29 @@ export default function ChecklistsPage() {
                     )
                   })}
                   {items.length > 5 && (
-                    <p className="text-sm text-gray-400 text-center pt-1">+ {items.length - 5} more items</p>
+                    <Link
+                      href={`/checklists/${list.id}`}
+                      className="block text-sm text-indigo-600 font-semibold text-center pt-2 hover:underline"
+                    >
+                      + {items.length - 5} more items →
+                    </Link>
                   )}
                 </div>
 
-                <Link
-                  href="/signup"
-                  className="block w-full text-center bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700 transition-colors"
-                >
-                  Copy this list to my room — free
-                </Link>
+                <div className="flex gap-2">
+                  <Link
+                    href={`/checklists/${list.id}`}
+                    className="flex-1 text-center bg-white border border-indigo-200 text-indigo-600 font-bold py-3 rounded-xl hover:bg-indigo-50 transition-colors text-sm"
+                  >
+                    View full list
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="flex-1 text-center bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700 transition-colors text-sm"
+                  >
+                    Copy to my room →
+                  </Link>
+                </div>
               </div>
             )
           })}
