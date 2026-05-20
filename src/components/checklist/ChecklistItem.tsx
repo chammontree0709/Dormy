@@ -10,6 +10,7 @@ import { buildAffiliateUrl } from '@/lib/amazon'
 
 interface ChecklistItemProps {
   item: RoomItem
+  roomId: string
   onToggle: (id: string, checked: boolean) => void
   onDelete: (id: string) => void
   onClaim: (id: string, claimed: boolean) => void
@@ -21,7 +22,7 @@ interface ChecklistItemProps {
 }
 
 export default function ChecklistItem({
-  item, onToggle, onDelete, onClaim, onQuantityChange, onNoteChange, onOwnedChange, currentUserName, shoppingMode = false
+  item, roomId, onToggle, onDelete, onClaim, onQuantityChange, onNoteChange, onOwnedChange, currentUserName, shoppingMode = false
 }: ChecklistItemProps) {
   const [showNote, setShowNote] = useState(false)
   const [draftNote, setDraftNote] = useState(item.notes ?? '')
@@ -47,7 +48,7 @@ export default function ChecklistItem({
         className={cn(
           'w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all text-left',
           item.is_checked
-            ? 'bg-green-50 border-green-300 opacity-60'
+            ? 'bg-green-50 dark:bg-green-950/40 border-green-300 dark:border-green-900 opacity-60'
             : 'bg-white border-gray-200 active:scale-[0.98]'
         )}
       >
@@ -78,11 +79,11 @@ export default function ChecklistItem({
       className={cn(
         'rounded-xl border transition-all duration-200',
         item.is_checked
-          ? 'bg-green-50 border-green-200 opacity-75'
+          ? 'bg-green-50 dark:bg-green-950/40 border-green-200 dark:border-green-900 opacity-75'
           : item.owned
-          ? 'bg-sky-50 border-sky-200'
+          ? 'bg-sky-50 dark:bg-sky-950/40 border-sky-200 dark:border-sky-900'
           : isClaimed
-          ? 'bg-amber-50 border-amber-200'
+          ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900'
           : 'bg-white border-gray-100 hover:border-indigo-100 hover:shadow-sm'
       )}
     >
@@ -143,10 +144,10 @@ export default function ChecklistItem({
                   className={cn(
                     'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-colors',
                     isClaimedByMe
-                      ? 'bg-amber-200 text-amber-800 hover:bg-amber-300'
+                      ? 'bg-amber-200 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 hover:bg-amber-300'
                       : isClaimed
                       ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
-                      : 'bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100'
+                      : 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800 hover:bg-amber-100'
                   )}
                   disabled={isClaimed && !isClaimedByMe}
                   title={isClaimedByMe ? 'Unclaim' : isClaimed ? `${item.claimed_by_name} claimed this` : "I'll buy this"}
@@ -198,7 +199,7 @@ export default function ChecklistItem({
 
               {preset && (
                 <Link
-                  href={`item/${item.preset_id}`}
+                  href={`/room/${roomId}/item/${item.preset_id}`}
                   className="p-1.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
                   title="View details & reviews"
                 >

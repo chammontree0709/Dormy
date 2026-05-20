@@ -1,13 +1,25 @@
 @import "tailwindcss";
 
+/* Enable class-based dark mode for Tailwind v4 dark: utilities */
+@variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
+  --card: #ffffff;
+  --card-border: #e2e8f0;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
 }
 
 .dark {
-  --background: #0f172a;
-  --foreground: #f1f5f9;
+  --background: #0f172a;       /* page bg — darkest */
+  --foreground: #f1f5f9;       /* primary text */
+  --card: #1e293b;             /* card / modal surfaces */
+  --card-border: #334155;      /* all borders */
+  --muted: #243347;            /* elevated surfaces (category headers, inputs) */
+  --muted-foreground: #94a3b8; /* secondary text */
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -22,10 +34,82 @@ body {
   font-family: var(--font-plus-jakarta), system-ui, sans-serif;
 }
 
-.dark body {
-  background: var(--background);
+/* ─── Dark mode component theming ─────────────────────────────────────
+   Rules outside @layer beat Tailwind utility layers regardless of
+   specificity, so no !important needed for the surface overrides.
+   Accent colours (indigo, amber, green, red, sky, violet) are untouched.
+──────────────────────────────────────────────────────────────────── */
+
+/* ── Surfaces ── */
+
+/* White surfaces (cards, modals, navbar) → elevated card colour */
+.dark .bg-white { background-color: var(--card); }
+
+/* Page-level backgrounds → darkest bg */
+.dark .bg-slate-50 { background-color: var(--background); }
+
+/* Secondary surfaces (hover rows, category headers, input fields) */
+.dark .bg-gray-50  { background-color: #162032; }
+.dark .bg-gray-100 { background-color: var(--muted); }
+.dark .bg-gray-200 { background-color: #334155; }
+
+/* White with opacity — sticky nav backdrop */
+.dark .bg-white\/80 { background-color: rgb(30 41 59 / 0.92); }
+
+/* ── Hover surfaces ── */
+.dark .hover\:bg-gray-50:hover  { background-color: #1e2d3d; }
+.dark .hover\:bg-gray-100:hover { background-color: #2d4157; }
+.dark .hover\:bg-white:hover    { background-color: #2d4157; }
+
+/* ── Borders ── */
+.dark .border-gray-100 { border-color: #2d3f55; }
+.dark .border-gray-200 { border-color: #3b526a; }
+
+/* ── Text ── */
+.dark .text-gray-900 { color: #f1f5f9; }
+.dark .text-gray-800 { color: #e2e8f0; }
+.dark .text-gray-700 { color: #cbd5e1; }
+.dark .text-gray-600 { color: #94a3b8; }
+.dark .text-gray-500 { color: #64748b; }
+.dark .text-gray-400 { color: #4b5e72; }
+.dark .text-gray-300 { color: #334155; }
+
+/* ── Hover text ── */
+.dark .hover\:text-gray-900:hover { color: #f1f5f9; }
+.dark .hover\:text-gray-600:hover { color: #cbd5e1; }
+
+/* ── Focus ring offset (gap between ring and element should match card bg) ── */
+.dark .focus\:ring-offset-2:focus { --tw-ring-offset-color: var(--card); }
+
+/* ── Form inputs, textareas, selects ── */
+.dark input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+.dark textarea,
+.dark select {
+  background-color: var(--muted);
+  border-color: #475569;
   color: var(--foreground);
 }
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #4b5e72;
+}
+
+/* ── Button: secondary variant (bg-white border-indigo-200) ── */
+.dark .border-indigo-200 { border-color: #4338ca; }
+
+/* ── Shadows — deepen in dark mode ── */
+.dark .shadow-sm  { box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4); }
+.dark .shadow-xl  { box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5); }
+.dark .shadow-2xl { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.6); }
+
+/* ── Scrollbar (webkit) ── */
+.dark ::-webkit-scrollbar             { width: 8px; background-color: var(--background); }
+.dark ::-webkit-scrollbar-thumb       { background-color: #334155; border-radius: 4px; }
+.dark ::-webkit-scrollbar-thumb:hover { background-color: #475569; }
+
+/* ── Animations ── */
+.dark .animate-pulse { opacity: 0.6; }
 
 @layer utilities {
   .line-clamp-2 {

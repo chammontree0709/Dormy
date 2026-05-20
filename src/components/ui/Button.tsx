@@ -19,7 +19,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
           {
             'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500 active:scale-95': variant === 'primary',
-            'bg-white text-indigo-600 border-2 border-indigo-200 hover:border-indigo-400 focus:ring-indigo-500': variant === 'secondary',
+            'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 border-2 border-indigo-200 dark:border-indigo-700 hover:border-indigo-400 focus:ring-indigo-500': variant === 'secondary',
             'bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-400': variant === 'ghost',
             'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500': variant === 'danger',
             'px-3 py-1.5 text-sm': size === 'sm',
