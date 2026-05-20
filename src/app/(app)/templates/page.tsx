@@ -1,17 +1,22 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { PRESET_LISTS, PRESET_ITEMS, CATEGORIES, getItemById } from '@/data/presets'
 import { buildAffiliateUrl } from '@/lib/amazon'
 import Navbar from '@/components/layout/Navbar'
 import { Card } from '@/components/ui/Card'
-import { ShoppingCart, Star, ChevronDown, ChevronUp } from 'lucide-react'
+import { ShoppingCart, Star, ChevronDown, ChevronUp, ArrowLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export default function TemplatesPage() {
   const [selectedList, setSelectedList] = useState<string | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set())
+  const listRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    listRef.current?.scrollTo({ top: 0 })
+  }, [selectedCategory, selectedList])
 
   const displayItems = selectedList
     ? (PRESET_LISTS.find((l) => l.id === selectedList)?.itemIds.map((id) => getItemById(id)).filter(Boolean) ?? [])
@@ -58,31 +63,55 @@ export default function TemplatesPage() {
           ))}
         </div>
 
-        {/* Category filter */}
-        <h2 className="font-black text-xl text-gray-900 mb-4">Browse by Category</h2>
-        <div className="flex gap-2 overflow-x-auto pb-2 mb-6 -mx-4 px-4">
-          <button
-            onClick={() => { setSelectedCategory(null); setSelectedList(null) }}
-            className={cn('flex-shrink-0 px-3 py-2 rounded-full text-xs font-semibold transition-colors whitespace-nowrap', !selectedCategory && !selectedList ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:border-indigo-300')}
-          >
-            All Items ({PRESET_ITEMS.length})
-          </button>
-          {CATEGORIES.map((cat) => {
-            const count = PRESET_ITEMS.filter((i) => i.category === cat.id).length
-            return (
-              <button
-                key={cat.id}
-                onClick={() => { setSelectedCategory(selectedCategory === cat.id ? null : cat.id); setSelectedList(null) }}
-                className={cn('flex-shrink-0 px-3 py-2 rounded-full text-xs font-semibold transition-colors whitespace-nowrap', selectedCategory === cat.id ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:border-indigo-300')}
-              >
-                {cat.icon} {cat.name} ({count})
-              </button>
-            )
-          })}
+        {/* Category browser */}
+        <div className="flex items-center justify-between mb-4">
+          {selectedCategory ? (
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 font-bold text-xl"
+            >
+              <ArrowLeft size={20} />
+              {CATEGORIES.find((c) => c.id === selectedCategory)?.icon}{' '}
+              {CATEGORIES.find((c) => c.id === selectedCategory)?.name}
+            </button>
+          ) : (
+            <h2 className="font-black text-xl text-gray-900">
+              {selectedList ? PRESET_LISTS.find((l) => l.id === selectedList)?.name : 'Browse by Category'}
+            </h2>
+          )}
+          {(selectedCategory || selectedList) && (
+            <button
+              onClick={() => { setSelectedCategory(null); setSelectedList(null) }}
+              className="text-xs text-indigo-600 font-semibold hover:underline"
+            >
+              Clear
+            </button>
+          )}
         </div>
 
-        {/* Item list */}
-        <div className="space-y-3">
+        {/* Category grid (shown when no category or list selected) */}
+        {!selectedCategory && !selectedList && (
+          <div className="grid grid-cols-2 gap-3 mb-8">
+            {CATEGORIES.map((cat) => {
+              const count = PRESET_ITEMS.filter((i) => i.category === cat.id).length
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className="flex flex-col items-start gap-1 p-4 rounded-2xl border-2 border-gray-200 bg-white hover:border-indigo-300 hover:bg-indigo-50/50 transition-all text-left"
+                >
+                  <span className="text-2xl">{cat.icon}</span>
+                  <p className="font-bold text-gray-900 text-sm leading-tight">{cat.name}</p>
+                  <p className="text-xs text-gray-400">{count} items</p>
+                </button>
+              )
+            })}
+          </div>
+        )}
+
+        {/* Item list (shown when category or starter pack selected) */}
+        {(selectedCategory || selectedList) && (
+        <div ref={listRef} className="space-y-3">
           {(displayItems as ReturnType<typeof getItemById>[]).map((item) => {
             if (!item) return null
             const isExpanded = expandedItems.has(item.id)
@@ -182,6 +211,7 @@ export default function TemplatesPage() {
             )
           })}
         </div>
+        )}
 
         <div className="mt-8">
           <ins
