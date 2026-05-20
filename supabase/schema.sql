@@ -47,6 +47,24 @@ create table if not exists room_items (
   sort_order int default 0
 );
 
+-- Landing-page newsletter signups (public, no auth required)
+create table if not exists email_signups (
+  id         uuid primary key default gen_random_uuid(),
+  email      text unique not null,
+  created_at timestamptz default now()
+);
+
+alter table email_signups enable row level security;
+
+-- Allow anyone to subscribe, but validate email format at the DB level
+create policy "Anyone can subscribe" on email_signups
+  for insert
+  with check (
+    email is not null
+    and char_length(email) between 5 and 254
+    and email ~ '^[^@\s]+@[^@\s]+\.[^@\s]+$'
+  );
+
 -- Helpful indexes
 create index if not exists room_members_user_idx on room_members(user_id);
 create index if not exists room_items_room_idx   on room_items(room_id);
@@ -69,6 +87,7 @@ as $$
 $$;
 
 revoke all on function is_room_member(uuid, uuid) from public;
+revoke execute on function is_room_member(uuid, uuid) from anon;
 grant execute on function is_room_member(uuid, uuid) to authenticated;
 
 -- Join a room by invite code. Returns the room id on success.
@@ -104,6 +123,7 @@ end;
 $$;
 
 revoke all on function join_room_by_invite_code(text, text) from public;
+revoke execute on function join_room_by_invite_code(text, text) from anon;
 grant execute on function join_room_by_invite_code(text, text) to authenticated;
 
 -- =========================================================
