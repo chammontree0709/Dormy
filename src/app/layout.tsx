@@ -5,9 +5,6 @@ import './globals.css'
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist-sans' })
 
 export const metadata: Metadata = {
-  other: {
-    'google-adsense-account': 'ca-pub-7336988558032518',
-  },
   title: { default: 'Roomd — Shared Dorm Room Checklist', template: '%s | Roomd' },
   description: 'The shared dorm room supply list for you and your roommates. Check off items as you buy them, together.',
   metadataBase: new URL('https://roomdapp.com'),
