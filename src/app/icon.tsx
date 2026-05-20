@@ -29,7 +29,19 @@ export default function Icon() {
             justifyContent: 'center',
           }}
         >
-          <div style={{ color: '#92400e', fontSize: '12px', fontWeight: 900, lineHeight: 1 }}>✓</div>
+          {/* SVG checkmark — no font download needed */}
+          <svg
+            width="11"
+            height="11"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#92400e"
+            strokeWidth="3.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 13l4 4L19 7" />
+          </svg>
         </div>
       </div>
     ),
