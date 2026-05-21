@@ -75,7 +75,8 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
 
-    setCurrentUserName(user.user_metadata?.display_name ?? user.email?.split('@')[0] ?? 'You')
+    const displayName = user.user_metadata?.display_name ?? user.email?.split('@')[0] ?? 'You'
+    setCurrentUserName(displayName)
 
     const [{ data: roomData }, { data: itemData }, { data: memberData }] = await Promise.all([
       supabase.from('rooms').select('*').eq('id', id).single(),
@@ -84,8 +85,27 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
     ])
 
     setRoom(roomData)
-    setItems(itemData ?? [])
     setMembers(memberData ?? [])
+
+    // Self-heal: if this user created the room but has no room_members row (iOS creation
+    // bug), room_items RLS will silently block every insert. Fix membership now using the
+    // RPC (security-definer, idempotent ON CONFLICT) then re-fetch items.
+    const isMember = (memberData ?? []).some((m) => m.user_id === user.id)
+    if (!isMember && roomData?.created_by === user.id) {
+      await supabase.rpc('join_room_by_invite_code', {
+        p_invite_code: roomData.invite_code,
+        p_display_name: displayName,
+      })
+      const { data: fixedItems } = await supabase
+        .from('room_items').select('*').eq('room_id', id).order('added_at')
+      setItems(fixedItems ?? [])
+      setMembers((prev) => [
+        ...prev,
+        { room_id: id, user_id: user.id, display_name: displayName, joined_at: new Date().toISOString() },
+      ])
+    } else {
+      setItems(itemData ?? [])
+    }
 
     const { data: activityData } = await supabase
       .from('room_activity')
