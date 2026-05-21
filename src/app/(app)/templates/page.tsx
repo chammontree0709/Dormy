@@ -1,23 +1,86 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { createClient } from '@/lib/supabase/client'
 import { PRESET_LISTS, PRESET_ITEMS, CATEGORIES, getItemById } from '@/data/presets'
 import { buildAffiliateUrl } from '@/lib/amazon'
 import Navbar from '@/components/layout/Navbar'
 import { Card } from '@/components/ui/Card'
-import { ShoppingCart, Star, ChevronDown, ChevronUp, ArrowLeft } from 'lucide-react'
+import { ShoppingCart, Star, ChevronDown, ChevronUp, ArrowLeft, Plus, Check } from 'lucide-react'
 import AdUnit from '@/components/ui/AdUnit'
 import { cn } from '@/lib/utils'
+
+interface Room {
+  id: string
+  name: string
+}
 
 export default function TemplatesPage() {
   const [selectedList, setSelectedList] = useState<string | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set())
+  const [rooms, setRooms] = useState<Room[]>([])
+  const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null)
+  const [showRoomPicker, setShowRoomPicker] = useState(false)
+  const [addedItems, setAddedItems] = useState<Set<string>>(new Set())
+  const [addingItem, setAddingItem] = useState<string | null>(null)
+  const [currentUserName, setCurrentUserName] = useState('')
   const listRef = useRef<HTMLDivElement>(null)
+  const supabase = createClient()
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: 0 })
   }, [selectedCategory, selectedList])
+
+  useEffect(() => {
+    async function load() {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+      setCurrentUserName(user.user_metadata?.display_name ?? user.email?.split('@')[0] ?? 'You')
+
+      const { data: memberRows } = await supabase
+        .from('room_members')
+        .select('room_id')
+        .eq('user_id', user.id)
+
+      if (!memberRows?.length) return
+      const roomIds = memberRows.map((r) => r.room_id)
+
+      const { data: roomRows } = await supabase
+        .from('rooms')
+        .select('id, name')
+        .in('id', roomIds)
+        .order('created_at', { ascending: false })
+
+      if (roomRows?.length) {
+        setRooms(roomRows)
+        setSelectedRoomId(roomRows[0].id)
+      }
+    }
+    load()
+  }, [])
+
+  async function addToRoom(itemId: string) {
+    if (!selectedRoomId) { setShowRoomPicker(true); return }
+    const key = `${selectedRoomId}:${itemId}`
+    if (addedItems.has(key)) return
+
+    setAddingItem(itemId)
+    const item = getItemById(itemId)
+
+    await supabase.from('room_items').insert({
+      room_id: selectedRoomId,
+      preset_id: itemId,
+      custom_name: null,
+      custom_url: null,
+      category: item?.category ?? 'other',
+      added_by_name: currentUserName,
+      notes: null,
+    })
+
+    setAddedItems((prev) => new Set(prev).add(key))
+    setAddingItem(null)
+  }
 
   const displayItems = selectedList
     ? (PRESET_LISTS.find((l) => l.id === selectedList)?.itemIds.map((id) => getItemById(id)).filter(Boolean) ?? [])
@@ -33,6 +96,8 @@ export default function TemplatesPage() {
     })
   }
 
+  const selectedRoom = rooms.find((r) => r.id === selectedRoomId)
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -46,7 +111,40 @@ export default function TemplatesPage() {
           >
             Dorm Checklists
           </h1>
-          <p className="text-zinc-500 mt-1">Curated lists of everything you need. Click any item to buy.</p>
+          <p className="text-zinc-500 mt-1">Curated lists of everything you need. Tap <strong>+</strong> to add straight to your room.</p>
+        </div>
+
+        {/* Room selector */}
+        <div className="mb-8 relative">
+          {rooms.length === 0 ? (
+            <p className="text-sm text-zinc-400 bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3">
+              No rooms yet — <a href="/dashboard" className="text-emerald-600 font-semibold hover:underline">create one</a> to start adding items.
+            </p>
+          ) : (
+            <div className="flex items-center gap-3 bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3">
+              <span className="text-sm text-zinc-500 font-medium whitespace-nowrap">Adding to:</span>
+              <button
+                onClick={() => setShowRoomPicker((v) => !v)}
+                className="flex items-center gap-2 text-sm font-bold text-zinc-950 hover:text-emerald-600 transition-colors"
+              >
+                {selectedRoom?.name ?? 'Pick a room'}
+                <ChevronDown size={14} />
+              </button>
+              {showRoomPicker && (
+                <div className="absolute top-14 left-0 bg-white border border-zinc-200 rounded-xl shadow-lg z-20 min-w-[200px] overflow-hidden">
+                  {rooms.map((r) => (
+                    <button
+                      key={r.id}
+                      onClick={() => { setSelectedRoomId(r.id); setShowRoomPicker(false) }}
+                      className={`w-full text-left px-4 py-3 text-sm font-semibold hover:bg-zinc-50 transition-colors ${r.id === selectedRoomId ? 'text-emerald-600 bg-emerald-50/50' : 'text-zinc-800'}`}
+                    >
+                      {r.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Starter Packs */}
@@ -123,6 +221,9 @@ export default function TemplatesPage() {
             const avgRating = item.reviews.length
               ? (item.reviews.reduce((sum, r) => sum + r.rating, 0) / item.reviews.length).toFixed(1)
               : null
+            const key = `${selectedRoomId}:${item.id}`
+            const isAdded = addedItems.has(key)
+            const isLoading = addingItem === item.id
 
             return (
               <Card key={item.id} padding={false} className="overflow-hidden">
@@ -152,6 +253,20 @@ export default function TemplatesPage() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2 flex-shrink-0">
+                        <button
+                          onClick={(e) => { e.stopPropagation(); addToRoom(item.id) }}
+                          disabled={isAdded || isLoading || rooms.length === 0}
+                          className={cn(
+                            'flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold transition-all active:scale-[0.98]',
+                            isAdded
+                              ? 'bg-emerald-100 text-emerald-700'
+                              : rooms.length === 0
+                              ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
+                              : 'bg-zinc-950 text-white hover:bg-zinc-800'
+                          )}
+                        >
+                          {isAdded ? <><Check size={12} /> Added</> : <><Plus size={12} /> Add</>}
+                        </button>
                         <a
                           href={buyUrl}
                           target="_blank"
@@ -198,7 +313,21 @@ export default function TemplatesPage() {
                       </div>
                     )}
 
-                    <div className="mt-4">
+                    <div className="mt-4 space-y-2">
+                      <button
+                        onClick={() => addToRoom(item.id)}
+                        disabled={isAdded || isLoading || rooms.length === 0}
+                        className={cn(
+                          'flex items-center justify-center gap-2 w-full font-bold py-3 rounded-xl transition-colors text-sm active:scale-[0.98]',
+                          isAdded
+                            ? 'bg-emerald-100 text-emerald-700'
+                            : rooms.length === 0
+                            ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
+                            : 'bg-zinc-950 text-white hover:bg-zinc-800'
+                        )}
+                      >
+                        {isAdded ? <><Check size={16} /> Added to room</> : <><Plus size={16} /> Add to my room</>}
+                      </button>
                       <a
                         href={buyUrl}
                         target="_blank"
@@ -207,7 +336,7 @@ export default function TemplatesPage() {
                       >
                         <ShoppingCart size={16} /> Buy on Amazon
                       </a>
-                      <p className="text-center text-xs text-zinc-400 mt-1.5">
+                      <p className="text-center text-xs text-zinc-400">
                         Affiliate link — Roomd earns a small commission at no cost to you.
                       </p>
                     </div>
