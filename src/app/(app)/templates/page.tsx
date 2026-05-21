@@ -54,23 +54,31 @@ export default function TemplatesPage() {
       if (!user) return
       setCurrentUserName(user.user_metadata?.display_name ?? user.email?.split('@')[0] ?? 'You')
 
-      const { data: memberRows } = await supabase
-        .from('room_members')
-        .select('room_id')
-        .eq('user_id', user.id)
+      // Query membership rows AND rooms created by this user in parallel.
+      // Created-by fallback catches rooms where room_members insert silently
+      // failed on iOS, so the room still shows up here.
+      const [{ data: memberRows }, { data: createdRooms }] = await Promise.all([
+        supabase.from('room_members').select('room_id').eq('user_id', user.id),
+        supabase.from('rooms').select('id, name').eq('created_by', user.id),
+      ])
 
-      if (!memberRows?.length) return
-      const roomIds = memberRows.map((r) => r.room_id)
+      const memberRoomIds = (memberRows ?? []).map((r) => r.room_id)
+      const createdIds = new Set((createdRooms ?? []).map((r) => r.id))
 
-      const { data: roomRows } = await supabase
-        .from('rooms')
-        .select('id, name')
-        .in('id', roomIds)
-        .order('created_at', { ascending: false })
+      // Fetch rooms joined but not created
+      const joinedIds = memberRoomIds.filter((id) => !createdIds.has(id))
+      const { data: joinedRooms } = joinedIds.length > 0
+        ? await supabase.from('rooms').select('id, name').in('id', joinedIds)
+        : { data: [] as Room[] }
 
-      if (roomRows?.length) {
-        setRooms(roomRows)
-        setSelectedRoomId(roomRows[0].id)
+      const allRooms = [
+        ...(createdRooms ?? []),
+        ...(joinedRooms ?? []),
+      ]
+
+      if (allRooms.length) {
+        setRooms(allRooms)
+        setSelectedRoomId(allRooms[0].id)
       }
     }
     load()

@@ -8,7 +8,7 @@ import Navbar from '@/components/layout/Navbar'
 import Button from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import Link from 'next/link'
-import { Plus, DoorOpen, ArrowRight, Home, LayoutTemplate } from 'lucide-react'
+import { Plus, DoorOpen, ArrowRight, Home, LayoutTemplate, LogOut } from 'lucide-react'
 
 export default function DashboardPage() {
   const [rooms, setRooms] = useState<Room[]>([])
@@ -21,6 +21,7 @@ export default function DashboardPage() {
   const [creating, setCreating] = useState(false)
   const [joining, setJoining] = useState(false)
   const [actionError, setActionError] = useState('')
+  const [leavingRoomId, setLeavingRoomId] = useState<string | null>(null)
 
   const supabase = createClient()
 
@@ -145,6 +146,14 @@ export default function DashboardPage() {
     setJoining(false)
   }
 
+  async function leaveRoom(roomId: string) {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+    await supabase.from('room_members').delete().eq('room_id', roomId).eq('user_id', user.id)
+    setRooms((prev) => prev.filter((r) => r.id !== roomId))
+    setLeavingRoomId(null)
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -232,20 +241,44 @@ export default function DashboardPage() {
         ) : (
           <div className="border-t border-zinc-200">
             {rooms.map((room) => (
-              <Link key={room.id} href={`/room/${room.id}`}>
-                <div className="flex items-center justify-between py-4 border-b border-zinc-200 hover:bg-zinc-50 -mx-4 px-4 transition-colors group cursor-pointer">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-zinc-100 flex items-center justify-center flex-shrink-0">
-                      <Home className="w-4 h-4 text-zinc-500" strokeWidth={1.5} />
-                    </div>
-                    <div>
-                      <p className="font-bold text-zinc-950 group-hover:text-emerald-600 transition-colors">{room.name}</p>
-                      <p className="text-xs text-zinc-400">Code: <span className="font-mono font-semibold">{room.invite_code}</span></p>
-                    </div>
+              <div key={room.id} className="group flex items-center border-b border-zinc-200 hover:bg-zinc-50 -mx-4 px-4 transition-colors">
+                <Link href={`/room/${room.id}`} className="flex items-center flex-1 py-4 gap-3 min-w-0">
+                  <div className="w-9 h-9 rounded-xl bg-zinc-100 flex items-center justify-center flex-shrink-0">
+                    <Home className="w-4 h-4 text-zinc-500" strokeWidth={1.5} />
                   </div>
-                  <ArrowRight size={18} className="text-zinc-300 group-hover:text-zinc-950 group-hover:translate-x-0.5 transition-all" />
-                </div>
-              </Link>
+                  <div className="min-w-0">
+                    <p className="font-bold text-zinc-950 group-hover:text-emerald-600 transition-colors truncate">{room.name}</p>
+                    <p className="text-xs text-zinc-400">Code: <span className="font-mono font-semibold">{room.invite_code}</span></p>
+                  </div>
+                </Link>
+                {leavingRoomId === room.id ? (
+                  <div className="flex items-center gap-2 pl-2 flex-shrink-0">
+                    <button
+                      onClick={() => leaveRoom(room.id)}
+                      className="text-xs font-bold text-red-600 bg-red-50 px-3 py-1.5 rounded-lg hover:bg-red-100 transition-colors"
+                    >
+                      Leave
+                    </button>
+                    <button
+                      onClick={() => setLeavingRoomId(null)}
+                      className="text-xs font-semibold text-zinc-400 hover:text-zinc-700 px-2 py-1.5 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1 flex-shrink-0">
+                    <button
+                      onClick={() => setLeavingRoomId(room.id)}
+                      className="p-1.5 text-zinc-300 hover:text-red-400 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+                      title="Leave room"
+                    >
+                      <LogOut size={15} />
+                    </button>
+                    <ArrowRight size={18} className="text-zinc-300 group-hover:text-zinc-950 group-hover:translate-x-0.5 transition-all" />
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         )}
