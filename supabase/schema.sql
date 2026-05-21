@@ -191,3 +191,5 @@ create policy "Items deletable by room members" on room_items
 -- =========================================================
 
 alter publication supabase_realtime add table room_items;
+-- Required for UPDATE events to broadcast on the realtime channel
+alter table room_items replica identity full;
