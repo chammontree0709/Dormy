@@ -119,13 +119,6 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
             <span className="hidden sm:block">Inspo</span>
           </Link>
           <Link
-            href="/questionnaire"
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors"
-          >
-            <ClipboardList size={16} />
-            <span className="hidden sm:block">Quiz</span>
-          </Link>
-          <Link
             href="/guides"
             target="_blank"
             rel="noopener noreferrer"
