@@ -2830,7 +2830,7 @@ export const PRESET_ITEMS: PresetItem[] = [
     ],
   },
   {
-    id: 'first-aid-kit',
+    id: 'mini-first-aid-kit',
     name: 'Mini First Aid Kit',
     description: 'Band-aids, antiseptic wipes, pain relievers, and blister pads. The campus health center has lines — handle minor injuries yourself.',
     category: 'health',
