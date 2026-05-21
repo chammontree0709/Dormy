@@ -36,6 +36,12 @@ yarn-error.log*
 # vercel
 .vercel
 
+# project context (contains credentials)
+CONTEXT.md
+
+# Claude Code config
+.claude/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
