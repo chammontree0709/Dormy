@@ -52,18 +52,6 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   const [activity, setActivity] = useState<ActivityEvent[]>([])
   const [showActivity, setShowActivity] = useState(false)
 
-  // Reset iOS Safari zoom when entering/exiting shopping mode
-  useEffect(() => {
-    const viewport = document.querySelector('meta[name="viewport"]')
-    if (!viewport) return
-    // Briefly set maximum-scale=1 to reset any zoom, then restore normal pinch-zoom
-    viewport.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1')
-    const t = setTimeout(() => {
-      viewport.setAttribute('content', 'width=device-width, initial-scale=1')
-    }, 300)
-    return () => clearTimeout(t)
-  }, [shoppingMode])
-
   // Feature states
   const [shoppingMode, setShoppingMode] = useState(false)
   const [budget, setBudget] = useState<number | null>(null)
@@ -74,6 +62,17 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   const [dateDraft, setDateDraft] = useState('')
 
   const supabase = createClient()
+
+  // Reset iOS Safari zoom when entering/exiting shopping mode
+  useEffect(() => {
+    const viewport = document.querySelector('meta[name="viewport"]')
+    if (!viewport) return
+    viewport.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1')
+    const t = setTimeout(() => {
+      viewport.setAttribute('content', 'width=device-width, initial-scale=1')
+    }, 300)
+    return () => clearTimeout(t)
+  }, [shoppingMode])
 
   // Load localStorage prefs
   useEffect(() => {

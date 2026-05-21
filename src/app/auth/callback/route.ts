@@ -1,4 +1,5 @@
-import { createClient } from '@/lib/supabase/server'
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
@@ -7,8 +8,29 @@ export async function GET(request: Request) {
   const invite = searchParams.get('invite')
   const next = searchParams.get('next') ?? '/dashboard'
 
+  const redirectResponse = NextResponse.redirect(`${origin}${next}`)
+
   if (code) {
-    const supabase = await createClient()
+    const cookieStore = await cookies()
+    // Build a Supabase client that writes session cookies onto the redirect response
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL ?? 'https://placeholder.supabase.co',
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? 'placeholder-key',
+      {
+        cookies: {
+          getAll() {
+            return cookieStore.getAll()
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              // Write onto the response so they survive the redirect
+              redirectResponse.cookies.set(name, value, options)
+            })
+          },
+        },
+      }
+    )
+
     const { data: { user } } = await supabase.auth.exchangeCodeForSession(code)
 
     if (invite && user) {
@@ -24,5 +46,5 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.redirect(`${origin}${next}`)
+  return redirectResponse
 }
