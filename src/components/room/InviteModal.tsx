@@ -15,6 +15,7 @@ interface InviteModalProps {
 export default function InviteModal({ inviteCode, roomName, members, onClose }: InviteModalProps) {
   const [copiedCode, setCopiedCode] = useState(false)
   const [copiedLink, setCopiedLink] = useState(false)
+  const [sharedViaSheet, setSharedViaSheet] = useState(false)
 
   const joinUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/join/${inviteCode}`
@@ -30,6 +31,8 @@ export default function InviteModal({ inviteCode, roomName, members, onClose }: 
     if (typeof navigator !== 'undefined' && navigator.share) {
       try {
         await navigator.share({ title: `Join ${roomName} on Roomd`, url: joinUrl })
+        setSharedViaSheet(true)
+        setTimeout(() => setSharedViaSheet(false), 2000)
         return
       } catch {
         // User cancelled or share API failed — fall through to clipboard
@@ -81,8 +84,8 @@ export default function InviteModal({ inviteCode, roomName, members, onClose }: 
           >
             <p className="text-xs text-gray-500 group-hover:text-emerald-600 truncate">{joinUrl}</p>
             <span className="flex-shrink-0 flex items-center gap-1 text-xs font-semibold text-emerald-600">
-              {copiedLink ? <Check size={14} className="text-green-500" /> : <Share2 size={14} />}
-              {copiedLink ? 'Copied!' : 'Share link'}
+              {(copiedLink || sharedViaSheet) ? <Check size={14} className="text-green-500" /> : <Share2 size={14} />}
+              {copiedLink ? 'Copied!' : sharedViaSheet ? 'Shared!' : 'Share link'}
             </span>
           </button>
 

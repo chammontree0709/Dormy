@@ -189,7 +189,7 @@ export default function ChecklistItem({
             <button
               onClick={() => onOwnedChange?.(item.id, !item.owned)}
               className={cn(
-                'p-1.5 rounded-lg transition-colors',
+                'p-2 rounded-lg transition-colors',
                 item.owned
                   ? 'text-sky-600 bg-sky-50 hover:bg-sky-100'
                   : 'text-zinc-400 hover:text-sky-500 hover:bg-sky-50'
@@ -201,7 +201,7 @@ export default function ChecklistItem({
             <button
               onClick={() => { setShowNote((v) => !v); setDraftNote(item.notes ?? '') }}
               className={cn(
-                'p-1.5 rounded-lg transition-colors',
+                'p-2 rounded-lg transition-colors',
                 showNote || item.notes
                   ? 'text-emerald-500 bg-emerald-50 hover:bg-emerald-100'
                   : 'text-zinc-400 hover:text-emerald-500 hover:bg-emerald-50'
@@ -214,7 +214,7 @@ export default function ChecklistItem({
             {preset && (
               <Link
                 href={`/room/${roomId}/item/${item.preset_id}`}
-                className="p-1.5 text-zinc-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                className="p-2 text-zinc-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
                 title="View details & reviews"
               >
                 <ExternalLink size={14} />
@@ -224,17 +224,17 @@ export default function ChecklistItem({
             <div className="flex items-center gap-0.5 border border-zinc-200 rounded-lg overflow-hidden">
               <button
                 onClick={() => qty > 1 ? onQuantityChange(item.id, qty - 1) : onDelete(item.id)}
-                className="px-2 py-1.5 text-zinc-500 hover:bg-zinc-100 transition-colors text-sm font-bold leading-none"
+                className="px-2.5 py-2 text-zinc-500 hover:bg-zinc-100 transition-colors text-sm font-bold leading-none"
               >−</button>
               <span className="px-1.5 text-xs font-semibold text-zinc-700 select-none">{qty}</span>
               <button
                 onClick={() => onQuantityChange(item.id, qty + 1)}
-                className="px-2 py-1.5 text-zinc-500 hover:bg-zinc-100 transition-colors text-sm font-bold leading-none"
+                className="px-2.5 py-2 text-zinc-500 hover:bg-zinc-100 transition-colors text-sm font-bold leading-none"
               >+</button>
             </div>
             <button
               onClick={() => onDelete(item.id)}
-              className="p-1.5 text-zinc-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+              className="p-2 text-zinc-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
             >
               <Trash2 size={14} />
             </button>

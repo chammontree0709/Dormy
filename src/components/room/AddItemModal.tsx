@@ -21,6 +21,8 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
   const [customUrl, setCustomUrl] = useState('')
   const [customCategory, setCustomCategory] = useState('storage')
   const [notes, setNotes] = useState('')
+  const [justAdded, setJustAdded] = useState<string | null>(null)
+  const [customAdded, setCustomAdded] = useState(false)
   const listRef = useRef<HTMLDivElement>(null)
 
   // Scroll list to top whenever category or search changes
@@ -30,12 +32,26 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
 
   const isSearching = search.trim().length > 0
 
-  const filtered = PRESET_ITEMS.filter((item) => {
-    const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase()) ||
-      item.description.toLowerCase().includes(search.toLowerCase())
-    const matchesCategory = !selectedCategory || item.category === selectedCategory
-    return matchesSearch && matchesCategory
-  })
+  // Rank results: name-prefix matches first, name-contains second, description-only last
+  const filtered = (() => {
+    const inCategory = PRESET_ITEMS.filter((item) => !selectedCategory || item.category === selectedCategory)
+    if (!isSearching) return inCategory
+    const q = search.toLowerCase().trim()
+    const matches = inCategory.filter((item) =>
+      item.name.toLowerCase().includes(q) || item.description.toLowerCase().includes(q)
+    )
+    return matches.sort((a, b) => {
+      const an = a.name.toLowerCase()
+      const bn = b.name.toLowerCase()
+      const aStart = an.startsWith(q)
+      const bStart = bn.startsWith(q)
+      if (aStart !== bStart) return aStart ? -1 : 1
+      const aName = an.includes(q)
+      const bName = bn.includes(q)
+      if (aName !== bName) return aName ? -1 : 1
+      return 0
+    })
+  })()
 
   const categoryItemCounts = Object.fromEntries(
     CATEGORIES.map((cat) => [cat.id, PRESET_ITEMS.filter((i) => i.category === cat.id).length])
@@ -43,13 +59,20 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
 
   function handleAddPreset(item: PresetItem) {
     onAdd(item.id, undefined, undefined, item.category)
-    onClose()
+    // Stay open — user can add multiple items; "in room" badge is the feedback
+    setJustAdded(item.id)
+    setTimeout(() => setJustAdded(null), 1200)
   }
 
   function handleAddCustom() {
     if (!customName.trim()) return
     onAdd(null, customName.trim(), customUrl.trim() || undefined, customCategory, notes.trim() || undefined)
-    onClose()
+    // Reset form and flash success — stay open so user can add another
+    setCustomName('')
+    setCustomUrl('')
+    setNotes('')
+    setCustomAdded(true)
+    setTimeout(() => setCustomAdded(false), 1500)
   }
 
   const showCategoryGrid = !isSearching && !selectedCategory
@@ -134,17 +157,28 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                 // Item list (filtered by search or category)
                 <div className="space-y-2">
                   {filtered.length === 0 ? (
-                    <p className="text-center text-gray-400 text-sm py-8">No items found.</p>
+                    <div className="text-center py-8">
+                      <p className="text-gray-400 text-sm mb-3">No preset items match &ldquo;{search}&rdquo;</p>
+                      <button
+                        onClick={() => { setTab('custom'); setCustomName(search.trim()) }}
+                        className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white text-sm font-semibold rounded-xl hover:bg-emerald-700 transition-colors touch-manipulation"
+                      >
+                        <Plus size={15} /> Add &ldquo;{search.trim()}&rdquo; as custom item
+                      </button>
+                    </div>
                   ) : (
                     filtered.map((item) => {
                       const alreadyAdded = existingPresetIds.includes(item.id)
+                      const wasJustAdded = justAdded === item.id
                       return (
                         <button
                           key={item.id}
                           onClick={() => handleAddPreset(item)}
                           className={cn(
                             'w-full text-left flex items-start gap-3 p-3 rounded-xl border transition-all group touch-manipulation',
-                            alreadyAdded
+                            wasJustAdded
+                              ? 'border-emerald-400 bg-emerald-100'
+                              : alreadyAdded
                               ? 'border-emerald-200 bg-emerald-50 hover:bg-emerald-100'
                               : 'border-gray-100 hover:border-emerald-200 hover:bg-emerald-50'
                           )}
@@ -154,7 +188,10 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                             <div className="flex items-center justify-between gap-2">
                               <p className="font-semibold text-sm text-gray-900 truncate">{item.name}</p>
                               <div className="flex items-center gap-1.5 flex-shrink-0">
-                                {alreadyAdded && (
+                                {wasJustAdded && (
+                                  <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500 text-white font-semibold">Added!</span>
+                                )}
+                                {!wasJustAdded && alreadyAdded && (
                                   <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-800 font-semibold">in room</span>
                                 )}
                                 <span className={cn('text-xs px-2 py-0.5 rounded-full', {
@@ -223,8 +260,8 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                 className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
               />
             </div>
-            <Button onClick={handleAddCustom} disabled={!customName.trim()} size="lg" className="w-full">
-              Add to Checklist
+            <Button onClick={handleAddCustom} disabled={!customName.trim()} size="lg" className={cn('w-full transition-colors', customAdded && 'bg-emerald-500')}>
+              {customAdded ? '✓ Added!' : 'Add to Checklist'}
             </Button>
           </div>
         )}

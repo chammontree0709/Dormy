@@ -125,7 +125,7 @@ function LoginForm() {
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <label className="block text-sm font-semibold text-zinc-700">Password</label>
-              <Link href="/forgot-password" className="text-xs text-emerald-600 hover:underline">Forgot password?</Link>
+              <Link href="/forgot-password" className="text-xs text-emerald-600 hover:underline py-2 -my-2">Forgot password?</Link>
             </div>
             <div className="relative">
               <input
@@ -134,12 +134,12 @@ function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-3 pr-11 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-4 py-3 pr-12 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
+                className="absolute right-0 top-0 h-full px-3 flex items-center text-zinc-400 hover:text-zinc-600"
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
