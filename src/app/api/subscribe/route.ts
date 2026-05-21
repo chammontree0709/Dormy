@@ -5,6 +5,15 @@ import { buildWelcomeEmail } from '@/lib/emails/welcome'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+function sendWelcomeEmail(email: string) {
+  return resend.emails.send({
+    from: 'Roomd <hello@roomdapp.com>',
+    to: email,
+    subject: 'Your dorm room era starts now.',
+    html: buildWelcomeEmail(),
+  }).catch(() => {})
+}
+
 export async function POST(request: Request) {
   const { email } = await request.json()
 
@@ -19,18 +28,13 @@ export async function POST(request: Request) {
 
   if (error) {
     if (error.code === '23505') {
+      // Already signed up — still send the email in case they never got it
+      sendWelcomeEmail(normalizedEmail)
       return NextResponse.json({ message: "You're already on the list!" })
     }
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
   }
 
-  // Send welcome email (fire and forget — don't block the response)
-  resend.emails.send({
-    from: 'Roomd <hello@roomdapp.com>',
-    to: normalizedEmail,
-    subject: 'Your dorm room era starts now.',
-    html: buildWelcomeEmail(),
-  }).catch(() => {})
-
+  sendWelcomeEmail(normalizedEmail)
   return NextResponse.json({ message: "You're on the list!" })
 }
