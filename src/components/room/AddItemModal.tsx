@@ -142,7 +142,6 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                         <button
                           key={item.id}
                           onClick={() => handleAddPreset(item)}
-                          onTouchEnd={(e) => { e.preventDefault(); handleAddPreset(item) }}
                           className={cn(
                             'w-full text-left flex items-start gap-3 p-3 rounded-xl border transition-all group touch-manipulation',
                             alreadyAdded

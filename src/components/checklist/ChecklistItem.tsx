@@ -109,9 +109,18 @@ export default function ChecklistItem({
           <div className="flex items-start gap-2 min-w-0">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 min-w-0">
-                <p className={cn('font-medium text-zinc-950 truncate', item.is_checked && 'line-through text-zinc-400')}>
-                  {name}
-                </p>
+                {preset ? (
+                  <Link
+                    href={`/room/${roomId}/item/${item.preset_id}`}
+                    className={cn('font-medium text-zinc-950 truncate hover:text-emerald-600 transition-colors', item.is_checked && 'line-through text-zinc-400')}
+                  >
+                    {name}
+                  </Link>
+                ) : (
+                  <p className={cn('font-medium text-zinc-950 truncate', item.is_checked && 'line-through text-zinc-400')}>
+                    {name}
+                  </p>
+                )}
                 {qty > 1 && (
                   <span className="flex-shrink-0 text-xs font-bold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-md">×{qty}</span>
                 )}
@@ -241,6 +250,7 @@ export default function ChecklistItem({
             rows={2}
             value={draftNote}
             onChange={(e) => setDraftNote(e.target.value)}
+            onBlur={saveNote}
             placeholder="Add a note for your roommates…"
             className="flex-1 text-sm border border-emerald-200 rounded-xl px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-300 text-zinc-700 placeholder-zinc-400"
           />

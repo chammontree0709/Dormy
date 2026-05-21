@@ -72,6 +72,21 @@ export default function InspoPage() {
   const [currentUserName, setCurrentUserName] = useState('')
   const supabase = createClient()
 
+  // When the selected room changes, fetch which preset items are already in it
+  useEffect(() => {
+    if (!selectedRoomId) return
+    supabase
+      .from('room_items')
+      .select('preset_id')
+      .eq('room_id', selectedRoomId)
+      .not('preset_id', 'is', null)
+      .then(({ data }) => {
+        if (data) {
+          setAddedItems(new Set(data.map((r) => `${selectedRoomId}:${r.preset_id}`)))
+        }
+      })
+  }, [selectedRoomId])
+
   useEffect(() => {
     async function load() {
       const { data: { user } } = await supabase.auth.getUser()

@@ -45,6 +45,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${outfit.variable} ${playfair.variable} h-full`}>
       <head>
+        {/* Synchronously apply dark mode before first paint to prevent FOUC */}
+        <script dangerouslySetInnerHTML={{ __html: `try{if(localStorage.getItem('roomd-dark')==='true')document.documentElement.classList.add('dark')}catch(e){}` }} />
         <meta name="google-adsense-account" content="ca-pub-7336988558032518" />
         <script
           async

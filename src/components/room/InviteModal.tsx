@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Copy, Check, X, Users } from 'lucide-react'
+import { Copy, Check, X, Users, Share2 } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import { RoomMember } from '@/types'
 
@@ -26,10 +26,22 @@ export default function InviteModal({ inviteCode, roomName, members, onClose }: 
     setTimeout(() => setCopiedCode(false), 2000)
   }
 
-  async function copyLink() {
-    await navigator.clipboard.writeText(joinUrl)
-    setCopiedLink(true)
-    setTimeout(() => setCopiedLink(false), 2000)
+  async function shareLink() {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({ title: `Join ${roomName} on Roomd`, url: joinUrl })
+        return
+      } catch {
+        // User cancelled or share API failed — fall through to clipboard
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(joinUrl)
+      setCopiedLink(true)
+      setTimeout(() => setCopiedLink(false), 2000)
+    } catch {
+      // Clipboard also unavailable — silent fail
+    }
   }
 
   return (
@@ -64,13 +76,13 @@ export default function InviteModal({ inviteCode, roomName, members, onClose }: 
           </div>
 
           <button
-            onClick={copyLink}
+            onClick={shareLink}
             className="w-full flex items-center justify-between gap-2 bg-gray-50 hover:bg-emerald-50 border border-gray-200 hover:border-emerald-200 rounded-xl px-3 py-2.5 transition-colors group"
           >
             <p className="text-xs text-gray-500 group-hover:text-emerald-600 truncate">{joinUrl}</p>
             <span className="flex-shrink-0 flex items-center gap-1 text-xs font-semibold text-emerald-600">
-              {copiedLink ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
-              {copiedLink ? 'Copied!' : 'Copy link'}
+              {copiedLink ? <Check size={14} className="text-green-500" /> : <Share2 size={14} />}
+              {copiedLink ? 'Copied!' : 'Share link'}
             </span>
           </button>
 
