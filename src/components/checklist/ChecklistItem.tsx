@@ -256,11 +256,13 @@ export default function ChecklistItem({
           />
           <div className="flex flex-col gap-1.5">
             <button
+              onMouseDown={(e) => e.preventDefault()}
               onClick={saveNote}
               className="px-3 py-1.5 bg-zinc-950 text-white text-xs font-bold rounded-lg hover:bg-zinc-800"
             >Save</button>
             <button
-              onClick={() => setShowNote(false)}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => { setDraftNote(item.notes ?? ''); setShowNote(false) }}
               className="px-3 py-1.5 bg-zinc-100 text-zinc-600 text-xs font-semibold rounded-lg hover:bg-zinc-200"
             >Cancel</button>
           </div>
