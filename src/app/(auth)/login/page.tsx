@@ -59,7 +59,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-zinc-50 flex flex-col items-center justify-center px-4">
       <Link href="/" className="flex items-center gap-2 mb-8">
         <LogoMark size={44} />
           <span className="font-black text-zinc-950 text-2xl">Roomd</span>

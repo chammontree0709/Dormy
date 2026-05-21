@@ -83,7 +83,7 @@ export default function SignupPage() {
 
   if (verifyEmail) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
+      <div className="min-h-screen bg-zinc-50 flex flex-col items-center justify-center px-4">
         <Link href="/" className="flex items-center gap-2 mb-8">
           <LogoMark size={44} />
           <span className="font-black text-zinc-950 text-2xl">Roomd</span>
@@ -106,10 +106,10 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-zinc-50 flex flex-col items-center justify-center px-4">
       <Link href="/" className="flex items-center gap-2 mb-8">
         <LogoMark size={44} />
-          <span className="font-black text-zinc-950 text-2xl">Roomd</span>
+        <span className="font-black text-zinc-950 text-2xl">Roomd</span>
       </Link>
 
       <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-zinc-100 p-8">
