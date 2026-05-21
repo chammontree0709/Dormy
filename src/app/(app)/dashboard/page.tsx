@@ -33,42 +33,28 @@ export default function DashboardPage() {
       const displayName = user.user_metadata?.display_name ?? user.email?.split('@')[0] ?? 'You'
       setUserName(displayName)
 
-      // Fetch membership rows AND rooms created by this user in parallel.
-      // Querying created_by is the fallback for when room_members insert silently
-      // failed on iOS (network drop, RLS race) so the room never shows up on reload.
-      const [{ data: memberRows }, { data: createdRooms }] = await Promise.all([
-        supabase.from('room_members').select('room_id').eq('user_id', user.id),
-        supabase.from('rooms').select('*').eq('created_by', user.id),
-      ])
+      // Only show rooms the user has an active room_members row for.
+      // The created_by fallback was removed — it fought with leave room by
+      // re-adding rooms on reload. createRoom now uses the RPC so membership
+      // is always created correctly upfront.
+      const { data: memberRows } = await supabase
+        .from('room_members')
+        .select('room_id')
+        .eq('user_id', user.id)
 
-      const memberRoomIds = (memberRows ?? []).map((r) => r.room_id)
-      const createdIds = new Set((createdRooms ?? []).map((r) => r.id))
-
-      // Self-heal: rooms user created but was never added to room_members (iOS bug).
-      // Use invite_code via RPC (security-definer) — direct inserts can be blocked by RLS.
-      const missingMemberships = (createdRooms ?? []).filter((r) => !memberRoomIds.includes(r.id))
-      if (missingMemberships.length > 0) {
-        await Promise.all(
-          missingMemberships.map((r) =>
-            supabase.rpc('join_room_by_invite_code', {
-              p_invite_code: r.invite_code,
-              p_display_name: displayName,
-            })
-          )
-        )
-        memberRoomIds.push(...missingMemberships.map((r) => r.id))
+      const roomIds = (memberRows ?? []).map((r) => r.room_id)
+      if (!roomIds.length) {
+        setLoading(false)
+        return
       }
 
-      // Fetch rooms the user joined but didn't create (not already in createdRooms)
-      const joinedIds = memberRoomIds.filter((id) => !createdIds.has(id))
-      const { data: joinedRooms } = joinedIds.length > 0
-        ? await supabase.from('rooms').select('*').in('id', joinedIds)
-        : { data: [] as Room[] }
+      const { data: roomRows } = await supabase
+        .from('rooms')
+        .select('*')
+        .in('id', roomIds)
+        .order('created_at', { ascending: false })
 
-      const allRooms = [...(createdRooms ?? []), ...(joinedRooms ?? [])]
-        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-
-      setRooms(allRooms)
+      setRooms(roomRows ?? [])
       setLoading(false)
     }
     load()
