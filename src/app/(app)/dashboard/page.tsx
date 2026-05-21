@@ -29,23 +29,42 @@ export default function DashboardPage() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
 
-      setUserName(user.user_metadata?.display_name ?? user.email?.split('@')[0] ?? 'there')
+      const displayName = user.user_metadata?.display_name ?? user.email?.split('@')[0] ?? 'You'
+      setUserName(displayName)
 
-      const { data: memberRows } = await supabase
-        .from('room_members')
-        .select('room_id')
-        .eq('user_id', user.id)
+      // Fetch membership rows AND rooms created by this user in parallel.
+      // Querying created_by is the fallback for when room_members insert silently
+      // failed on iOS (network drop, RLS race) so the room never shows up on reload.
+      const [{ data: memberRows }, { data: createdRooms }] = await Promise.all([
+        supabase.from('room_members').select('room_id').eq('user_id', user.id),
+        supabase.from('rooms').select('*').eq('created_by', user.id),
+      ])
 
-      if (!memberRows?.length) { setLoading(false); return }
+      const memberRoomIds = (memberRows ?? []).map((r) => r.room_id)
+      const createdIds = new Set((createdRooms ?? []).map((r) => r.id))
 
-      const roomIds = memberRows.map((r) => r.room_id)
-      const { data: roomData } = await supabase
-        .from('rooms')
-        .select('*')
-        .in('id', roomIds)
-        .order('created_at', { ascending: false })
+      // Self-heal: rooms user created but was never added to room_members (iOS bug).
+      // Without a membership row, room_items RLS also blocks — fix it now.
+      const missingMemberships = [...createdIds].filter((id) => !memberRoomIds.includes(id))
+      if (missingMemberships.length > 0) {
+        await Promise.all(
+          missingMemberships.map((roomId) =>
+            supabase.from('room_members').insert({ room_id: roomId, user_id: user.id, display_name: displayName })
+          )
+        )
+        memberRoomIds.push(...missingMemberships)
+      }
 
-      setRooms(roomData ?? [])
+      // Fetch rooms the user joined but didn't create (not already in createdRooms)
+      const joinedIds = memberRoomIds.filter((id) => !createdIds.has(id))
+      const { data: joinedRooms } = joinedIds.length > 0
+        ? await supabase.from('rooms').select('*').in('id', joinedIds)
+        : { data: [] as Room[] }
+
+      const allRooms = [...(createdRooms ?? []), ...(joinedRooms ?? [])]
+        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+
+      setRooms(allRooms)
       setLoading(false)
     }
     load()
@@ -74,11 +93,19 @@ export default function DashboardPage() {
       return
     }
 
-    await supabase.from('room_members').insert({
+    const { error: memberErr } = await supabase.from('room_members').insert({
       room_id: room.id,
       user_id: user.id,
       display_name: displayName,
     })
+
+    if (memberErr) {
+      // Rollback: room was created but membership failed — delete the orphaned room
+      await supabase.from('rooms').delete().eq('id', room.id)
+      setActionError('Failed to set up your room. Please try again.')
+      setCreating(false)
+      return
+    }
 
     setRooms((prev) => [room, ...prev])
     setNewRoomName('')
