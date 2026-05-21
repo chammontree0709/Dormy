@@ -18,5 +18,5 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
   }
 
-  return NextResponse.json({ message: 'You\'re on the list! 🎉' })
+  return NextResponse.json({ message: "You're on the list!" })
 }

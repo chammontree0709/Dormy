@@ -152,16 +152,16 @@ function EmailCapture() {
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Mail className="w-4 h-4 text-emerald-400" strokeWidth={1.5} />
-            <span className="text-emerald-400 text-xs font-bold tracking-widest uppercase">Free resource</span>
+            <span className="text-emerald-400 text-xs font-bold tracking-widest uppercase">Stay updated</span>
           </div>
           <h2
             className="text-3xl md:text-4xl font-bold italic text-white mb-3 leading-tight"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
-            Get the ultimate packing list.
+            Stay in the loop.
           </h2>
           <p className="text-zinc-400 leading-relaxed max-w-md">
-            Free move-in checklist PDF plus early access to new features. No spam, ever.
+            Move-in tips, new features, and packing reminders — straight to your inbox. No spam, ever.
           </p>
         </div>
         <div className="w-full md:min-w-[340px]">

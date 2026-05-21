@@ -1,11 +1,11 @@
 {
-  "name": "Dormy",
-  "short_name": "Dormy",
+  "name": "Roomd",
+  "short_name": "Roomd",
   "description": "Shared dorm room supply checklist for roommates",
   "start_url": "/dashboard",
   "display": "standalone",
-  "background_color": "#f8fafc",
-  "theme_color": "#4f46e5",
+  "background_color": "#ffffff",
+  "theme_color": "#09090b",
   "orientation": "portrait",
   "icons": [
     {
