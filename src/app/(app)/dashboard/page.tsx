@@ -45,15 +45,18 @@ export default function DashboardPage() {
       const createdIds = new Set((createdRooms ?? []).map((r) => r.id))
 
       // Self-heal: rooms user created but was never added to room_members (iOS bug).
-      // Without a membership row, room_items RLS also blocks — fix it now.
-      const missingMemberships = [...createdIds].filter((id) => !memberRoomIds.includes(id))
+      // Use invite_code via RPC (security-definer) — direct inserts can be blocked by RLS.
+      const missingMemberships = (createdRooms ?? []).filter((r) => !memberRoomIds.includes(r.id))
       if (missingMemberships.length > 0) {
         await Promise.all(
-          missingMemberships.map((roomId) =>
-            supabase.from('room_members').insert({ room_id: roomId, user_id: user.id, display_name: displayName })
+          missingMemberships.map((r) =>
+            supabase.rpc('join_room_by_invite_code', {
+              p_invite_code: r.invite_code,
+              p_display_name: displayName,
+            })
           )
         )
-        memberRoomIds.push(...missingMemberships)
+        memberRoomIds.push(...missingMemberships.map((r) => r.id))
       }
 
       // Fetch rooms the user joined but didn't create (not already in createdRooms)
@@ -94,10 +97,11 @@ export default function DashboardPage() {
       return
     }
 
-    const { error: memberErr } = await supabase.from('room_members').insert({
-      room_id: room.id,
-      user_id: user.id,
-      display_name: displayName,
+    // Use the RPC (security-definer) instead of a direct insert —
+    // room_members RLS blocks direct inserts in some policy configurations.
+    const { error: memberErr } = await supabase.rpc('join_room_by_invite_code', {
+      p_invite_code: inviteCode,
+      p_display_name: displayName,
     })
 
     if (memberErr) {
