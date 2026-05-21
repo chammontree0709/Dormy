@@ -63,7 +63,6 @@ export default function TemplatesPage() {
                   : 'border-zinc-200 bg-white hover:border-zinc-400 hover:bg-zinc-50'
               )}
             >
-              <p className="text-2xl mb-2">{list.emoji}</p>
               <p className={cn('font-bold text-sm', selectedList === list.id ? 'text-white' : 'text-zinc-950')}>{list.name}</p>
               <p className={cn('text-xs mt-0.5', selectedList === list.id ? 'text-zinc-400' : 'text-zinc-400')}>{list.itemIds.length} items</p>
             </button>
@@ -78,7 +77,6 @@ export default function TemplatesPage() {
               className="flex items-center gap-2 text-zinc-600 hover:text-zinc-950 font-bold text-xl"
             >
               <ArrowLeft size={20} />
-              {CATEGORIES.find((c) => c.id === selectedCategory)?.icon}{' '}
               {CATEGORIES.find((c) => c.id === selectedCategory)?.name}
             </button>
           ) : (
@@ -107,7 +105,6 @@ export default function TemplatesPage() {
                   onClick={() => setSelectedCategory(cat.id)}
                   className="flex flex-col items-start gap-1 p-4 rounded-2xl border border-zinc-200 bg-white hover:border-zinc-400 hover:bg-zinc-50 transition-all text-left"
                 >
-                  <span className="text-2xl">{cat.icon}</span>
                   <p className="font-bold text-zinc-950 text-sm leading-tight">{cat.name}</p>
                   <p className="text-xs text-zinc-400">{count} items</p>
                 </button>
@@ -133,7 +130,6 @@ export default function TemplatesPage() {
                   onClick={() => toggleExpand(item.id)}
                   className="w-full text-left p-4 flex items-start gap-3"
                 >
-                  <span className="text-2xl flex-shrink-0 mt-0.5">{item.image_emoji}</span>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">

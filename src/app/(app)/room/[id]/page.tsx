@@ -15,6 +15,7 @@ import { use } from 'react'
 import {
   Plus, Users, ChevronDown, ChevronUp, LayoutTemplate,
   ShoppingCart, X, CalendarDays, DollarSign, Activity,
+  PartyPopper, ClipboardList,
 } from 'lucide-react'
 
 interface ActivityEvent {
@@ -244,7 +245,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
   const uncategorized = items.filter((item) => !CATEGORIES.find((c) => c.id === item.category))
   if (uncategorized.length > 0) {
-    groupedItems.push({ category: { id: 'other', name: 'Other', icon: '📋', description: '' }, items: uncategorized })
+    groupedItems.push({ category: { id: 'other', name: 'Other', icon: '', description: '' }, items: uncategorized })
   }
 
   const totalItems = items.length
@@ -305,7 +306,9 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
         <div className="max-w-2xl mx-auto px-4 py-6 space-y-3">
           {uncheckedItems.length === 0 ? (
             <div className="text-center py-16">
-              <div className="text-5xl mb-4">🎉</div>
+              <div className="w-16 h-16 rounded-2xl bg-emerald-50 flex items-center justify-center mx-auto mb-4">
+                <PartyPopper size={32} className="text-emerald-500" />
+              </div>
               <p className="text-2xl font-bold text-zinc-950">All done!</p>
               <p className="text-zinc-500 mt-2 mb-6">Everything on your list has been bought.</p>
               <button onClick={() => setShoppingMode(false)} className="bg-zinc-950 text-white font-bold px-6 py-3 rounded-2xl hover:bg-zinc-800">
@@ -441,7 +444,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   days > 0
                     ? <span><span className="font-bold text-emerald-600">{days} days</span> until move-in</span>
                     : days === 0
-                    ? <span className="font-bold text-emerald-600">Move-in day! 🎉</span>
+                    ? <span className="font-bold text-emerald-600">Move-in day!</span>
                     : <span className="text-zinc-400">Move-in was {Math.abs(days)}d ago · <span className="text-emerald-500">update</span></span>
                 ) : (
                   <span className="text-zinc-400">Set move-in date</span>
@@ -480,7 +483,9 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
         {/* Checklist */}
         {items.length === 0 ? (
           <div className="text-center py-16">
-            <div className="text-5xl mb-4">📋</div>
+            <div className="w-16 h-16 rounded-2xl bg-zinc-100 flex items-center justify-center mx-auto mb-4">
+              <ClipboardList size={32} className="text-zinc-400" />
+            </div>
             <h2 className="font-bold text-zinc-950 text-xl mb-2">Your checklist is empty</h2>
             <p className="text-zinc-500 text-sm mb-6">Add items from our preset lists or create your own.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -501,7 +506,6 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-xl">{category.icon}</span>
                       <span className="font-bold text-zinc-950">{category.name}</span>
                       <span className="text-xs bg-zinc-100 text-zinc-500 px-2 py-0.5 rounded-full font-semibold">
                         {doneCount}/{catItems.length}

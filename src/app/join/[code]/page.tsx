@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Button from '@/components/ui/Button'
 import { use } from 'react'
+import { Home, CheckCircle2, KeyRound, XCircle, Loader2 } from 'lucide-react'
 
 export default function JoinPage({ params }: { params: Promise<{ code: string }> }) {
   const { code } = use(params)
@@ -53,27 +54,33 @@ export default function JoinPage({ params }: { params: Promise<{ code: string }>
     <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
       <Link href="/" className="flex items-center gap-2 mb-8">
         <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
-          <span className="font-black text-emerald-600 text-2xl">Roomd</span>
+          <span className="font-black text-zinc-950 text-2xl">Roomd</span>
       </Link>
 
-      <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-gray-100 p-8 text-center">
+      <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-zinc-100 p-8 text-center">
         {status === 'loading' || status === 'joining' ? (
           <>
-            <div className="text-4xl mb-4 animate-bounce">🏠</div>
-            <p className="font-bold text-gray-900 text-lg mb-1">Joining room...</p>
-            <p className="text-gray-500 text-sm">Code: <span className="font-mono font-bold">{code}</span></p>
+            <div className="w-14 h-14 rounded-2xl bg-zinc-100 flex items-center justify-center mx-auto mb-4">
+              <Loader2 size={28} className="text-zinc-400 animate-spin" />
+            </div>
+            <p className="font-bold text-zinc-900 text-lg mb-1">Joining room...</p>
+            <p className="text-zinc-500 text-sm">Code: <span className="font-mono font-bold">{code}</span></p>
           </>
         ) : status === 'success' ? (
           <>
-            <div className="text-4xl mb-4">🎉</div>
-            <p className="font-bold text-gray-900 text-xl mb-1">You&apos;re in!</p>
-            <p className="text-gray-500 text-sm">Welcome to <strong>{roomName}</strong>. Redirecting...</p>
+            <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 size={28} className="text-emerald-500" />
+            </div>
+            <p className="font-bold text-zinc-900 text-xl mb-1">You&apos;re in!</p>
+            <p className="text-zinc-500 text-sm">Welcome to <strong>{roomName}</strong>. Redirecting...</p>
           </>
         ) : status === 'needsAuth' ? (
           <>
-            <div className="text-4xl mb-4">🔑</div>
-            <p className="font-bold text-gray-900 text-xl mb-2">Sign in first</p>
-            <p className="text-gray-500 text-sm mb-6">You need an account to join a room.</p>
+            <div className="w-14 h-14 rounded-2xl bg-zinc-100 flex items-center justify-center mx-auto mb-4">
+              <KeyRound size={28} className="text-zinc-400" />
+            </div>
+            <p className="font-bold text-zinc-900 text-xl mb-2">Sign in first</p>
+            <p className="text-zinc-500 text-sm mb-6">You need an account to join a room.</p>
             <div className="space-y-3">
               <Link href={`/signup?invite=${code}`} className="block">
                 <Button className="w-full">Create account</Button>
@@ -85,9 +92,11 @@ export default function JoinPage({ params }: { params: Promise<{ code: string }>
           </>
         ) : (
           <>
-            <div className="text-4xl mb-4">❌</div>
-            <p className="font-bold text-gray-900 text-xl mb-2">Couldn&apos;t join</p>
-            <p className="text-gray-500 text-sm mb-6">{error}</p>
+            <div className="w-14 h-14 rounded-2xl bg-red-50 flex items-center justify-center mx-auto mb-4">
+              <XCircle size={28} className="text-red-400" />
+            </div>
+            <p className="font-bold text-zinc-900 text-xl mb-2">Couldn&apos;t join</p>
+            <p className="text-zinc-500 text-sm mb-6">{error}</p>
             <Link href="/dashboard"><Button>Go to Dashboard</Button></Link>
           </>
         )}

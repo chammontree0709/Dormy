@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { LogOut, Home, LayoutTemplate, BookOpen, Sparkles, ClipboardList, Moon, Sun, Check, X, KeyRound } from 'lucide-react'
+import { LogOut, Home, LayoutTemplate, BookOpen, Sparkles, ClipboardList, Moon, Sun, Check, X, KeyRound, Pencil } from 'lucide-react'
 
 interface NavbarProps {
   roomName?: string
@@ -194,9 +194,9 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
                   {!editingName && (
                     <button
                       onClick={() => setEditingName(true)}
-                      className="mt-2.5 w-full text-xs text-emerald-600 hover:text-emerald-700 font-medium text-left"
+                      className="mt-2.5 w-full flex items-center gap-1.5 text-xs text-zinc-500 hover:text-zinc-900 font-medium text-left transition-colors"
                     >
-                      ✏️ Edit display name
+                      <Pencil size={11} /> Edit display name
                     </button>
                   )}
                 </div>

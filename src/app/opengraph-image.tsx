@@ -10,65 +10,69 @@ export default function OgImage() {
     (
       <div
         style={{
-          background: 'linear-gradient(135deg, #eef2ff 0%, #ffffff 100%)',
+          background: '#ffffff',
           width: '100%',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           justifyContent: 'center',
           fontFamily: 'sans-serif',
-          padding: '60px',
+          padding: '80px',
         }}
       >
         {/* Logo row */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '40px' }}>
           <div
             style={{
-              width: '72px',
-              height: '72px',
-              background: '#4f46e5',
-              borderRadius: '18px',
+              width: '64px',
+              height: '64px',
+              background: '#09090b',
+              borderRadius: '16px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: 'white',
-              fontSize: '40px',
+              fontSize: '32px',
               fontWeight: 900,
             }}
           >
             R
           </div>
-          <span style={{ fontSize: '52px', fontWeight: 900, color: '#4f46e5', letterSpacing: '-2px' }}>
+          <span style={{ fontSize: '44px', fontWeight: 900, color: '#09090b', letterSpacing: '-2px' }}>
             Roomd
           </span>
+        </div>
+
+        {/* Eyebrow */}
+        <div style={{ fontSize: '18px', fontWeight: 700, color: '#10b981', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '20px' }}>
+          Shared dorm checklist
         </div>
 
         {/* Headline */}
         <div
           style={{
-            fontSize: '56px',
+            fontSize: '64px',
             fontWeight: 900,
-            color: '#111827',
-            textAlign: 'center',
-            lineHeight: 1.1,
-            marginBottom: '20px',
-            letterSpacing: '-2px',
+            color: '#09090b',
+            lineHeight: 1.05,
+            marginBottom: '28px',
+            letterSpacing: '-3px',
+            maxWidth: '820px',
           }}
         >
           Your dorm room,
           <br />
-          <span style={{ color: '#4f46e5' }}>packed together.</span>
+          packed together.
         </div>
 
         {/* Subtext */}
         <div
           style={{
-            fontSize: '26px',
-            color: '#6b7280',
-            textAlign: 'center',
-            maxWidth: '700px',
-            lineHeight: 1.4,
+            fontSize: '24px',
+            color: '#71717a',
+            maxWidth: '600px',
+            lineHeight: 1.5,
           }}
         >
           The shared checklist app for you and your roommates. Never buy the same thing twice.
@@ -77,16 +81,16 @@ export default function OgImage() {
         {/* Pill badge */}
         <div
           style={{
-            marginTop: '36px',
-            background: '#eef2ff',
-            color: '#4338ca',
-            fontSize: '20px',
+            marginTop: '40px',
+            background: '#f4f4f5',
+            color: '#09090b',
+            fontSize: '18px',
             fontWeight: 700,
             padding: '10px 24px',
             borderRadius: '100px',
           }}
         >
-          🎓 Built for college move-in day
+          Built for college move-in day
         </div>
       </div>
     ),

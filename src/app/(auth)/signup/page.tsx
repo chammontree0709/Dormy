@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import Button from '@/components/ui/Button'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, Mail, Check, Clock } from 'lucide-react'
 
 function GoogleIcon() {
   return (
@@ -89,7 +89,9 @@ export default function SignupPage() {
           <span className="font-black text-zinc-950 text-2xl">Roomd</span>
         </Link>
         <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-zinc-100 p-8 text-center">
-          <div className="text-4xl mb-4">📬</div>
+          <div className="w-14 h-14 rounded-2xl bg-zinc-100 flex items-center justify-center mx-auto mb-4">
+            <Mail size={28} className="text-zinc-400" />
+          </div>
           <h1 className="text-2xl font-black text-zinc-950 mb-2">Check your inbox</h1>
           <p className="text-zinc-500 text-sm mb-2">We sent a confirmation link to:</p>
           <p className="font-bold text-zinc-900 mb-4">{verifyEmail}</p>
@@ -201,8 +203,11 @@ export default function SignupPage() {
                 }`}
               />
               {inviteCode.length > 0 && (
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-lg">
-                  {inviteValid ? '✅' : '⏳'}
+                <span className="absolute right-3 top-1/2 -translate-y-1/2">
+                  {inviteValid
+                    ? <Check size={16} className="text-emerald-500" strokeWidth={2.5} />
+                    : <Clock size={16} className="text-amber-400" strokeWidth={2} />
+                  }
                 </span>
               )}
             </div>

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { RoomItem } from '@/types'
 import { getItemById } from '@/data/presets'
 import { cn } from '@/lib/utils'
-import { Trash2, ExternalLink, ShoppingCart, Hand, MessageSquare, Home } from 'lucide-react'
+import { Trash2, ExternalLink, ShoppingCart, Hand, MessageSquare, Home, Check } from 'lucide-react'
 import Link from 'next/link'
 import { buildAffiliateUrl } from '@/lib/amazon'
 
@@ -49,12 +49,12 @@ export default function ChecklistItem({
           'w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all text-left',
           item.is_checked
             ? 'bg-green-50 dark:bg-green-950/40 border-green-300 dark:border-green-900 opacity-60'
-            : 'bg-white border-gray-200 active:scale-[0.98]'
+            : 'bg-white border-zinc-200 active:scale-[0.98]'
         )}
       >
         <div className={cn(
           'flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center',
-          item.is_checked ? 'bg-green-500 border-green-500 text-white' : 'border-gray-300'
+          item.is_checked ? 'bg-green-500 border-green-500 text-white' : 'border-zinc-300'
         )}>
           {item.is_checked && (
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -63,12 +63,11 @@ export default function ChecklistItem({
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <p className={cn('font-semibold text-lg text-gray-900', item.is_checked && 'line-through text-gray-400')}>
-            {preset && <span className="mr-1.5">{preset.image_emoji}</span>}
+          <p className={cn('font-semibold text-lg text-zinc-950', item.is_checked && 'line-through text-zinc-400')}>
             {name}
             {qty > 1 && <span className="ml-2 text-sm font-bold text-emerald-600">×{qty}</span>}
           </p>
-          {preset && <p className="text-sm text-gray-400 mt-0.5">{preset.price_estimate}</p>}
+          {preset && <p className="text-sm text-zinc-400 mt-0.5">{preset.price_estimate}</p>}
         </div>
       </button>
     )
@@ -84,7 +83,7 @@ export default function ChecklistItem({
           ? 'bg-sky-50 dark:bg-sky-950/40 border-sky-200 dark:border-sky-900'
           : isClaimed
           ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900'
-          : 'bg-white border-gray-100 hover:border-emerald-100 hover:shadow-sm'
+          : 'bg-white border-zinc-100 hover:border-zinc-300 hover:shadow-sm'
       )}
     >
       <div className="flex items-start gap-3 p-4">
@@ -94,7 +93,7 @@ export default function ChecklistItem({
             'flex-shrink-0 w-6 h-6 mt-0.5 rounded-full border-2 flex items-center justify-center transition-all duration-150',
             item.is_checked
               ? 'bg-green-500 border-green-500 text-white'
-              : 'border-gray-300 hover:border-emerald-400'
+              : 'border-zinc-300 hover:border-emerald-400'
           )}
           aria-label={item.is_checked ? 'Mark as needed' : 'Mark as bought'}
         >
@@ -109,8 +108,7 @@ export default function ChecklistItem({
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
               <div className="flex items-center gap-2 min-w-0">
-                <p className={cn('font-medium text-gray-900 truncate', item.is_checked && 'line-through text-gray-500')}>
-                  {preset && <span className="mr-1">{preset.image_emoji}</span>}
+                <p className={cn('font-medium text-zinc-950 truncate', item.is_checked && 'line-through text-zinc-400')}>
                   {name}
                 </p>
                 {qty > 1 && (
@@ -119,21 +117,28 @@ export default function ChecklistItem({
               </div>
 
               {item.is_checked && item.checked_by_name && (
-                <p className="text-xs text-green-600 mt-0.5">✓ Bought by {item.checked_by_name}</p>
+                <p className="text-xs text-green-600 mt-0.5 flex items-center gap-1">
+                  <Check size={11} strokeWidth={2.5} /> Bought by {item.checked_by_name}
+                </p>
               )}
               {!item.is_checked && isClaimed && (
-                <p className="text-xs text-amber-600 mt-0.5 font-semibold">
-                  🙋 {isClaimedByMe ? "You're buying this" : `${item.claimed_by_name} is buying this`}
+                <p className="text-xs text-amber-600 mt-0.5 font-semibold flex items-center gap-1">
+                  <Hand size={11} strokeWidth={2} />
+                  {isClaimedByMe ? "You're buying this" : `${item.claimed_by_name} is buying this`}
                 </p>
               )}
               {item.owned && !item.is_checked && (
-                <p className="text-xs text-sky-600 mt-0.5 font-semibold">🏠 Bringing from home</p>
+                <p className="text-xs text-sky-600 mt-0.5 font-semibold flex items-center gap-1">
+                  <Home size={11} strokeWidth={2} /> Bringing from home
+                </p>
               )}
               {!item.is_checked && !isClaimed && !item.owned && preset && (
-                <p className="text-xs text-gray-500 mt-0.5">{preset.price_estimate}</p>
+                <p className="text-xs text-zinc-400 mt-0.5">{preset.price_estimate}</p>
               )}
               {item.notes && !showNote && (
-                <p className="text-xs text-emerald-500 mt-1 italic">💬 {item.notes}</p>
+                <p className="text-xs text-emerald-600 mt-1 flex items-center gap-1">
+                  <MessageSquare size={11} strokeWidth={2} /> {item.notes}
+                </p>
               )}
             </div>
 
@@ -146,7 +151,7 @@ export default function ChecklistItem({
                     isClaimedByMe
                       ? 'bg-amber-200 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 hover:bg-amber-300'
                       : isClaimed
-                      ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
+                      ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
                       : 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800 hover:bg-amber-100'
                   )}
                   disabled={isClaimed && !isClaimedByMe}
@@ -178,7 +183,7 @@ export default function ChecklistItem({
                   'p-1.5 rounded-lg transition-colors',
                   item.owned
                     ? 'text-sky-600 bg-sky-50 hover:bg-sky-100'
-                    : 'text-gray-400 hover:text-sky-500 hover:bg-sky-50'
+                    : 'text-zinc-400 hover:text-sky-500 hover:bg-sky-50'
                 )}
                 title={item.owned ? 'Mark as need to buy' : 'Bringing from home'}
               >
@@ -190,7 +195,7 @@ export default function ChecklistItem({
                   'p-1.5 rounded-lg transition-colors',
                   showNote || item.notes
                     ? 'text-emerald-500 bg-emerald-50 hover:bg-emerald-100'
-                    : 'text-gray-400 hover:text-emerald-500 hover:bg-emerald-50'
+                    : 'text-zinc-400 hover:text-emerald-500 hover:bg-emerald-50'
                 )}
                 title={item.notes ? 'Edit note' : 'Add note'}
               >
@@ -200,26 +205,26 @@ export default function ChecklistItem({
               {preset && (
                 <Link
                   href={`/room/${roomId}/item/${item.preset_id}`}
-                  className="p-1.5 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                  className="p-1.5 text-zinc-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
                   title="View details & reviews"
                 >
                   <ExternalLink size={14} />
                 </Link>
               )}
-              <div className="flex items-center gap-0.5 border border-gray-200 rounded-lg overflow-hidden">
+              <div className="flex items-center gap-0.5 border border-zinc-200 rounded-lg overflow-hidden">
                 <button
                   onClick={() => qty > 1 ? onQuantityChange(item.id, qty - 1) : onDelete(item.id)}
-                  className="px-2 py-1.5 text-gray-500 hover:bg-gray-100 transition-colors text-sm font-bold leading-none"
+                  className="px-2 py-1.5 text-zinc-500 hover:bg-zinc-100 transition-colors text-sm font-bold leading-none"
                 >−</button>
-                <span className="px-1.5 text-xs font-semibold text-gray-700 select-none">{qty}</span>
+                <span className="px-1.5 text-xs font-semibold text-zinc-700 select-none">{qty}</span>
                 <button
                   onClick={() => onQuantityChange(item.id, qty + 1)}
-                  className="px-2 py-1.5 text-gray-500 hover:bg-gray-100 transition-colors text-sm font-bold leading-none"
+                  className="px-2 py-1.5 text-zinc-500 hover:bg-zinc-100 transition-colors text-sm font-bold leading-none"
                 >+</button>
               </div>
               <button
                 onClick={() => onDelete(item.id)}
-                className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                className="p-1.5 text-zinc-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
               >
                 <Trash2 size={14} />
               </button>
@@ -237,16 +242,16 @@ export default function ChecklistItem({
             value={draftNote}
             onChange={(e) => setDraftNote(e.target.value)}
             placeholder="Add a note for your roommates…"
-            className="flex-1 text-sm border border-emerald-200 rounded-xl px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-300 text-gray-700 placeholder-gray-400"
+            className="flex-1 text-sm border border-emerald-200 rounded-xl px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-300 text-zinc-700 placeholder-zinc-400"
           />
           <div className="flex flex-col gap-1.5">
             <button
               onClick={saveNote}
-              className="px-3 py-1.5 bg-emerald-600 text-white text-xs font-bold rounded-lg hover:bg-emerald-700"
+              className="px-3 py-1.5 bg-zinc-950 text-white text-xs font-bold rounded-lg hover:bg-zinc-800"
             >Save</button>
             <button
               onClick={() => setShowNote(false)}
-              className="px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-200"
+              className="px-3 py-1.5 bg-zinc-100 text-zinc-600 text-xs font-semibold rounded-lg hover:bg-zinc-200"
             >Cancel</button>
           </div>
         </div>
