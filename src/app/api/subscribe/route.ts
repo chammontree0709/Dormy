@@ -1,9 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { WelcomeEmail } from '@/lib/emails/welcome'
-import { renderToStaticMarkup } from 'react-dom/server'
-import React from 'react'
+import { buildWelcomeEmail } from '@/lib/emails/welcome'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -31,8 +29,8 @@ export async function POST(request: Request) {
     from: 'Roomd <hello@roomdapp.com>',
     to: normalizedEmail,
     subject: 'Your dorm room era starts now.',
-    html: renderToStaticMarkup(React.createElement(WelcomeEmail)),
-  }).catch(() => {}) // swallow errors so a failed email never breaks signup
+    html: buildWelcomeEmail(),
+  }).catch(() => {})
 
   return NextResponse.json({ message: "You're on the list!" })
 }
