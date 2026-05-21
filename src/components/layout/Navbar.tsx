@@ -3,9 +3,9 @@
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { LogOut, Home, LayoutTemplate, BookOpen, Sparkles, ClipboardList, Moon, Sun, Check, X, KeyRound, Pencil } from 'lucide-react'
+import { LogoMark } from '@/components/ui/LogoMark'
 
 interface NavbarProps {
   roomName?: string
@@ -85,7 +85,7 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
       <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link href="/dashboard" className="flex items-center">
-            <Image src="/logo.png" alt="Roomd" height={36} width={36} className="rounded-lg" priority />
+            <LogoMark size={36} />
             <span className="font-bold text-zinc-950 text-lg hidden sm:block ml-2">Roomd</span>
           </Link>
           {roomName && (

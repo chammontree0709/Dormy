@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
+import { LogoMark } from '@/components/ui/LogoMark'
 import { useState } from 'react'
 import {
   Zap,
@@ -228,7 +228,7 @@ export default function LandingPage() {
       <header className="border-b border-zinc-100 sticky top-0 bg-white/90 backdrop-blur-md z-40">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <Image src="/logo.png" alt="Roomd" height={32} width={32} className="rounded-lg" priority />
+            <LogoMark size={32} />
             <span className="font-black text-zinc-950 text-xl tracking-tight">Roomd</span>
           </div>
           <nav className="flex items-center gap-4">

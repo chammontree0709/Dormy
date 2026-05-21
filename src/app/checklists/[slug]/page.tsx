@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
+import { LogoMark } from '@/components/ui/LogoMark'
 import { notFound } from 'next/navigation'
 import { PRESET_LISTS, getItemById } from '@/data/presets'
 import { buildAffiliateUrl } from '@/lib/amazon'
@@ -65,7 +65,7 @@ export default async function ChecklistSlugPage({ params }: Props) {
       <header className="border-b border-zinc-100 sticky top-0 bg-white/90 backdrop-blur-md z-40">
         <div className="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
-            <Image src="/logo.png" alt="Roomd" height={30} width={30} className="rounded-lg" />
+            <LogoMark size={30} />
             <span className="font-black text-zinc-950 text-xl">Roomd</span>
           </Link>
           <div className="flex items-center gap-4">

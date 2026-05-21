@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
-import Image from 'next/image'
+import { LogoMark } from '@/components/ui/LogoMark'
 import { Mail } from 'lucide-react'
 
 export default function ForgotPasswordPage() {
@@ -33,7 +33,7 @@ export default function ForgotPasswordPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
       <Link href="/" className="flex items-center gap-2 mb-8">
-        <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
+        <LogoMark size={44} />
           <span className="font-black text-zinc-950 text-2xl">Roomd</span>
       </Link>
 

@@ -1,12 +1,12 @@
 import Link from 'next/link'
-import Image from 'next/image'
+import { LogoMark } from '@/components/ui/LogoMark'
 import { ArrowRight } from 'lucide-react'
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center px-6 text-center">
       <Link href="/" className="flex items-center gap-2.5 mb-12">
-        <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
+        <LogoMark size={44} />
         <span className="font-black text-zinc-950 text-2xl">Roomd</span>
       </Link>
       <p className="text-xs font-bold tracking-widest text-zinc-400 uppercase mb-4">404</p>

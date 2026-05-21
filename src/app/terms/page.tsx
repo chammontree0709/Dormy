@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
+import { LogoMark } from '@/components/ui/LogoMark'
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
@@ -14,7 +14,7 @@ export default function TermsPage() {
       <header className="border-b border-zinc-100">
         <div className="max-w-3xl mx-auto px-4 h-16 flex items-center">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.png" alt="Roomd" height={30} width={30} className="rounded-lg" />
+            <LogoMark size={30} />
             <span className="font-black text-zinc-950 text-xl">Roomd</span>
           </Link>
         </div>

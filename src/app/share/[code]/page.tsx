@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
+import { LogoMark } from '@/components/ui/LogoMark'
 import { buildAffiliateUrl } from '@/lib/amazon'
 import { House, Users, Check, GraduationCap } from 'lucide-react'
 
@@ -236,7 +236,7 @@ function PublicHeader() {
     <header className="bg-white border-b border-zinc-100 sticky top-0 z-40">
       <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.png" alt="Roomd" height={28} width={28} className="rounded-lg" />
+          <LogoMark size={28} />
           <span className="font-bold text-zinc-950 text-lg">Roomd</span>
         </Link>
         <Link

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
+import { LogoMark } from '@/components/ui/LogoMark'
 import Button from '@/components/ui/Button'
 import { Eye, EyeOff, Mail, Check, Clock } from 'lucide-react'
 
@@ -85,7 +85,7 @@ export default function SignupPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
         <Link href="/" className="flex items-center gap-2 mb-8">
-          <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
+          <LogoMark size={44} />
           <span className="font-black text-zinc-950 text-2xl">Roomd</span>
         </Link>
         <div className="bg-white w-full max-w-sm rounded-2xl shadow-sm border border-zinc-100 p-8 text-center">
@@ -108,7 +108,7 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white flex flex-col items-center justify-center px-4">
       <Link href="/" className="flex items-center gap-2 mb-8">
-        <Image src="/logo.png" alt="Roomd" height={44} width={44} className="rounded-xl" />
+        <LogoMark size={44} />
           <span className="font-black text-zinc-950 text-2xl">Roomd</span>
       </Link>
 
