@@ -105,8 +105,9 @@ export default function ChecklistItem({
         </button>
 
         <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-2">
-            <div className="min-w-0">
+          {/* Row 1: name + status */}
+          <div className="flex items-start gap-2 min-w-0">
+            <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 min-w-0">
                 <p className={cn('font-medium text-zinc-950 truncate', item.is_checked && 'line-through text-zinc-400')}>
                   {name}
@@ -141,94 +142,93 @@ export default function ChecklistItem({
                 </p>
               )}
             </div>
+          </div>
 
-            <div className="flex items-center gap-1 flex-shrink-0">
-              {!item.is_checked && (
-                <button
-                  onClick={() => onClaim(item.id, !isClaimed || !isClaimedByMe)}
-                  className={cn(
-                    'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-colors',
-                    isClaimedByMe
-                      ? 'bg-amber-200 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 hover:bg-amber-300'
-                      : isClaimed
-                      ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
-                      : 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800 hover:bg-amber-100'
-                  )}
-                  disabled={isClaimed && !isClaimedByMe}
-                  title={isClaimedByMe ? 'Unclaim' : isClaimed ? `${item.claimed_by_name} claimed this` : "I'll buy this"}
-                >
-                  <Hand size={12} />
-                  <span className="hidden sm:block">
-                    {isClaimedByMe ? 'Claimed' : isClaimed ? 'Taken' : "I'll buy"}
-                  </span>
-                </button>
-              )}
-
-              {buyUrl && !item.is_checked && (
-                <a
-                  href={buyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1 px-2.5 py-1.5 bg-amber-50 text-amber-700 border border-amber-200 rounded-lg text-xs font-semibold hover:bg-amber-100 transition-colors"
-                  title="Buy on Amazon"
-                >
-                  <ShoppingCart size={12} />
-                  <span className="hidden sm:block">Buy</span>
-                </a>
-              )}
-
+          {/* Row 2: actions */}
+          <div className="flex items-center gap-1 mt-2 flex-wrap">
+            {!item.is_checked && (
               <button
-                onClick={() => onOwnedChange?.(item.id, !item.owned)}
+                onClick={() => onClaim(item.id, !isClaimed || !isClaimedByMe)}
                 className={cn(
-                  'p-1.5 rounded-lg transition-colors',
-                  item.owned
-                    ? 'text-sky-600 bg-sky-50 hover:bg-sky-100'
-                    : 'text-zinc-400 hover:text-sky-500 hover:bg-sky-50'
+                  'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-colors',
+                  isClaimedByMe
+                    ? 'bg-amber-200 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 hover:bg-amber-300'
+                    : isClaimed
+                    ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
+                    : 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800 hover:bg-amber-100'
                 )}
-                title={item.owned ? 'Mark as need to buy' : 'Bringing from home'}
+                disabled={isClaimed && !isClaimedByMe}
+                title={isClaimedByMe ? 'Unclaim' : isClaimed ? `${item.claimed_by_name} claimed this` : "I'll buy this"}
               >
-                <Home size={14} />
+                <Hand size={12} />
+                {isClaimedByMe ? 'Claimed' : isClaimed ? 'Taken' : "I'll buy"}
               </button>
-              <button
-                onClick={() => { setShowNote((v) => !v); setDraftNote(item.notes ?? '') }}
-                className={cn(
-                  'p-1.5 rounded-lg transition-colors',
-                  showNote || item.notes
-                    ? 'text-emerald-500 bg-emerald-50 hover:bg-emerald-100'
-                    : 'text-zinc-400 hover:text-emerald-500 hover:bg-emerald-50'
-                )}
-                title={item.notes ? 'Edit note' : 'Add note'}
-              >
-                <MessageSquare size={14} />
-              </button>
+            )}
 
-              {preset && (
-                <Link
-                  href={`/room/${roomId}/item/${item.preset_id}`}
-                  className="p-1.5 text-zinc-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
-                  title="View details & reviews"
-                >
-                  <ExternalLink size={14} />
-                </Link>
-              )}
-              <div className="flex items-center gap-0.5 border border-zinc-200 rounded-lg overflow-hidden">
-                <button
-                  onClick={() => qty > 1 ? onQuantityChange(item.id, qty - 1) : onDelete(item.id)}
-                  className="px-2 py-1.5 text-zinc-500 hover:bg-zinc-100 transition-colors text-sm font-bold leading-none"
-                >−</button>
-                <span className="px-1.5 text-xs font-semibold text-zinc-700 select-none">{qty}</span>
-                <button
-                  onClick={() => onQuantityChange(item.id, qty + 1)}
-                  className="px-2 py-1.5 text-zinc-500 hover:bg-zinc-100 transition-colors text-sm font-bold leading-none"
-                >+</button>
-              </div>
-              <button
-                onClick={() => onDelete(item.id)}
-                className="p-1.5 text-zinc-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+            {buyUrl && !item.is_checked && (
+              <a
+                href={buyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 px-2.5 py-1.5 bg-amber-50 text-amber-700 border border-amber-200 rounded-lg text-xs font-semibold hover:bg-amber-100 transition-colors"
+                title="Buy on Amazon"
               >
-                <Trash2 size={14} />
-              </button>
+                <ShoppingCart size={12} /> Buy
+              </a>
+            )}
+
+            <button
+              onClick={() => onOwnedChange?.(item.id, !item.owned)}
+              className={cn(
+                'p-1.5 rounded-lg transition-colors',
+                item.owned
+                  ? 'text-sky-600 bg-sky-50 hover:bg-sky-100'
+                  : 'text-zinc-400 hover:text-sky-500 hover:bg-sky-50'
+              )}
+              title={item.owned ? 'Mark as need to buy' : 'Bringing from home'}
+            >
+              <Home size={14} />
+            </button>
+            <button
+              onClick={() => { setShowNote((v) => !v); setDraftNote(item.notes ?? '') }}
+              className={cn(
+                'p-1.5 rounded-lg transition-colors',
+                showNote || item.notes
+                  ? 'text-emerald-500 bg-emerald-50 hover:bg-emerald-100'
+                  : 'text-zinc-400 hover:text-emerald-500 hover:bg-emerald-50'
+              )}
+              title={item.notes ? 'Edit note' : 'Add note'}
+            >
+              <MessageSquare size={14} />
+            </button>
+
+            {preset && (
+              <Link
+                href={`/room/${roomId}/item/${item.preset_id}`}
+                className="p-1.5 text-zinc-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                title="View details & reviews"
+              >
+                <ExternalLink size={14} />
+              </Link>
+            )}
+
+            <div className="flex items-center gap-0.5 border border-zinc-200 rounded-lg overflow-hidden">
+              <button
+                onClick={() => qty > 1 ? onQuantityChange(item.id, qty - 1) : onDelete(item.id)}
+                className="px-2 py-1.5 text-zinc-500 hover:bg-zinc-100 transition-colors text-sm font-bold leading-none"
+              >−</button>
+              <span className="px-1.5 text-xs font-semibold text-zinc-700 select-none">{qty}</span>
+              <button
+                onClick={() => onQuantityChange(item.id, qty + 1)}
+                className="px-2 py-1.5 text-zinc-500 hover:bg-zinc-100 transition-colors text-sm font-bold leading-none"
+              >+</button>
             </div>
+            <button
+              onClick={() => onDelete(item.id)}
+              className="p-1.5 text-zinc-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+            >
+              <Trash2 size={14} />
+            </button>
           </div>
         </div>
       </div>
