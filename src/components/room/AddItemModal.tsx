@@ -56,7 +56,7 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4">
-      <div className="bg-white rounded-2xl w-full max-w-md shadow-xl flex flex-col max-h-[85vh]">
+      <div className="bg-white rounded-2xl w-full max-w-md shadow-xl flex flex-col max-h-[85dvh]">
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-gray-100 flex-shrink-0">
           {selectedCategory && !isSearching ? (
@@ -102,7 +102,6 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setSelectedCategory(null) }}
                 className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                autoFocus
               />
             </div>
 
@@ -143,8 +142,9 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                         <button
                           key={item.id}
                           onClick={() => handleAddPreset(item)}
+                          onTouchEnd={(e) => { e.preventDefault(); handleAddPreset(item) }}
                           className={cn(
-                            'w-full text-left flex items-start gap-3 p-3 rounded-xl border transition-all group',
+                            'w-full text-left flex items-start gap-3 p-3 rounded-xl border transition-all group touch-manipulation',
                             alreadyAdded
                               ? 'border-emerald-200 bg-emerald-50 hover:bg-emerald-100'
                               : 'border-gray-100 hover:border-emerald-200 hover:bg-emerald-50'

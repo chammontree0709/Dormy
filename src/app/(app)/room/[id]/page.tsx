@@ -105,7 +105,11 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
       .channel(`room-${id}`)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'room_items', filter: `room_id=eq.${id}` }, (payload) => {
         if (payload.eventType === 'INSERT') {
-          setItems((prev) => [...prev, payload.new as RoomItem])
+          setItems((prev) =>
+            prev.some((i) => i.id === (payload.new as RoomItem).id)
+              ? prev
+              : [...prev, payload.new as RoomItem]
+          )
         } else if (payload.eventType === 'UPDATE') {
           setItems((prev) => prev.map((item) => item.id === payload.new.id ? payload.new as RoomItem : item))
         } else if (payload.eventType === 'DELETE') {
@@ -204,15 +208,50 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
     category?: string,
     notes?: string
   ) {
-    await supabase.from('room_items').insert({
+    const tempId = crypto.randomUUID()
+    const now = new Date().toISOString()
+    const optimistic: RoomItem = {
+      id: tempId,
       room_id: id,
-      preset_id: presetId,
+      preset_id: presetId ?? null,
       custom_name: customName ?? null,
       custom_url: customUrl ?? null,
       category: category ?? 'storage',
+      is_checked: false,
+      checked_by_name: null,
+      checked_at: null,
+      claimed_by_name: null,
+      claimed_at: null,
       added_by_name: currentUserName,
+      added_at: now,
       notes: notes ?? null,
-    })
+      quantity: 1,
+      owned: false,
+      sort_order: 0,
+    }
+    setItems((prev) => [...prev, optimistic])
+
+    const { data, error } = await supabase
+      .from('room_items')
+      .insert({
+        room_id: id,
+        preset_id: presetId,
+        custom_name: customName ?? null,
+        custom_url: customUrl ?? null,
+        category: category ?? 'storage',
+        added_by_name: currentUserName,
+        notes: notes ?? null,
+      })
+      .select()
+      .single()
+
+    if (error) {
+      setItems((prev) => prev.filter((item) => item.id !== tempId))
+      return
+    }
+
+    // Replace optimistic placeholder with real DB row; realtime INSERT is deduped above
+    setItems((prev) => prev.map((item) => item.id === tempId ? data as RoomItem : item))
   }
 
   function saveBudget() {
