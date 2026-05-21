@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { LogoMark } from '@/components/ui/LogoMark'
 import Button from '@/components/ui/Button'
@@ -19,25 +19,32 @@ function GoogleIcon() {
   )
 }
 
-export default function SignupPage() {
+function SignupForm() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const supabase = createClient()
+
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [inviteCode, setInviteCode] = useState('')
+  // Pre-fill invite code from ?invite= URL param (set by /join/[code] redirect)
+  const [inviteCode, setInviteCode] = useState((searchParams.get('invite') ?? '').toUpperCase())
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [verifyEmail, setVerifyEmail] = useState('')
-  const router = useRouter()
-  const supabase = createClient()
 
   const inviteValid = /^[A-Z0-9]{6}$/.test(inviteCode)
 
   async function handleGoogleSignIn() {
     setLoading(true)
+    const invite = inviteCode.trim()
+    const redirectTo = invite
+      ? `${window.location.origin}/auth/callback?invite=${invite.toUpperCase()}`
+      : `${window.location.origin}/auth/callback`
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: { redirectTo },
     })
     if (error) {
       setError(error.message)
@@ -62,7 +69,7 @@ export default function SignupPage() {
       return
     }
 
-    // Join room after signup if invite code provided
+    // Join room after signup if invite code provided (from URL param or manual entry)
     if (inviteCode.trim() && data.user) {
       const displayName = name.trim() || email.split('@')[0]
       await supabase.rpc('join_room_by_invite_code', {
@@ -235,5 +242,13 @@ export default function SignupPage() {
         </p>
       </div>
     </div>
+  )
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense>
+      <SignupForm />
+    </Suspense>
   )
 }

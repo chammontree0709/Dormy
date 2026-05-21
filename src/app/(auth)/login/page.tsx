@@ -33,9 +33,13 @@ function LoginForm() {
 
   async function handleGoogleSignIn() {
     setLoading(true)
+    const inviteParam = searchParams.get('invite')
+    const redirectTo = inviteParam
+      ? `${window.location.origin}/auth/callback?invite=${inviteParam}`
+      : `${window.location.origin}/auth/callback`
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: { redirectTo },
     })
     if (error) {
       setError(error.message)
@@ -48,11 +52,19 @@ function LoginForm() {
     setLoading(true)
     setError('')
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
       setError(error.message)
       setLoading(false)
     } else {
+      const inviteParam = searchParams.get('invite')
+      if (inviteParam && data.user) {
+        const displayName = data.user.user_metadata?.display_name ?? data.user.email?.split('@')[0] ?? 'Roommate'
+        await supabase.rpc('join_room_by_invite_code', {
+          p_invite_code: inviteParam.trim().toUpperCase(),
+          p_display_name: displayName,
+        })
+      }
       router.push('/dashboard')
       router.refresh()
     }
