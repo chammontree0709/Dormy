@@ -52,6 +52,18 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   const [activity, setActivity] = useState<ActivityEvent[]>([])
   const [showActivity, setShowActivity] = useState(false)
 
+  // Reset iOS Safari zoom when entering/exiting shopping mode
+  useEffect(() => {
+    const viewport = document.querySelector('meta[name="viewport"]')
+    if (!viewport) return
+    // Briefly set maximum-scale=1 to reset any zoom, then restore normal pinch-zoom
+    viewport.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1')
+    const t = setTimeout(() => {
+      viewport.setAttribute('content', 'width=device-width, initial-scale=1')
+    }, 300)
+    return () => clearTimeout(t)
+  }, [shoppingMode])
+
   // Feature states
   const [shoppingMode, setShoppingMode] = useState(false)
   const [budget, setBudget] = useState<number | null>(null)
@@ -356,9 +368,9 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
           </div>
           <button
             onClick={() => setShoppingMode(false)}
-            className="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-colors"
+            className="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white text-sm font-bold px-4 py-2.5 rounded-xl transition-colors touch-manipulation"
           >
-            <X size={14} /> Exit
+            <X size={16} /> Exit
           </button>
         </div>
 
