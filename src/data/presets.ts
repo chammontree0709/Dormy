@@ -637,7 +637,7 @@ export const PRESET_ITEMS: PresetItem[] = [
 
   // Tech extras
   {
-    id: 'monitor',
+    id: 'external-monitor-24',
     name: 'External Monitor (24")',
     description: 'A second screen massively boosts productivity — one screen for notes, one for lecture slides or research. 24" is the sweet spot for desk space.',
     category: 'tech',
@@ -651,7 +651,7 @@ export const PRESET_ITEMS: PresetItem[] = [
     ],
   },
   {
-    id: 'webcam',
+    id: 'hd-webcam',
     name: 'HD Webcam',
     description: 'For Zoom classes, study groups, and video calls home. Laptop cameras are usually terrible — a $30 webcam is a huge upgrade.',
     category: 'tech',
@@ -665,7 +665,7 @@ export const PRESET_ITEMS: PresetItem[] = [
     ],
   },
   {
-    id: 'blue-light-glasses',
+    id: 'blue-light-blocking-glasses',
     name: 'Blue Light Blocking Glasses',
     description: 'Reduce eye strain from staring at screens all day. Especially helpful for late-night study sessions.',
     category: 'tech',
@@ -913,7 +913,7 @@ export const PRESET_ITEMS: PresetItem[] = [
     ],
   },
   {
-    id: 'printer',
+    id: 'compact-inkjet-printer',
     name: 'Compact Inkjet Printer',
     description: 'Campus printers are always broken or have a long line. Having your own printer for syllabi, assignments, and notes is a huge time saver.',
     category: 'school',
@@ -1105,7 +1105,7 @@ export const PRESET_ITEMS: PresetItem[] = [
 
   // Bathroom additions
   {
-    id: 'hair-dryer',
+    id: 'compact-hair-dryer',
     name: 'Compact Hair Dryer',
     description: 'A travel-size or compact dryer takes up less space and usually still has enough power for daily use.',
     category: 'bathroom',
@@ -1119,7 +1119,7 @@ export const PRESET_ITEMS: PresetItem[] = [
     ],
   },
   {
-    id: 'shower-speaker',
+    id: 'waterproof-shower-speaker',
     name: 'Waterproof Shower Speaker',
     description: 'Bluetooth shower speaker that suctions to the wall. Makes the dorm bathroom feel a lot less sad.',
     category: 'bathroom',
@@ -1209,7 +1209,7 @@ export const PRESET_ITEMS: PresetItem[] = [
 
   // Laundry additions
   {
-    id: 'dryer-sheets',
+    id: 'dryer-sheets-balls',
     name: 'Dryer Sheets / Dryer Balls',
     description: 'Dryer sheets reduce static and keep clothes smelling fresh. Wool dryer balls are reusable and better for sensitive skin.',
     category: 'laundry',
@@ -1269,7 +1269,7 @@ export const PRESET_ITEMS: PresetItem[] = [
 
   // Health additions
   {
-    id: 'hand-sanitizer',
+    id: 'hand-sanitizer-large',
     name: 'Hand Sanitizer (large bottle)',
     description: 'Keep one on your desk and one in your bag. Cold season in a dorm hits hard — sanitation is your best defense.',
     category: 'health',
@@ -1285,7 +1285,7 @@ export const PRESET_ITEMS: PresetItem[] = [
 
   // School additions
   {
-    id: 'blue-light-glasses',
+    id: 'blue-light-glasses-school',
     name: 'Blue Light Blocking Glasses',
     description: 'Reduce eye strain during late-night study sessions. Non-prescription, $15-25 versions work just as well as expensive ones.',
     category: 'school',
@@ -1347,7 +1347,7 @@ export const PRESET_ITEMS: PresetItem[] = [
 
   // Campus additions
   {
-    id: 'bike-lock',
+    id: 'bike-u-lock',
     name: 'Bike U-Lock',
     description: 'If you\'re bringing a bike to campus, a U-lock is essential. Cable locks are easy to cut — U-locks are not.',
     category: 'campus',
@@ -1450,7 +1450,7 @@ export const PRESET_ITEMS: PresetItem[] = [
 
   // ── Bathroom (more) ─────────────────────────────────────────────────────────
   {
-    id: 'electric-toothbrush',
+    id: 'electric-toothbrush-travel',
     name: 'Electric Toothbrush',
     description: 'Clinically proven to clean better than manual brushing. Travel-size or standard — both easy to store.',
     category: 'bathroom',
@@ -2378,7 +2378,7 @@ export const PRESET_ITEMS: PresetItem[] = [
     ],
   },
   {
-    id: 'sticky-notes',
+    id: 'sticky-notes-variety',
     name: 'Sticky Notes Variety Pack',
     description: 'Mark textbook pages, leave reminders, annotate notes, and stick your to-do list where you can\'t ignore it.',
     category: 'school',
@@ -2678,7 +2678,7 @@ export const PRESET_ITEMS: PresetItem[] = [
     ],
   },
   {
-    id: 'over-door-hooks',
+    id: 'over-door-hooks-6pack',
     name: 'Over-Door Hooks (6-pack)',
     description: 'Hang coats, bags, towels, and robes without drilling. Essential in a dorm where you can\'t put holes in the walls.',
     category: 'storage',
@@ -2818,7 +2818,7 @@ export const PRESET_ITEMS: PresetItem[] = [
     ],
   },
   {
-    id: 'command-strips',
+    id: 'command-strips-value',
     name: 'Command Strips (value pack)',
     description: 'Hang everything without leaving holes in the wall — frames, hooks, shelves. A must for any dorm where damage costs deposits.',
     category: 'storage',
@@ -3179,7 +3179,7 @@ export const PRESET_ITEMS: PresetItem[] = [
     ],
   },
   {
-    id: 'sunglasses',
+    id: 'sunglasses-greek',
     name: 'Sunglasses',
     description: 'Most frat events are outdoors — BBQs, cornhole, yard games. A clean pair of polarized shades looks good and protects your eyes.',
     category: 'greek',
