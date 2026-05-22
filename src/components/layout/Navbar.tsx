@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import { LogOut, Home, LayoutTemplate, BookOpen, Sparkles, ClipboardList, Moon, Sun, Check, X, KeyRound, Pencil } from 'lucide-react'
+import { LogOut, Home, LayoutTemplate, BookOpen, Sparkles, ClipboardList, Moon, Sun, Check, X, KeyRound, Pencil, HelpCircle } from 'lucide-react'
 import { LogoMark } from '@/components/ui/LogoMark'
 
 interface NavbarProps {
@@ -218,6 +218,16 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
                   >
                     <KeyRound size={15} className="text-gray-400" />
                     <span>Change password</span>
+                  </Link>
+
+                  {/* Help & Feedback */}
+                  <Link
+                    href="/support"
+                    onClick={() => setShowProfile(false)}
+                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    <HelpCircle size={15} className="text-gray-400" />
+                    <span>Help & Feedback</span>
                   </Link>
                 </div>
 
