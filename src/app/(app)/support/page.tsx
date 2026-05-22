@@ -192,11 +192,11 @@ export default function SupportPage() {
             <p className="text-sm text-zinc-500 mt-0.5">For urgent issues or anything else.</p>
           </div>
           <a
-            href="mailto:support@roomdapp.com"
+            href="mailto:Roomdappboss@gmail.com"
             className="flex items-center gap-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-800 font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors whitespace-nowrap"
           >
             <Mail size={15} />
-            support@roomdapp.com
+            Roomdappboss@gmail.com
           </a>
         </div>
 
