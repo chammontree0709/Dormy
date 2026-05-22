@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { Room, RoomItem, RoomMember } from '@/types'
+import { Room, RoomItem, RoomMember, ItemClaim } from '@/types'
 import { CATEGORIES, getItemById } from '@/data/presets'
 import Navbar from '@/components/layout/Navbar'
 import ChecklistItem from '@/components/checklist/ChecklistItem'
@@ -44,6 +44,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   const [items, setItems] = useState<RoomItem[]>([])
   const [members, setMembers] = useState<RoomMember[]>([])
   const [currentUserName, setCurrentUserName] = useState('')
+  const [currentUserId, setCurrentUserId] = useState('')
   const [loading, setLoading] = useState(true)
   const [showAdd, setShowAdd] = useState(false)
   const [showInvite, setShowInvite] = useState(false)
@@ -88,10 +89,11 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
     const displayName = user.user_metadata?.display_name ?? user.email?.split('@')[0] ?? 'You'
     setCurrentUserName(displayName)
+    setCurrentUserId(user.id)
 
     const [{ data: roomData }, { data: itemData }, { data: memberData }] = await Promise.all([
       supabase.from('rooms').select('*').eq('id', id).single(),
-      supabase.from('room_items').select('*').eq('room_id', id).order('added_at'),
+      supabase.from('room_items').select('*, claims:room_item_claims(*)').eq('room_id', id).order('added_at'),
       supabase.from('room_members').select('*').eq('room_id', id),
     ])
 
@@ -108,7 +110,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
         p_display_name: displayName,
       })
       const { data: fixedItems } = await supabase
-        .from('room_items').select('*').eq('room_id', id).order('added_at')
+        .from('room_items').select('*, claims:room_item_claims(*)').eq('room_id', id).order('added_at')
       setItems(fixedItems ?? [])
       setMembers((prev) => [
         ...prev,
@@ -139,12 +141,33 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
           setItems((prev) =>
             prev.some((i) => i.id === (payload.new as RoomItem).id)
               ? prev
-              : [...prev, payload.new as RoomItem]
+              : [...prev, { ...(payload.new as RoomItem), claims: [] }]
           )
         } else if (payload.eventType === 'UPDATE') {
-          setItems((prev) => prev.map((item) => item.id === payload.new.id ? payload.new as RoomItem : item))
+          setItems((prev) => prev.map((item) =>
+            item.id === payload.new.id
+              ? { ...(payload.new as RoomItem), claims: item.claims ?? [] }
+              : item
+          ))
         } else if (payload.eventType === 'DELETE') {
           setItems((prev) => prev.filter((item) => item.id !== payload.old.id))
+        }
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'room_item_claims', filter: `room_id=eq.${id}` }, (payload) => {
+        if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
+          const claim = payload.new as ItemClaim
+          setItems((prev) => prev.map((item) =>
+            item.id === claim.item_id
+              ? { ...item, claims: [...(item.claims ?? []).filter(c => c.user_id !== claim.user_id), claim] }
+              : item
+          ))
+        } else if (payload.eventType === 'DELETE') {
+          const old = payload.old as Partial<ItemClaim>
+          setItems((prev) => prev.map((item) =>
+            item.id === old.item_id
+              ? { ...item, claims: (item.claims ?? []).filter(c => c.id !== old.id) }
+              : item
+          ))
         }
       })
       .subscribe()
@@ -210,6 +233,46 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
     if (claim) logActivity("claimed — I'll buy this", getItemName(itemId))
   }
 
+  async function upsertClaim(itemId: string, quantity: number, splittingCost: boolean) {
+    const item = items.find(i => i.id === itemId)
+    if (!item) return
+    if (quantity <= 0 && !splittingCost) {
+      // Remove claim entirely
+      setItems((prev) => prev.map((i) =>
+        i.id === itemId
+          ? { ...i, claims: (i.claims ?? []).filter(c => c.user_id !== currentUserId) }
+          : i
+      ))
+      supabase.from('room_item_claims').delete()
+        .eq('item_id', itemId).eq('user_id', currentUserId).then(() => {})
+      return
+    }
+    const optimistic: ItemClaim = {
+      id: (item.claims ?? []).find(c => c.user_id === currentUserId)?.id ?? crypto.randomUUID(),
+      item_id: itemId,
+      room_id: id,
+      user_id: currentUserId,
+      display_name: currentUserName,
+      quantity: Math.max(0, quantity),
+      splitting_cost: splittingCost,
+      created_at: new Date().toISOString(),
+    }
+    setItems((prev) => prev.map((i) =>
+      i.id === itemId
+        ? { ...i, claims: [...(i.claims ?? []).filter(c => c.user_id !== currentUserId), optimistic] }
+        : i
+    ))
+    supabase.from('room_item_claims').upsert({
+      item_id: itemId,
+      room_id: id,
+      user_id: currentUserId,
+      display_name: currentUserName,
+      quantity: Math.max(0, quantity),
+      splitting_cost: splittingCost,
+    }, { onConflict: 'item_id,user_id' }).then(() => {})
+    if (quantity > 0) logActivity(`claimed ${quantity > 1 ? `×${quantity}` : "— buying this"}`, getItemName(itemId))
+  }
+
   async function updateOwned(itemId: string, owned: boolean) {
     setItems((prev) => prev.map((item) =>
       item.id === itemId ? { ...item, owned } : item
@@ -259,6 +322,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
       quantity: 1,
       owned: false,
       sort_order: 0,
+      claims: [],
     }
     setItems((prev) => [...prev, optimistic])
 
@@ -401,7 +465,9 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   onQuantityChange={updateQuantity}
                   onNoteChange={updateNote}
                   onOwnedChange={updateOwned}
+                  onClaimChange={upsertClaim}
                   currentUserName={currentUserName}
+                  currentUserId={currentUserId}
                   shoppingMode
                 />
               ))}
@@ -597,7 +663,9 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                           onQuantityChange={updateQuantity}
                           onNoteChange={updateNote}
                           onOwnedChange={updateOwned}
+                          onClaimChange={upsertClaim}
                           currentUserName={currentUserName}
+                          currentUserId={currentUserId}
                         />
                       ))}
                     </div>

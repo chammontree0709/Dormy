@@ -15,6 +15,17 @@ export interface RoomMember {
   joined_at: string
 }
 
+export interface ItemClaim {
+  id: string
+  item_id: string
+  room_id: string
+  user_id: string
+  display_name: string
+  quantity: number
+  splitting_cost: boolean
+  created_at: string
+}
+
 export interface RoomItem {
   id: string
   room_id: string
@@ -33,6 +44,7 @@ export interface RoomItem {
   sort_order: number
   quantity: number
   owned: boolean
+  claims: ItemClaim[]
 }
 
 export interface PresetItem {

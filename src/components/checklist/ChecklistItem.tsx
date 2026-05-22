@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { RoomItem } from '@/types'
 import { getItemById } from '@/data/presets'
 import { cn } from '@/lib/utils'
-import { Trash2, ExternalLink, ShoppingCart, Hand, MessageSquare, Home, Check } from 'lucide-react'
+import { Trash2, ExternalLink, ShoppingCart, Hand, MessageSquare, Home, Check, DollarSign } from 'lucide-react'
 import Link from 'next/link'
 import { buildAffiliateUrl } from '@/lib/amazon'
 
@@ -17,12 +17,14 @@ interface ChecklistItemProps {
   onQuantityChange: (id: string, quantity: number) => void
   onNoteChange?: (id: string, note: string) => void
   onOwnedChange?: (id: string, owned: boolean) => void
+  onClaimChange?: (id: string, quantity: number, splittingCost: boolean) => void
   currentUserName: string
+  currentUserId?: string
   shoppingMode?: boolean
 }
 
 export default function ChecklistItem({
-  item, roomId, onToggle, onDelete, onClaim, onQuantityChange, onNoteChange, onOwnedChange, currentUserName, shoppingMode = false
+  item, roomId, onToggle, onDelete, onClaim, onQuantityChange, onNoteChange, onOwnedChange, onClaimChange, currentUserName, currentUserId, shoppingMode = false
 }: ChecklistItemProps) {
   const [showNote, setShowNote] = useState(false)
   const [draftNote, setDraftNote] = useState(item.notes ?? '')
@@ -32,12 +34,32 @@ export default function ChecklistItem({
   const name = preset?.name ?? item.custom_name ?? 'Unnamed item'
   const buyUrl = preset ? buildAffiliateUrl(preset.amazon_url) : (item.custom_url ?? null)
 
+  // Legacy single-claim (backwards compat)
   const isClaimed = !!item.claimed_by_name
   const isClaimedByMe = item.claimed_by_name === currentUserName
+
+  // New per-person claims
+  const claims = item.claims ?? []
+  const myClaim = currentUserId ? claims.find(c => c.user_id === currentUserId) : null
+  const myClaimQty = myClaim?.quantity ?? 0
+  const isSplitting = myClaim?.splitting_cost ?? false
+  const anySplit = claims.some(c => c.splitting_cost)
+  const claimsWithQty = claims.filter(c => c.quantity > 0)
+  const totalClaimed = claims.reduce((sum, c) => sum + c.quantity, 0)
+  const usesNewClaims = claims.length > 0
 
   function saveNote() {
     onNoteChange?.(item.id, draftNote)
     setShowNote(false)
+  }
+
+  function handleClaimQty(delta: number) {
+    const next = Math.max(0, myClaimQty + delta)
+    onClaimChange?.(item.id, next, isSplitting)
+  }
+
+  function handleSplitToggle() {
+    onClaimChange?.(item.id, myClaimQty, !isSplitting)
   }
 
   // Shopping mode — large, touch-friendly, minimal
@@ -81,7 +103,9 @@ export default function ChecklistItem({
           ? 'bg-green-50 dark:bg-green-950/40 border-green-200 dark:border-green-900 opacity-75'
           : item.owned
           ? 'bg-sky-50 dark:bg-sky-950/40 border-sky-200 dark:border-sky-900'
-          : isClaimed
+          : anySplit
+          ? 'bg-violet-50 dark:bg-violet-950/40 border-violet-200 dark:border-violet-900'
+          : (usesNewClaims && totalClaimed > 0) || (!usesNewClaims && isClaimed)
           ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900'
           : 'bg-white border-zinc-100 hover:border-zinc-300 hover:shadow-sm'
       )}
@@ -105,10 +129,10 @@ export default function ChecklistItem({
         </button>
 
         <div className="flex-1 min-w-0">
-          {/* Row 1: name + status */}
+          {/* Row 1: name + status badges */}
           <div className="flex items-start gap-2 min-w-0">
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 min-w-0">
+              <div className="flex items-center gap-2 min-w-0 flex-wrap">
                 {preset ? (
                   <Link
                     href={`/room/${roomId}/item/${item.preset_id}`}
@@ -124,14 +148,18 @@ export default function ChecklistItem({
                 {qty > 1 && (
                   <span className="flex-shrink-0 text-xs font-bold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-md">×{qty}</span>
                 )}
+                {!item.is_checked && totalClaimed >= qty && totalClaimed > 0 && (
+                  <span className="flex-shrink-0 text-xs font-bold bg-green-100 text-green-700 px-1.5 py-0.5 rounded-md">covered ✓</span>
+                )}
               </div>
 
+              {/* Status line */}
               {item.is_checked && item.checked_by_name && (
                 <p className="text-xs text-green-600 mt-0.5 flex items-center gap-1">
                   <Check size={11} strokeWidth={2.5} /> Bought by {item.checked_by_name}
                 </p>
               )}
-              {!item.is_checked && isClaimed && (
+              {!item.is_checked && !usesNewClaims && isClaimed && (
                 <p className="text-xs text-amber-600 mt-0.5 font-semibold flex items-center gap-1">
                   <Hand size={11} strokeWidth={2} />
                   {isClaimedByMe ? "You're buying this" : `${item.claimed_by_name} is buying this`}
@@ -142,7 +170,7 @@ export default function ChecklistItem({
                   <Home size={11} strokeWidth={2} /> Bringing from home
                 </p>
               )}
-              {!item.is_checked && !isClaimed && !item.owned && preset && (
+              {!item.is_checked && !isClaimed && !item.owned && !usesNewClaims && preset && (
                 <p className="text-xs text-zinc-400 mt-0.5">{preset.price_estimate}</p>
               )}
               {item.notes && !showNote && (
@@ -150,27 +178,64 @@ export default function ChecklistItem({
                   <MessageSquare size={11} strokeWidth={2} /> {item.notes}
                 </p>
               )}
+
+              {/* Per-person claims summary */}
+              {!item.is_checked && (claimsWithQty.length > 0 || anySplit) && (
+                <div className="flex flex-wrap gap-1 mt-1.5">
+                  {claimsWithQty.map(c => (
+                    <span key={c.user_id} className="text-xs px-1.5 py-0.5 bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 rounded-md font-medium">
+                      {c.display_name}: ×{c.quantity}
+                    </span>
+                  ))}
+                  {anySplit && (
+                    <span className="text-xs px-1.5 py-0.5 bg-violet-100 dark:bg-violet-900/40 text-violet-800 dark:text-violet-300 rounded-md font-medium">
+                      💰 Splitting: {claims.filter(c => c.splitting_cost).map(c => c.display_name).join(' + ')}
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
           {/* Row 2: actions */}
           <div className="flex items-center gap-1 mt-2 flex-wrap">
-            {!item.is_checked && (
+            {/* Per-person claim stepper — replaces old "I'll buy" */}
+            {!item.is_checked && onClaimChange && (
+              <div className={cn(
+                'flex items-center rounded-lg overflow-hidden border transition-colors',
+                myClaimQty > 0
+                  ? 'border-amber-300 bg-amber-50 dark:bg-amber-950/40'
+                  : 'border-zinc-200 bg-white'
+              )}>
+                <span className="pl-2 text-xs font-semibold text-zinc-500 select-none whitespace-nowrap">Mine</span>
+                <button
+                  onClick={() => handleClaimQty(-1)}
+                  className="px-2 py-1.5 text-zinc-500 hover:bg-zinc-100 text-sm font-bold leading-none transition-colors"
+                >−</button>
+                <span className={cn('px-1 text-xs font-bold select-none', myClaimQty > 0 ? 'text-amber-700' : 'text-zinc-400')}>
+                  {myClaimQty}
+                </span>
+                <button
+                  onClick={() => handleClaimQty(1)}
+                  className="px-2 py-1.5 text-zinc-500 hover:bg-zinc-100 text-sm font-bold leading-none transition-colors"
+                >+</button>
+              </div>
+            )}
+
+            {/* Split cost toggle */}
+            {!item.is_checked && onClaimChange && (
               <button
-                onClick={() => onClaim(item.id, !isClaimed || !isClaimedByMe)}
+                onClick={handleSplitToggle}
                 className={cn(
                   'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-colors',
-                  isClaimedByMe
-                    ? 'bg-amber-200 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 hover:bg-amber-300'
-                    : isClaimed
-                    ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
-                    : 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800 hover:bg-amber-100'
+                  isSplitting
+                    ? 'bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-700'
+                    : 'text-zinc-400 hover:text-violet-500 hover:bg-violet-50 dark:hover:bg-violet-950/30'
                 )}
-                disabled={isClaimed && !isClaimedByMe}
-                title={isClaimedByMe ? 'Unclaim' : isClaimed ? `${item.claimed_by_name} claimed this` : "I'll buy this"}
+                title="Split the cost of this item with roommates"
               >
-                <Hand size={12} />
-                {isClaimedByMe ? 'Claimed' : isClaimed ? 'Taken' : "I'll buy"}
+                <DollarSign size={12} />
+                {isSplitting ? 'Splitting' : 'Split'}
               </button>
             )}
 
