@@ -75,7 +75,7 @@ export default function Navbar({ roomName, roomId }: NavbarProps) {
 
   async function signOut() {
     await supabase.auth.signOut()
-    router.push('/login')
+    window.location.href = '/login'
   }
 
   const initials = userName ? userName.charAt(0).toUpperCase() : '?'
