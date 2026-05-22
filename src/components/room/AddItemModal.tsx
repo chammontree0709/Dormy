@@ -66,7 +66,9 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
 
   function handleAddCustom() {
     if (!customName.trim()) return
-    onAdd(null, customName.trim(), customUrl.trim() || undefined, customCategory, notes.trim() || undefined)
+    const rawUrl = customUrl.trim()
+    const safeUrl = rawUrl && (rawUrl.startsWith('https://') || rawUrl.startsWith('http://')) ? rawUrl : undefined
+    onAdd(null, customName.trim(), safeUrl, customCategory, notes.trim() || undefined)
     // Reset form and flash success — stay open so user can add another
     setCustomName('')
     setCustomUrl('')

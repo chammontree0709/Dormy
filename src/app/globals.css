@@ -72,7 +72,7 @@ body {
 .dark .text-gray-700 { color: #cbd5e1; }
 .dark .text-gray-600 { color: #94a3b8; }
 .dark .text-gray-500 { color: #64748b; }
-.dark .text-gray-400 { color: #4b5e72; }
+.dark .text-gray-400 { color: #64748b; }
 .dark .text-gray-300 { color: #334155; }
 
 /* ── Hover text ── */
@@ -99,7 +99,7 @@ body {
 .dark .text-zinc-700 { color: #cbd5e1; }
 .dark .text-zinc-600 { color: #94a3b8; }
 .dark .text-zinc-500 { color: #64748b; }
-.dark .text-zinc-400 { color: #4b5e72; }
+.dark .text-zinc-400 { color: #64748b; }
 
 /* ── Zinc hover text ── */
 .dark .hover\:text-zinc-950:hover { color: #f1f5f9; }
@@ -119,7 +119,7 @@ body {
 
 .dark input::placeholder,
 .dark textarea::placeholder {
-  color: #4b5e72;
+  color: #64748b;
 }
 
 /* ── Button: secondary variant (bg-white border-emerald-200) ── */

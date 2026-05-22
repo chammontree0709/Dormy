@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Copy, Check, X, Users, Share2 } from 'lucide-react'
+import { Copy, Check, X, Users, Share2, Eye } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import { RoomMember } from '@/types'
 
@@ -16,10 +16,11 @@ export default function InviteModal({ inviteCode, roomName, members, onClose }: 
   const [copiedCode, setCopiedCode] = useState(false)
   const [copiedLink, setCopiedLink] = useState(false)
   const [sharedViaSheet, setSharedViaSheet] = useState(false)
+  const [copiedViewLink, setCopiedViewLink] = useState(false)
 
-  const joinUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}/join/${inviteCode}`
-    : `https://roomdapp.com/join/${inviteCode}`
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://roomdapp.com'
+  const joinUrl = `${origin}/join/${inviteCode}`
+  const viewUrl = `${origin}/share/${inviteCode}`
 
   async function copyCode() {
     await navigator.clipboard.writeText(inviteCode)
@@ -44,6 +45,24 @@ export default function InviteModal({ inviteCode, roomName, members, onClose }: 
       setTimeout(() => setCopiedLink(false), 2000)
     } catch {
       // Clipboard also unavailable — silent fail
+    }
+  }
+
+  async function shareViewLink() {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({ title: `${roomName} checklist on Roomd`, url: viewUrl })
+        return
+      } catch {
+        // cancelled or failed — fall through
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(viewUrl)
+      setCopiedViewLink(true)
+      setTimeout(() => setCopiedViewLink(false), 2000)
+    } catch {
+      // silent fail
     }
   }
 
@@ -88,6 +107,20 @@ export default function InviteModal({ inviteCode, roomName, members, onClose }: 
               {copiedLink ? 'Copied!' : sharedViaSheet ? 'Shared!' : 'Share link'}
             </span>
           </button>
+
+          <div className="pt-1">
+            <p className="text-xs text-gray-400 mb-1.5">Share a read-only view (parents, friends)</p>
+            <button
+              onClick={shareViewLink}
+              className="w-full flex items-center justify-between gap-2 bg-gray-50 hover:bg-zinc-100 border border-gray-200 rounded-xl px-3 py-2.5 transition-colors group"
+            >
+              <p className="text-xs text-gray-500 truncate">{viewUrl}</p>
+              <span className="flex-shrink-0 flex items-center gap-1 text-xs font-semibold text-zinc-500">
+                {copiedViewLink ? <Check size={14} className="text-green-500" /> : <Eye size={14} />}
+                {copiedViewLink ? 'Copied!' : 'View only'}
+              </span>
+            </button>
+          </div>
 
           {members.length > 0 && (
             <div>

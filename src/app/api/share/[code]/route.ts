@@ -11,7 +11,7 @@ export async function GET(
 
   const { data: room } = await supabase
     .from('rooms')
-    .select('id, name, invite_code')
+    .select('id, name')
     .eq('invite_code', code)
     .single()
 
