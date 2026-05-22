@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { RoomItem } from '@/types'
 import { getItemById } from '@/data/presets'
 import { cn } from '@/lib/utils'
-import { Trash2, ExternalLink, ShoppingCart, Hand, MessageSquare, Home, Check, DollarSign } from 'lucide-react'
+import { Trash2, ExternalLink, ShoppingCart, Hand, MessageSquare, Home, Check, DollarSign, Minus, Plus } from 'lucide-react'
 import Link from 'next/link'
 import { buildAffiliateUrl } from '@/lib/amazon'
 
@@ -54,7 +54,7 @@ export default function ChecklistItem({
   }
 
   function handleClaimQty(delta: number) {
-    const next = Math.max(0, myClaimQty + delta)
+    const next = Math.max(0, Math.min(qty, myClaimQty + delta))
     onClaimChange?.(item.id, next, isSplitting)
   }
 
@@ -199,25 +199,50 @@ export default function ChecklistItem({
 
           {/* Row 2: actions */}
           <div className="flex items-center gap-1 mt-2 flex-wrap">
-            {/* Per-person claim stepper — replaces old "I'll buy" */}
-            {!item.is_checked && onClaimChange && (
+            {/* qty === 1: single-person claim toggle */}
+            {!item.is_checked && qty === 1 && onClaimChange && (() => {
+              const someoneClaimed = claimsWithQty.length > 0
+              const iClaimedIt = myClaimQty > 0
+              return (
+                <button
+                  onClick={() => onClaimChange(item.id, iClaimedIt ? 0 : 1, isSplitting)}
+                  disabled={someoneClaimed && !iClaimedIt}
+                  className={cn(
+                    'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-colors',
+                    iClaimedIt
+                      ? 'bg-amber-200 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 hover:bg-amber-300'
+                      : someoneClaimed
+                      ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
+                      : 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800 hover:bg-amber-100'
+                  )}
+                  title={iClaimedIt ? 'Unclaim' : someoneClaimed ? `${claimsWithQty[0]?.display_name} is buying this` : "I'll buy this"}
+                >
+                  <Hand size={12} />
+                  {iClaimedIt ? 'Claimed' : someoneClaimed ? 'Taken' : "I'll buy"}
+                </button>
+              )
+            })()}
+
+            {/* qty > 1: per-person stepper, capped at total qty */}
+            {!item.is_checked && qty > 1 && onClaimChange && (
               <div className={cn(
                 'flex items-center rounded-lg overflow-hidden border transition-colors',
                 myClaimQty > 0
                   ? 'border-amber-300 bg-amber-50 dark:bg-amber-950/40'
-                  : 'border-zinc-200 bg-white'
+                  : 'border-zinc-200 bg-white dark:bg-zinc-800'
               )}>
                 <span className="pl-2 text-xs font-semibold text-zinc-500 select-none whitespace-nowrap">Mine</span>
                 <button
                   onClick={() => handleClaimQty(-1)}
                   className="px-2 py-1.5 text-zinc-500 hover:bg-zinc-100 text-sm font-bold leading-none transition-colors"
                 >−</button>
-                <span className={cn('px-1 text-xs font-bold select-none', myClaimQty > 0 ? 'text-amber-700' : 'text-zinc-400')}>
+                <span className={cn('px-1 text-xs font-bold select-none min-w-[14px] text-center', myClaimQty > 0 ? 'text-amber-700' : 'text-zinc-400')}>
                   {myClaimQty}
                 </span>
                 <button
                   onClick={() => handleClaimQty(1)}
-                  className="px-2 py-1.5 text-zinc-500 hover:bg-zinc-100 text-sm font-bold leading-none transition-colors"
+                  disabled={myClaimQty >= qty}
+                  className="px-2 py-1.5 text-zinc-500 hover:bg-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed text-sm font-bold leading-none transition-colors"
                 >+</button>
               </div>
             )}
