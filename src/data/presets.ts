@@ -782,6 +782,22 @@ export const PRESET_ITEMS: PresetItem[] = [
     ],
   },
   {
+    id: 'dorm-tv',
+    name: 'Dorm Room TV',
+    description: 'A 32–43" TV is the sweet spot for a dorm room — big enough to watch from your bed, small enough to fit on a desk or dresser. Great for movies, gaming, and splitting with your roommate.',
+    category: 'entertainment',
+    amazon_url: 'https://www.amazon.com/s?k=32+inch+smart+tv+dorm+room&tag=roomd05-20',
+    image_emoji: '📺',
+    price_estimate: '$120–$280',
+    priority: 'nice-to-have',
+    tags: ['entertainment', 'tv', 'movies', 'gaming'],
+    reviews: [
+      { author: 'Jordan M.', rating: 5, text: 'Got a 32" and it fits perfectly on our dresser. Me and my roommate split the cost and it was totally worth it.', date: '2024-09-10' },
+      { author: 'Taylor R.', rating: 4, text: 'Honestly the best decision we made. We watch movies every weekend and use it for gaming too. Wish we had gotten a slightly bigger one.', date: '2024-10-02' },
+      { author: 'Priya K.', rating: 5, text: 'Got a smart TV so we don\'t even need a streaming stick. Fits on the shelf above the desk — measure your space before you buy.', date: '2024-09-28' },
+    ],
+  },
+  {
     id: 'streaming-stick',
     name: 'Streaming Stick (Fire TV / Roku)',
     description: 'Turn any TV or monitor into a smart TV. Plug it in and get Netflix, Hulu, Disney+ and more. Way cheaper than a smart TV.',
