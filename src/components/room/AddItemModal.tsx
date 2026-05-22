@@ -227,7 +227,6 @@ export default function AddItemModal({ existingPresetIds, onAdd, onClose }: AddI
                 value={customName}
                 onChange={(e) => setCustomName(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                autoFocus
               />
             </div>
             <div>
