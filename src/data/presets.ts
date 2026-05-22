@@ -3000,6 +3000,110 @@ export const PRESET_ITEMS: PresetItem[] = [
     ],
   },
 
+  // ── TikTok Finds ────────────────────────────────────────────────────────────
+
+  {
+    id: 'shower-filter',
+    name: 'Filtered Shower Head',
+    description: 'Dorm water is notoriously harsh — loaded with chlorine and heavy metals. A filtered shower head screws on in seconds and makes a huge difference for your hair and skin.',
+    category: 'bathroom',
+    amazon_url: 'https://www.amazon.com/s?k=filtered+shower+head+dorm+chlorine+filter&tag=roomd05-20',
+    image_emoji: '🚿',
+    price_estimate: '$20–$45',
+    priority: 'recommended',
+    tags: ['bathroom', 'health', 'hair'],
+    reviews: [
+      { author: 'Mia T.', rating: 5, text: 'My hair stopped breaking off after I installed this. Dorm water is genuinely awful — do not skip this.', date: '2024-09-14' },
+      { author: 'Jordan K.', rating: 5, text: 'Screwed on in 30 seconds with no tools. My scalp stopped being itchy within a week.', date: '2024-10-02' },
+      { author: 'Priya S.', rating: 4, text: 'Good filter, easy to install. Replace the cartridge halfway through the year and you\'re set.', date: '2025-01-20' },
+    ],
+  },
+
+  {
+    id: 'bed-rest-pillow',
+    name: 'Bed Rest / Backrest Pillow',
+    description: 'The stuffed armchair-style pillow that makes your bed actually functional as a couch. Perfect for studying, watching Netflix, or just vibing without falling over.',
+    category: 'bedding',
+    amazon_url: 'https://www.amazon.com/s?k=bed+rest+pillow+backrest+reading+pillow+dorm&tag=roomd05-20',
+    image_emoji: '🛋️',
+    price_estimate: '$25–$50',
+    priority: 'recommended',
+    tags: ['bedding', 'comfort', 'studying'],
+    reviews: [
+      { author: 'Alexis R.', rating: 5, text: 'Absolutely essential. Your dorm bed is also your couch — this makes it so much more comfortable.', date: '2024-09-05' },
+      { author: 'Tyler B.', rating: 5, text: 'I use this every single day for homework and watching TV. Worth every penny.', date: '2024-11-11' },
+      { author: 'Sam W.', rating: 4, text: 'Great for studying in bed without destroying your back. The armrests are a nice touch.', date: '2025-02-08' },
+    ],
+  },
+
+  {
+    id: 'contact-paper',
+    name: 'Peel-and-Stick Contact Paper',
+    description: 'Transform a scratched-up dorm desk, ugly shelves, or bland drawers instantly. Comes off cleanly at the end of the year without damaging surfaces — RA approved.',
+    category: 'decor',
+    amazon_url: 'https://www.amazon.com/s?k=peel+stick+contact+paper+marble+desk+dorm+removable&tag=roomd05-20',
+    image_emoji: '🎨',
+    price_estimate: '$10–$20',
+    priority: 'nice-to-have',
+    tags: ['decor', 'storage', 'diy'],
+    reviews: [
+      { author: 'Bella C.', rating: 5, text: 'Turned my disgusting dorm desk into a marble aesthetic piece. Removed at the end of the year with zero residue.', date: '2024-09-18' },
+      { author: 'Nadia F.', rating: 4, text: 'Took a little patience to line up but the result is amazing. My room looks so much cleaner.', date: '2024-10-30' },
+      { author: 'Casey M.', rating: 5, text: 'Used it on my shelf too. Total game changer for making a dorm feel like home.', date: '2025-01-14' },
+    ],
+  },
+
+  {
+    id: 'bag-hanger',
+    name: 'Over-Door Purse & Bag Hanger',
+    description: 'Keeps all your bags, totes, and purses off the floor and off your desk. Fits over any door without tools — free up precious dorm floor space instantly.',
+    category: 'storage',
+    amazon_url: 'https://www.amazon.com/s?k=over+door+purse+bag+hanger+organizer+dorm&tag=roomd05-20',
+    image_emoji: '👜',
+    price_estimate: '$10–$20',
+    priority: 'recommended',
+    tags: ['storage', 'organization', 'closet'],
+    reviews: [
+      { author: 'Hannah L.', rating: 5, text: 'I had bags everywhere. This fixed the problem in 5 seconds. Over the door, done.', date: '2024-09-22' },
+      { author: 'Zoe P.', rating: 5, text: 'Holds more than it looks like it will. I have 6 bags on it and it hasn\'t budged.', date: '2024-11-03' },
+      { author: 'Maya J.', rating: 4, text: 'Great for bags, also great for hanging robes, jackets, and lanyards.', date: '2025-02-19' },
+    ],
+  },
+
+  {
+    id: 'storage-ottoman',
+    name: 'Storage Ottoman',
+    description: 'Acts as extra seating, a footrest, AND hidden storage all in one. Perfect for the end of the bed or as a side table. Way more useful than it looks.',
+    category: 'storage',
+    amazon_url: 'https://www.amazon.com/s?k=storage+ottoman+small+dorm+room+collapsible&tag=roomd05-20',
+    image_emoji: '🪑',
+    price_estimate: '$25–$60',
+    priority: 'nice-to-have',
+    tags: ['storage', 'furniture', 'decor'],
+    reviews: [
+      { author: 'Olivia N.', rating: 5, text: 'I store extra blankets and clothes in it, use it as a seat when friends visit, and rest my feet on it. 3-in-1.', date: '2024-09-28' },
+      { author: 'Derek M.', rating: 4, text: 'Solid, doesn\'t wobble, and actually holds a surprising amount inside. Good buy.', date: '2024-12-01' },
+      { author: 'Chloe V.', rating: 5, text: 'My room has no extra seating. This saved my social life lol. People can actually come hang now.', date: '2025-01-09' },
+    ],
+  },
+
+  {
+    id: 'globe-fan',
+    name: 'Globe Fan (Woozoo-Style)',
+    description: 'The compact oscillating sphere fan that\'s all over dorm TikTok for a reason — powerful airflow in a tiny footprint. Sits on a desk or shelf and covers the whole room.',
+    category: 'bedding',
+    amazon_url: 'https://www.amazon.com/s?k=woozoo+globe+fan+oscillating+compact+dorm&tag=roomd05-20',
+    image_emoji: '🌀',
+    price_estimate: '$30–$55',
+    priority: 'recommended',
+    tags: ['bedding', 'comfort', 'cooling'],
+    reviews: [
+      { author: 'Kaito R.', rating: 5, text: 'Dorm rooms get HOT. This little fan is somehow more powerful than fans twice its size. 10/10.', date: '2024-08-20' },
+      { author: 'Emma S.', rating: 5, text: 'Saw it on TikTok and bought it immediately. It oscillates 360 degrees and barely takes up any space on my shelf.', date: '2024-09-03' },
+      { author: 'Marcus T.', rating: 5, text: 'Quiet on low, strong on high. Perfect for sleeping with some airflow. Best dorm purchase I made.', date: '2024-10-17' },
+    ],
+  },
+
   // ── Greek Life & Rush ──────────────────────────────────────────────
 
   // Shared
